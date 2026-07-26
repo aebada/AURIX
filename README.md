@@ -15,23 +15,38 @@ See [`docs/PRODUCT_PLAN.md`](docs/PRODUCT_PLAN.md) for the full product plan,
 ## Repository structure
 
 This is a monorepo covering the four connected products described in the
-product plan, plus the backend services that orchestrate them:
+product plan, plus the backend services that orchestrate them. **Every
+app/service below is a working scaffold built against mock data — none of
+them are wired up to each other or to a real database/provider yet.** Each
+has its own `README.md` detailing exactly what's implemented vs. not.
 
 ```
 apps/
-  website/   Public marketing site (Next.js, static export) — built
-  mobile/    Primary user product — not yet scaffolded
-  web/       Desktop dashboard for advanced users & businesses — not yet scaffolded
-  admin/     Internal operations / compliance portal — not yet scaffolded
+  website/   Public marketing site (Next.js, static export)
+  mobile/    Primary user product (Expo + expo-router) — 5 tabs, mock data
+  web/       Desktop dashboard (Next.js) — portfolio, transactions, business, partners/API
+  admin/     Internal operations portal (Next.js) — KYC, monitoring, partner health, AI governance
 services/
-  backend/   Orchestration API (Node.js) — not yet scaffolded
-  ai/        Fraud detection, insights, AI governance (Python) — not yet scaffolded
+  backend/   Orchestration API (Express + TypeScript) — in-memory mock DB, full auth/wallet/payments flow
+  ai/        Fraud scoring, insights, AI governance (FastAPI) — rule-based mocks, no trained models
 docs/        Product plan, mobile UX spec, pitch deck reference, deployment guide
 assets/      Brand assets (logo, mark)
 ```
 
-Each unscaffolded app/service has a `README.md` describing what it will do
-and its planned tech stack.
+## Status at a glance
+
+| App/service | Runs | Talks to other services | Auth |
+|---|---|---|---|
+| `apps/website` | ✅ | n/a (static) | n/a |
+| `apps/mobile` | ✅ | ❌ mock data only | ❌ |
+| `apps/web` | ✅ | ❌ mock data only | ❌ |
+| `apps/admin` | ✅ | ❌ mock data only | ❌ (wide open — see its README) |
+| `services/backend` | ✅ | ❌ no real vault/payment/KYC provider | ✅ JWT (dev-only secret) |
+| `services/ai` | ✅ | n/a (called by backend, not yet wired) | ❌ (open) |
+
+The natural next step is wiring `apps/mobile`, `apps/web`, and
+`apps/admin` up to `services/backend`, and `services/backend` up to
+`services/ai` — none of that cross-service integration exists yet.
 
 ## Website
 
@@ -55,6 +70,70 @@ deploy workflow is wired up.
 The contact and waitlist forms are currently front-end only (no backend
 exists yet to receive submissions) — see the `TODO` comments in
 `apps/website/src/components/ContactForm.tsx` and `WaitlistForm.tsx`.
+
+## Mobile app
+
+`apps/mobile` (Expo + expo-router) has five tabs — Wallet, Buy/Sell,
+Payments, Market, Profile — matching `docs/MOBILE_UX.md`, backed by mock
+data in `src/lib/mock-data.ts`.
+
+```bash
+cd apps/mobile
+npm install
+npm run web    # or npm run ios / npm run android
+```
+
+## Web platform
+
+`apps/web` is a Next.js desktop dashboard: Overview, Transactions,
+Statements, Business, Partners & API — mock data in `src/lib/mock-data.ts`.
+
+```bash
+cd apps/web
+npm install
+npm run dev    # http://localhost:3000
+```
+
+## Admin portal
+
+`apps/admin` is a Next.js ops console: Overview, Users, KYC Queue,
+Transaction Monitoring, Partner Health, AI Governance — mock data, **no
+authentication or access control yet** (see its README before deploying
+it anywhere reachable).
+
+```bash
+cd apps/admin
+npm install
+npm run dev    # http://localhost:3000
+```
+
+## Backend
+
+`services/backend` is an Express + TypeScript API with an in-memory mock
+data store: auth, KYC (auto-approve stub), wallet ledger, market data,
+payments (topup/buy/sell), and admin views. No real database or provider
+integration yet.
+
+```bash
+cd services/backend
+npm install
+cp .env.example .env
+npm run dev    # http://localhost:4000
+```
+
+## AI service
+
+`services/ai` is a FastAPI service with rule-based (non-ML) mocks for
+fraud scoring, portfolio insights, and AI governance proposal evaluation.
+The governance endpoint always returns `requires_human_approval: true` —
+see its README for why that must never change.
+
+```bash
+cd services/ai
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8001
+```
 
 ## AURIX does not custody assets
 
