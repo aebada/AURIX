@@ -9,7 +9,7 @@ export function Card({
 }) {
   return (
     <div
-      className={`rounded-3xl border border-[var(--color-line)] bg-white p-8 ${className}`}
+      className={`hover-lift rounded-3xl border border-[var(--color-line)] bg-white p-8 ${className}`}
     >
       {children}
     </div>
