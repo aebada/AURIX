@@ -1,0 +1,51 @@
+name: Deploy Website (FTP)
+
+# Builds apps/website as a static export and uploads it to shared hosting
+# over FTP. Runs on pushes to main that touch the website, or manually.
+#
+# Required repository secrets (Settings > Secrets and variables > Actions):
+#   FTP_SERVER       the FTP host (IP address or hostname)
+#   FTP_USERNAME     the FTP account username
+#   FTP_PASSWORD     the FTP account password
+#   FTP_SERVER_DIR   remote target directory (the site's document root)
+#
+# Credentials are never stored in this repo — only referenced as secrets.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/website/**"
+      - ".github/workflows/deploy-website.yml"
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: apps/website/package-lock.json
+
+      - name: Install dependencies
+        working-directory: apps/website
+        run: npm ci
+
+      - name: Build static export
+        working-directory: apps/website
+        run: npm run build
+
+      - name: Deploy over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: apps/website/out/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
