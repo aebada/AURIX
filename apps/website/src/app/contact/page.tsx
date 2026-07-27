@@ -16,7 +16,7 @@ export default function ContactPage() {
         title="Let's talk."
         description="Whether you're a future user, an investor, or a potential vault, payment, or compliance partner — we'd like to hear from you."
       />
-      <section className="bg-white py-20">
+      <section className="bg-[var(--color-surface)] py-20">
         <Container className="max-w-2xl">
           <ContactForm />
         </Container>

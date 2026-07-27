@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
+import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
   title: {
@@ -18,8 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full bg-[var(--color-paper)]">
-        <Sidebar />
-        <div className="flex min-h-screen flex-1 flex-col">{children}</div>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

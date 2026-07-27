@@ -57,7 +57,7 @@ export default function PricingPage() {
         description="AURIX is asset-light — no custody fees, no hidden storage costs. Revenue comes from transaction fees, a modest buy/sell spread, and optional subscriptions."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <Card>
@@ -105,7 +105,7 @@ export default function PricingPage() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-20">
         <Container>
           <Eyebrow>Account Tiers</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             Plans for every kind of user
           </h2>
           <div className="mt-12 grid gap-8 lg:grid-cols-3">
@@ -114,11 +114,11 @@ export default function PricingPage() {
                 key={tier.name}
                 className={`rounded-3xl p-8 ${
                   tier.highlighted
-                    ? "border-2 border-gold bg-white shadow-lg shadow-gold/10"
-                    : "border border-[var(--color-line)] bg-white"
+                    ? "border-2 border-gold bg-[var(--color-surface)] shadow-lg shadow-gold/10"
+                    : "border border-[var(--color-line)] bg-[var(--color-surface)]"
                 }`}
               >
-                <h3 className="font-extrabold tracking-tight text-xl text-navy">
+                <h3 className="font-extrabold tracking-tight text-xl text-heading">
                   {tier.name}
                 </h3>
                 <p className="mt-1 text-sm text-muted">{tier.tagline}</p>

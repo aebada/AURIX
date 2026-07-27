@@ -1,33 +1,6 @@
-// Mock data only — this app is not yet wired up to services/backend.
-
-export const portfolio = {
-  totalUsd: 128_450.32,
-  changePctToday: 1.8,
-  allocation: [
-    { asset: "Gold", pct: 52, colorVar: "--color-gold" },
-    { asset: "Silver", pct: 18, colorVar: "--color-navy-soft" },
-    { asset: "Fiat", pct: 22, colorVar: "--color-line" },
-    { asset: "Crypto (connected)", pct: 8, colorVar: "--color-muted" },
-  ],
-};
-
-export interface Transaction {
-  id: string;
-  date: string;
-  type: "Buy" | "Sell" | "Transfer" | "Deposit" | "Withdrawal";
-  asset: string;
-  amount: string;
-  status: "Settled" | "Pending" | "Failed";
-  reference: string;
-}
-
-export const transactions: Transaction[] = [
-  { id: "txn_1", date: "2026-07-24", type: "Buy", asset: "Gold", amount: "+120.4 BPC", status: "Settled", reference: "mock-vault-8841" },
-  { id: "txn_2", date: "2026-07-23", type: "Transfer", asset: "Fiat", amount: "-$1,250.00", status: "Settled", reference: "internal" },
-  { id: "txn_3", date: "2026-07-22", type: "Deposit", asset: "Fiat", amount: "+$5,000.00", status: "Settled", reference: "mock-stripe-2291" },
-  { id: "txn_4", date: "2026-07-20", type: "Sell", asset: "Silver", amount: "-800.0 BPC", status: "Pending", reference: "mock-vault-7723" },
-  { id: "txn_5", date: "2026-07-18", type: "Withdrawal", asset: "Fiat", amount: "-$2,000.00", status: "Failed", reference: "mock-stripe-1187" },
-];
+// Mock data for the parts of this app with no backend endpoint yet
+// (Statements, Business, Partners & API). Overview and Transactions now
+// pull live data from services/backend — see src/lib/api.ts.
 
 export const statements = [
   { id: "st_2026_06", period: "June 2026", format: "PDF" },

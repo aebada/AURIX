@@ -14,8 +14,8 @@ export function WaitlistForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-3xl border border-gold/30 bg-white p-8 text-center">
-        <p className="font-extrabold tracking-tight text-xl text-navy">
+      <div className="rounded-3xl border border-gold/30 bg-[var(--color-surface)] p-8 text-center">
+        <p className="font-extrabold tracking-tight text-xl text-heading">
           You&apos;re on the list.
         </p>
         <p className="mt-2 text-sm text-muted">
@@ -28,9 +28,9 @@ export function WaitlistForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-[var(--color-line)] bg-white p-8"
+      className="rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)] p-8"
     >
-      <label className="block text-sm font-medium text-navy">
+      <label className="block text-sm font-medium text-heading">
         Email address
         <input
           required
@@ -40,7 +40,7 @@ export function WaitlistForm() {
           className="mt-2 w-full rounded-lg border border-[var(--color-line)] px-4 py-2.5 text-sm text-ink focus:border-gold focus:outline-none"
         />
       </label>
-      <label className="mt-6 block text-sm font-medium text-navy">
+      <label className="mt-6 block text-sm font-medium text-heading">
         I&apos;m most interested in...
         <select
           name="interest"

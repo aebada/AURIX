@@ -120,16 +120,16 @@ export default function FeaturesPage() {
         description="The mobile app is where users pay, save, and invest every day. The web platform is where analytics, business tools, and administration live."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <Eyebrow>Mobile App — Primary Product</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             Daily payments, wallet usage, and investing
           </h2>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {mobileGroups.map((g) => (
               <div key={g.title}>
-                <h3 className="text-base font-semibold text-navy">
+                <h3 className="text-base font-semibold text-heading">
                   {g.title}
                 </h3>
                 <ul className="mt-4 space-y-3">
@@ -146,13 +146,13 @@ export default function FeaturesPage() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-20">
         <Container>
           <Eyebrow>Web Platform — Control &amp; Intelligence</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             Analytics, business tools, and operations
           </h2>
           <div className="mt-12 grid gap-10 sm:grid-cols-2">
             {webGroups.map((g) => (
               <div key={g.title}>
-                <h3 className="text-base font-semibold text-navy">
+                <h3 className="text-base font-semibold text-heading">
                   {g.title}
                 </h3>
                 <ul className="mt-4 space-y-3">

@@ -43,12 +43,12 @@ export default function CareersPage() {
         description="AURIX is early — architecture is complete and the MVP is in development. We're assembling the founding team across five disciplines."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {departments.map((d) => (
               <Card key={d.title}>
-                <h3 className="font-extrabold tracking-tight text-lg text-navy">
+                <h3 className="font-extrabold tracking-tight text-lg text-heading">
                   {d.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -63,7 +63,7 @@ export default function CareersPage() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-16">
         <Container>
           <Eyebrow>Open Roles</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-2xl text-navy">
+          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-2xl text-heading">
             No roles are posted yet — reach out directly and we&apos;ll keep
             you in mind as the team forms.
           </h2>

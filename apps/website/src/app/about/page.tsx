@@ -49,12 +49,12 @@ export default function AboutPage() {
         description="AURIX combines fintech usability, AI governance, real-asset integrity, ethical financial infrastructure, and global interoperability into a single hybrid monetary architecture."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <div className="grid gap-14 lg:grid-cols-2">
             <div>
               <Eyebrow>Founder</Eyebrow>
-              <h2 className="mt-4 font-extrabold tracking-tight text-2xl text-navy">
+              <h2 className="mt-4 font-extrabold tracking-tight text-2xl text-heading">
                 Prof. Dr. Ahmed Ebada
               </h2>
               <p className="mt-2 text-sm font-medium text-gold-dark">
@@ -68,7 +68,7 @@ export default function AboutPage() {
             </div>
             <div>
               <Eyebrow>One-Line Definition</Eyebrow>
-              <p className="mt-4 font-extrabold tracking-tight text-2xl leading-snug text-navy">
+              <p className="mt-4 font-extrabold tracking-tight text-2xl leading-snug text-heading">
                 &ldquo;AURIX is a global fintech platform that turns real
                 assets into instantly usable digital money through a hybrid,
                 AI-powered financial infrastructure.&rdquo;
@@ -81,7 +81,7 @@ export default function AboutPage() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-20">
         <Container>
           <Eyebrow>Positioning</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             What AURIX is — and isn&apos;t
           </h2>
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
@@ -109,16 +109,16 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <Eyebrow>Product Structure</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             Four connected products
           </h2>
           <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((p) => (
               <div key={p.title}>
-                <h3 className="text-base font-semibold text-navy">
+                <h3 className="text-base font-semibold text-heading">
                   {p.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">

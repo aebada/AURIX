@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { navLinks } from "./nav-links";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -34,12 +35,12 @@ export function Header() {
             className="h-8 w-auto"
             priority
           />
-          <span className="font-extrabold tracking-tight text-xl text-navy">
+          <span className="font-extrabold tracking-tight text-xl text-heading">
             AURIX
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 rounded-full border border-[var(--color-line)] bg-white/70 p-1 lg:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 p-1 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -54,10 +55,11 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/contact"
-            className="text-sm font-semibold text-muted transition-colors hover:text-navy"
+            className="text-sm font-semibold text-muted transition-colors hover:text-heading"
           >
             Contact
           </Link>
+          <ThemeToggle />
           <Link
             href="/waitlist"
             className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
@@ -66,20 +68,23 @@ export function Header() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-line)] lg:hidden"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-        >
-          <span className="sr-only">Toggle menu</span>
-          <div className="flex flex-col gap-1">
-            <span className="block h-0.5 w-4 bg-navy" />
-            <span className="block h-0.5 w-4 bg-navy" />
-            <span className="block h-0.5 w-4 bg-navy" />
-          </div>
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-line)]"
+            aria-label="Toggle menu"
+            aria-expanded={open}
+          >
+            <span className="sr-only">Toggle menu</span>
+            <div className="flex flex-col gap-1">
+              <span className="block h-0.5 w-4 bg-navy" />
+              <span className="block h-0.5 w-4 bg-navy" />
+              <span className="block h-0.5 w-4 bg-navy" />
+            </div>
+          </button>
+        </div>
       </div>
 
       {open && (

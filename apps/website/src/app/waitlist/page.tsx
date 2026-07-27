@@ -16,7 +16,7 @@ export default function WaitlistPage() {
         title="Be first in line."
         description="Get early access, founding-member pricing, and updates as AURIX moves from architecture to MVP."
       />
-      <section className="bg-white py-20">
+      <section className="bg-[var(--color-surface)] py-20">
         <Container className="max-w-xl">
           <WaitlistForm />
         </Container>

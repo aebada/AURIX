@@ -6,6 +6,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { Reveal } from "@/components/Reveal";
+import { PointcoinCoin } from "@/components/PointcoinCoin";
 
 const problems = [
   {
@@ -38,6 +39,12 @@ const solutions = [
     title: "Instant Global Utility",
     body: "A high-performance payment network that makes precious metals as liquid as cash — instantly usable for transfers, retail payments, and savings.",
   },
+];
+
+const pointcoinFacts = [
+  { value: "0.0001g", label: "Smallest unit — one Pointcoin, enabling true micro-ownership" },
+  { value: "1:1", label: "Every Pointcoin issued is matched by vaulted gold or silver" },
+  { value: "24/7", label: "AI-audited proof-of-reserve, continuously verified against vault APIs" },
 ];
 
 const platform = [
@@ -87,11 +94,11 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-white">
+      <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[var(--color-surface)]">
         <Container className="grid gap-12 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
           <Reveal>
             <Eyebrow>The Fintech Revolution — 2026</Eyebrow>
-            <h1 className="mt-5 font-extrabold tracking-tight text-4xl leading-[1.05] text-navy sm:text-5xl lg:text-7xl">
+            <h1 className="mt-5 font-extrabold tracking-tight text-4xl leading-[1.05] text-heading sm:text-5xl lg:text-7xl">
               Measured Trust.
               <br />
               <span className="text-gradient-gold">Real Digital Money.</span>
@@ -110,7 +117,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/how-it-works"
-                className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-navy transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
+                className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
               >
                 See How It Works
               </Link>
@@ -132,7 +139,7 @@ export default function Home() {
         <Container>
           <Reveal>
             <Eyebrow>The Problem</Eyebrow>
-            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
               A broken financial system
             </h2>
           </Reveal>
@@ -140,7 +147,7 @@ export default function Home() {
             {problems.map((p, i) => (
               <Reveal key={p.number} delay={i * 100}>
                 <p className="font-extrabold tracking-tight text-2xl text-gold">{p.number}</p>
-                <h3 className="mt-2 text-lg font-semibold text-navy">
+                <h3 className="mt-2 text-lg font-semibold text-heading">
                   {p.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -149,7 +156,7 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-          <p className="mt-14 border-t border-[var(--color-line)] pt-8 font-extrabold tracking-tight text-xl italic text-navy/80">
+          <p className="mt-14 border-t border-[var(--color-line)] pt-8 font-extrabold tracking-tight text-xl italic text-heading/80">
             &ldquo;There is no system that combines real value, stability, and
             global usability.&rdquo;
           </p>
@@ -157,11 +164,11 @@ export default function Home() {
       </section>
 
       {/* Solution */}
-      <section className="border-b border-[var(--color-line)] bg-white py-24">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
             <Eyebrow>The Solution</Eyebrow>
-            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
               A new category of money
             </h2>
           </Reveal>
@@ -169,7 +176,7 @@ export default function Home() {
             {solutions.map((s, i) => (
               <Reveal key={s.title} delay={i * 100}>
                 <Card>
-                  <h3 className="font-extrabold tracking-tight text-lg text-navy">
+                  <h3 className="font-extrabold tracking-tight text-lg text-heading">
                     {s.title}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -188,19 +195,75 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Platform */}
+      {/* Pointcoin */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
+        <Container>
+          <div className="grid items-center gap-14 lg:grid-cols-2">
+            <Reveal className="order-2 flex justify-center lg:order-1">
+              <PointcoinCoin className="h-64 w-64 drop-shadow-xl sm:h-80 sm:w-80" />
+            </Reveal>
+            <Reveal delay={100} className="order-1 lg:order-2">
+              <Eyebrow>Introducing Pointcoin</Eyebrow>
+              <h2 className="mt-4 max-w-xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
+                Real gold, down to the point.
+              </h2>
+              <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted">
+                Pointcoin is AURIX&apos;s atomic unit of ownership — our BPC
+                (Base Precious Coin) standard. Every Pointcoin represents
+                exactly 0.0001g of vaulted gold or silver, minted the moment
+                a deposit is verified and burned the moment it&apos;s
+                redeemed. No promises, no synthetic exposure — just physical
+                reserves, tokenized down to a fractionable, spendable point.
+              </p>
+              <ul className="mt-6 space-y-3">
+                <CheckItem>
+                  Fully allocated ownership — legal, not just price exposure
+                </CheckItem>
+                <CheckItem>
+                  Used directly for payments, transfers, savings, and
+                  gold-backed collateral
+                </CheckItem>
+                <CheckItem>
+                  Continuous proof-of-reserve — issued supply can never
+                  exceed vaulted metal
+                </CheckItem>
+              </ul>
+              <div className="mt-8 grid grid-cols-3 gap-6 border-t border-[var(--color-line)] pt-6">
+                {pointcoinFacts.map((f) => (
+                  <div key={f.value}>
+                    <p className="font-extrabold tracking-tight text-xl text-gradient-gold sm:text-2xl">
+                      {f.value}
+                    </p>
+                    <p className="mt-1 text-xs leading-snug text-muted">
+                      {f.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <Link
+                href="/whitepaper"
+                className="mt-8 inline-block text-sm font-semibold text-gold-dark hover:underline"
+              >
+                Read the full tokenization model →
+              </Link>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* Platform */}
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
             <Eyebrow>Revolutionizing Digital Ownership</Eyebrow>
-            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
               The all-in-one asset platform
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {platform.map((p, i) => (
               <Reveal key={p.title} delay={i * 100}>
-                <h3 className="font-extrabold tracking-tight text-lg text-navy">
+                <h3 className="font-extrabold tracking-tight text-lg text-heading">
                   {p.title}
                 </h3>
                 <ul className="mt-4 space-y-3">
@@ -255,11 +318,11 @@ export default function Home() {
       </section>
 
       {/* Market opportunity */}
-      <section className="border-b border-[var(--color-line)] bg-white py-24">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
             <Eyebrow>Market Opportunity</Eyebrow>
-            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
               Intersection of four giants
             </h2>
           </Reveal>
@@ -277,7 +340,7 @@ export default function Home() {
           <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr]">
             <Reveal>
               <Eyebrow>Scalable &amp; Asset-Light</Eyebrow>
-              <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+              <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
                 Diversified revenue streams
               </h2>
               <p className="mt-6 text-sm leading-relaxed text-muted">
@@ -303,11 +366,11 @@ export default function Home() {
       </section>
 
       {/* Competitive landscape */}
-      <section className="border-b border-[var(--color-line)] bg-white py-24">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
             <Eyebrow>Beyond Stablecoins</Eyebrow>
-            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
               Competitive landscape
             </h2>
           </Reveal>
