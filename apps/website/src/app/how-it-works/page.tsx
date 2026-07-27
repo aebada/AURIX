@@ -58,15 +58,15 @@ export default function HowItWorksPage() {
         description="AURIX does not custody assets. It is the orchestration and intelligence layer that connects licensed vault, payment, and compliance providers into one coherent, auditable system."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <Eyebrow>The Two-Layer Architecture</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             Reserve Layer + Payment Layer
           </h2>
           <div className="mt-10 grid gap-8 lg:grid-cols-2">
             <Card>
-              <h3 className="font-extrabold tracking-tight text-lg text-navy">
+              <h3 className="font-extrabold tracking-tight text-lg text-heading">
                 01 Reserve Layer
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -76,7 +76,7 @@ export default function HowItWorksPage() {
               </p>
             </Card>
             <Card>
-              <h3 className="font-extrabold tracking-tight text-lg text-navy">
+              <h3 className="font-extrabold tracking-tight text-lg text-heading">
                 02 Payment Layer
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -92,7 +92,7 @@ export default function HowItWorksPage() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-20">
         <Container>
           <Eyebrow>Gold Tokenization Model</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading">
             Physical-to-digital, step by step
           </h2>
           <div className="mt-14 space-y-10">
@@ -103,7 +103,7 @@ export default function HowItWorksPage() {
               >
                 <p className="font-extrabold tracking-tight text-3xl text-gold">{s.step}</p>
                 <div>
-                  <h3 className="text-base font-semibold text-navy">
+                  <h3 className="text-base font-semibold text-heading">
                     {s.title}
                   </h3>
                   <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
@@ -124,15 +124,15 @@ export default function HowItWorksPage() {
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <Eyebrow>Allocation Model</Eyebrow>
-          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
             Pooled today, fully allocated tomorrow
           </h2>
           <div className="mt-10 grid gap-8 lg:grid-cols-2">
             <Card>
-              <h3 className="text-base font-semibold text-navy">
+              <h3 className="text-base font-semibold text-heading">
                 Fully Allocated
               </h3>
               <p className="mt-2 text-xs uppercase tracking-wider text-gold-dark">
@@ -144,7 +144,7 @@ export default function HowItWorksPage() {
               </p>
             </Card>
             <Card>
-              <h3 className="text-base font-semibold text-navy">Pooled</h3>
+              <h3 className="text-base font-semibold text-heading">Pooled</h3>
               <p className="mt-2 text-xs uppercase tracking-wider text-gold-dark">
                 Launch model
               </p>

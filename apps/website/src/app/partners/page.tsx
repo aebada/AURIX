@@ -62,12 +62,12 @@ export default function PartnersPage() {
         description="Every category below represents a class of regulated provider that AURIX orchestrates through secure APIs. Names listed are best-fit candidates the team is evaluating — not yet signed commercial partners."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((c) => (
               <div key={c.title}>
-                <h3 className="text-base font-semibold text-navy">
+                <h3 className="text-base font-semibold text-heading">
                   {c.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -90,7 +90,7 @@ export default function PartnersPage() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-16">
         <Container>
           <Eyebrow>Become a Partner</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-2xl text-navy">
+          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-2xl text-heading">
             Vault operators, payment providers, and compliance partners —
             we&apos;d like to hear from you.
           </h2>

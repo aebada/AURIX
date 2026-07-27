@@ -41,10 +41,10 @@ export default function AiGovernancePage() {
         description="Instead of mining, staking, or gas-fee consensus, AURIX uses AI trust orchestration to evaluate transaction legitimacy, reserve consistency, and liquidity stability in real time."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <Eyebrow>The AI Voting Engine</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy">
+          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading">
             Decentralized intelligence, without blockchain inefficiency
           </h2>
           <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
@@ -55,7 +55,7 @@ export default function AiGovernancePage() {
             limits, and reserve-balancing actions.
           </p>
           <div className="mt-10 rounded-3xl border border-gold/30 bg-[var(--color-paper)] p-8">
-            <p className="text-sm font-semibold text-navy">
+            <p className="text-sm font-semibold text-heading">
               A hard rule, not a suggestion
             </p>
             <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -73,7 +73,7 @@ export default function AiGovernancePage() {
           <div className="grid gap-10 lg:grid-cols-2">
             <Card>
               <Eyebrow>For Users</Eyebrow>
-              <h3 className="mt-3 font-extrabold tracking-tight text-lg text-navy">
+              <h3 className="mt-3 font-extrabold tracking-tight text-lg text-heading">
                 AI features in the app
               </h3>
               <ul className="mt-5 space-y-3 text-sm leading-relaxed text-ink/75">

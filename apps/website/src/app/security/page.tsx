@@ -31,11 +31,11 @@ export default function SecurityPage() {
         description="AURIX pairs regulated custody partners with continuous, AI-driven verification so that digital balances always match what's actually vaulted."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <div className="grid gap-10 lg:grid-cols-3">
             <Card>
-              <h3 className="font-extrabold tracking-tight text-lg text-navy">
+              <h3 className="font-extrabold tracking-tight text-lg text-heading">
                 Continuous Proof-of-Reserve
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -45,7 +45,7 @@ export default function SecurityPage() {
               </p>
             </Card>
             <Card>
-              <h3 className="font-extrabold tracking-tight text-lg text-navy">
+              <h3 className="font-extrabold tracking-tight text-lg text-heading">
                 AI Anomaly Detection
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -55,7 +55,7 @@ export default function SecurityPage() {
               </p>
             </Card>
             <Card>
-              <h3 className="font-extrabold tracking-tight text-lg text-navy">
+              <h3 className="font-extrabold tracking-tight text-lg text-heading">
                 Zero-Knowledge Verification
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -73,7 +73,7 @@ export default function SecurityPage() {
           <div className="grid gap-14 lg:grid-cols-2">
             <div>
               <Eyebrow>Identity &amp; Compliance</Eyebrow>
-              <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+              <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
                 KYC, AML, and account security
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted">
@@ -95,7 +95,7 @@ export default function SecurityPage() {
             </div>
             <div>
               <Eyebrow>Data Principles</Eyebrow>
-              <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
+              <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
                 What AURIX will never do
               </h2>
               <ul className="mt-6 space-y-4">

@@ -54,12 +54,12 @@ export default function WhitepaperPage() {
         description="A living summary of the AURIX architecture, tokenization model, and business model. This page will be superseded by a downloadable, versioned whitepaper PDF ahead of launch."
       />
 
-      <section className="border-b border-[var(--color-line)] bg-white py-20">
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
           <div className="space-y-8">
             {sections.map((s) => (
               <Card key={s.title}>
-                <h2 className="font-extrabold tracking-tight text-xl text-navy">
+                <h2 className="font-extrabold tracking-tight text-xl text-heading">
                   {s.title}
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-muted">

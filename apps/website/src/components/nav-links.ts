@@ -1,11 +1,11 @@
+// Primary nav is deliberately short (5 items) per standard UX guidance for
+// top-level navigation (aim for 5-7 max) — the rest of the site's sections
+// are one click away via the footer (see footerLinks below).
 export const navLinks = [
   { href: "/how-it-works", label: "How It Works" },
   { href: "/features", label: "Features" },
-  { href: "/ai-governance", label: "AI & Governance" },
-  { href: "/reserve-transparency", label: "Reserve Transparency" },
   { href: "/pricing", label: "Pricing" },
   { href: "/security", label: "Security" },
-  { href: "/partners", label: "Partners" },
   { href: "/about", label: "About" },
 ];
 

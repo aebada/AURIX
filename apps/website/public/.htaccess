@@ -1,0 +1,10 @@
+# Force this static export's index.html to take priority over any
+# leftover PHP entry point (e.g. from a prior install) in the same
+# document root, and prevent stale caching of HTML after deploys.
+DirectoryIndex index.html index.php
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

@@ -39,14 +39,16 @@ assets/      Brand assets (logo, mark)
 |---|---|---|---|
 | `apps/website` | ✅ | n/a (static) | n/a |
 | `apps/mobile` | ✅ | ❌ mock data only | ❌ |
-| `apps/web` | ✅ | ❌ mock data only | ❌ |
+| `apps/web` | ✅ | ✅ Overview/Transactions live via `services/backend`; Statements/Business/Partners still mock | ✅ real JWT login/register |
 | `apps/admin` | ✅ | ❌ mock data only | ❌ (wide open — see its README) |
 | `services/backend` | ✅ | ❌ no real vault/payment/KYC provider | ✅ JWT (dev-only secret) |
 | `services/ai` | ✅ | n/a (called by backend, not yet wired) | ❌ (open) |
 
-The natural next step is wiring `apps/mobile`, `apps/web`, and
-`apps/admin` up to `services/backend`, and `services/backend` up to
-`services/ai` — none of that cross-service integration exists yet.
+`apps/web` is now wired up to `services/backend` for auth, wallet
+balances, and transactions — run both together locally (see the Web
+platform section below). The remaining next step is wiring `apps/mobile`
+and `apps/admin` up to `services/backend` the same way, and
+`services/backend` up to `services/ai`.
 
 ## Website
 
@@ -86,11 +88,18 @@ npm run web    # or npm run ios / npm run android
 ## Web platform
 
 `apps/web` is a Next.js desktop dashboard: Overview, Transactions,
-Statements, Business, Partners & API — mock data in `src/lib/mock-data.ts`.
+Statements, Business, Partners & API. Overview and Transactions are wired
+up to `services/backend` for real auth, wallet balances, and transaction
+history; Statements/Business/Partners are still mock data (no backend
+endpoints exist for those yet). Requires `services/backend` running — see
+`apps/web/README.md`.
 
 ```bash
+cd services/backend && npm install && npm run dev   # http://localhost:4000, in one terminal
+
 cd apps/web
 npm install
+cp .env.example .env.local
 npm run dev    # http://localhost:3000
 ```
 
