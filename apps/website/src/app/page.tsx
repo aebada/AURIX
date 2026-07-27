@@ -5,6 +5,7 @@ import { Card, StatCard, CheckItem } from "@/components/Card";
 import { CtaBand } from "@/components/CtaBand";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { Reveal } from "@/components/Reveal";
 
 const problems = [
   {
@@ -88,7 +89,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-white">
         <Container className="grid gap-12 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
-          <div>
+          <Reveal>
             <Eyebrow>The Fintech Revolution — 2026</Eyebrow>
             <h1 className="mt-5 font-extrabold tracking-tight text-4xl leading-[1.05] text-navy sm:text-5xl lg:text-7xl">
               Measured Trust.
@@ -103,13 +104,13 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/waitlist"
-                className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
               >
                 Join the Waitlist
               </Link>
               <Link
                 href="/how-it-works"
-                className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-navy transition-colors hover:border-navy"
+                className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-navy transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
               >
                 See How It Works
               </Link>
@@ -117,25 +118,27 @@ export default function Home() {
             <div className="mt-8">
               <AppStoreBadges variant="light" />
             </div>
-          </div>
-          <div className="flex items-center justify-center">
+          </Reveal>
+          <Reveal delay={150} className="flex items-center justify-center">
             <div className="relative flex w-full max-w-md items-center justify-center overflow-hidden rounded-[2.5rem] bg-navy-glow p-10 sm:p-14">
               <PhoneMockup />
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       {/* Problem */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
-          <Eyebrow>The Problem</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
-            A broken financial system
-          </h2>
+          <Reveal>
+            <Eyebrow>The Problem</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+              A broken financial system
+            </h2>
+          </Reveal>
           <div className="mt-14 grid gap-10 border-t border-[var(--color-line)] pt-10 sm:grid-cols-3">
-            {problems.map((p) => (
-              <div key={p.number}>
+            {problems.map((p, i) => (
+              <Reveal key={p.number} delay={i * 100}>
                 <p className="font-extrabold tracking-tight text-2xl text-gold">{p.number}</p>
                 <h3 className="mt-2 text-lg font-semibold text-navy">
                   {p.title}
@@ -143,7 +146,7 @@ export default function Home() {
                 <p className="mt-3 text-sm leading-relaxed text-muted">
                   {p.body}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
           <p className="mt-14 border-t border-[var(--color-line)] pt-8 font-extrabold tracking-tight text-xl italic text-navy/80">
@@ -156,20 +159,24 @@ export default function Home() {
       {/* Solution */}
       <section className="border-b border-[var(--color-line)] bg-white py-24">
         <Container>
-          <Eyebrow>The Solution</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
-            A new category of money
-          </h2>
+          <Reveal>
+            <Eyebrow>The Solution</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+              A new category of money
+            </h2>
+          </Reveal>
           <div className="mt-14 grid gap-10 sm:grid-cols-3">
-            {solutions.map((s) => (
-              <Card key={s.title}>
-                <h3 className="font-extrabold tracking-tight text-lg text-navy">
-                  {s.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {s.body}
-                </p>
-              </Card>
+            {solutions.map((s, i) => (
+              <Reveal key={s.title} delay={i * 100}>
+                <Card>
+                  <h3 className="font-extrabold tracking-tight text-lg text-navy">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    {s.body}
+                  </p>
+                </Card>
+              </Reveal>
             ))}
           </div>
           <div className="mt-14 rounded-3xl bg-navy px-8 py-6 text-center">
@@ -184,13 +191,15 @@ export default function Home() {
       {/* Platform */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
-          <Eyebrow>Revolutionizing Digital Ownership</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
-            The all-in-one asset platform
-          </h2>
+          <Reveal>
+            <Eyebrow>Revolutionizing Digital Ownership</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+              The all-in-one asset platform
+            </h2>
+          </Reveal>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
-            {platform.map((p) => (
-              <div key={p.title}>
+            {platform.map((p, i) => (
+              <Reveal key={p.title} delay={i * 100}>
                 <h3 className="font-extrabold tracking-tight text-lg text-navy">
                   {p.title}
                 </h3>
@@ -199,7 +208,7 @@ export default function Home() {
                     <CheckItem key={item}>{item}</CheckItem>
                   ))}
                 </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -208,12 +217,14 @@ export default function Home() {
       {/* Two-layer architecture */}
       <section className="border-b border-white/10 bg-navy py-24 text-white">
         <Container>
-          <Eyebrow tone="dark">Middleware Integration</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl sm:text-4xl">
-            The two-layer architecture
-          </h2>
+          <Reveal>
+            <Eyebrow tone="dark">Middleware Integration</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl sm:text-4xl">
+              The two-layer architecture
+            </h2>
+          </Reveal>
           <div className="mt-14 grid gap-14 lg:grid-cols-2">
-            <div>
+            <Reveal>
               <p className="font-extrabold tracking-tight text-sm text-gold-light">
                 01 &nbsp; Reserve Layer
               </p>
@@ -223,8 +234,8 @@ export default function Home() {
                 <li>AI-driven anomaly detection for real-time reserve monitoring.</li>
                 <li>Cryptographic link between physical bars and digital units.</li>
               </ul>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal delay={100}>
               <p className="font-extrabold tracking-tight text-sm text-gold-light">
                 02 &nbsp; Payment Layer
               </p>
@@ -234,7 +245,7 @@ export default function Home() {
                 <li>Seamless integration with NFC, QR, and P2P payment rails.</li>
                 <li>Scalable architecture designed for global retail transaction volume.</li>
               </ul>
-            </div>
+            </Reveal>
           </div>
           <p className="mt-14 border-t border-white/10 pt-8 text-xs uppercase tracking-wider text-white/40">
             System integrity — real-time reconciliation ensures 1:1 backing at
@@ -246,15 +257,17 @@ export default function Home() {
       {/* Market opportunity */}
       <section className="border-b border-[var(--color-line)] bg-white py-24">
         <Container>
-          <Eyebrow>Market Opportunity</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
-            Intersection of four giants
-          </h2>
-          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal>
+            <Eyebrow>Market Opportunity</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+              Intersection of four giants
+            </h2>
+          </Reveal>
+          <Reveal delay={100} className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {marketStats.map((s) => (
               <StatCard key={s.value} value={s.value} label={s.label} />
             ))}
-          </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -262,7 +275,7 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
           <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr]">
-            <div>
+            <Reveal>
               <Eyebrow>Scalable &amp; Asset-Light</Eyebrow>
               <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-navy">
                 Diversified revenue streams
@@ -272,8 +285,8 @@ export default function Home() {
                 store assets; we connect users to physical reserves via
                 secure APIs.
               </p>
-            </div>
-            <div className="grid gap-8 sm:grid-cols-2">
+            </Reveal>
+            <Reveal delay={100} className="grid gap-8 sm:grid-cols-2">
               {revenueStreams.map((r) => (
                 <div key={r.title}>
                   <p className="text-xs font-semibold uppercase tracking-wider text-gold-dark">
@@ -284,7 +297,7 @@ export default function Home() {
                   </p>
                 </div>
               ))}
-            </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -292,10 +305,12 @@ export default function Home() {
       {/* Competitive landscape */}
       <section className="border-b border-[var(--color-line)] bg-white py-24">
         <Container>
-          <Eyebrow>Beyond Stablecoins</Eyebrow>
-          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
-            Competitive landscape
-          </h2>
+          <Reveal>
+            <Eyebrow>Beyond Stablecoins</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-navy sm:text-4xl">
+              Competitive landscape
+            </h2>
+          </Reveal>
           <div className="mt-14 grid gap-10 lg:grid-cols-2">
             <Card>
               <h3 className="text-sm font-semibold uppercase tracking-wider text-muted">

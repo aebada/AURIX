@@ -29,13 +29,13 @@ export function CtaBand({
           <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row">
             <Link
               href={primaryHref}
-              className="rounded-full bg-gradient-to-br from-[var(--color-gold-light)] to-[var(--color-gold-dark)] px-6 py-3 text-center text-sm font-bold text-navy transition-opacity hover:opacity-90"
+              className="rounded-full bg-gradient-to-br from-[var(--color-gold-light)] to-[var(--color-gold-dark)] px-6 py-3 text-center text-sm font-bold text-navy transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-black/20 active:translate-y-0"
             >
               {primaryLabel}
             </Link>
             <Link
               href={secondaryHref}
-              className="rounded-full border border-white/25 px-6 py-3 text-center text-sm font-bold text-white transition-colors hover:bg-white/10"
+              className="rounded-full border border-white/25 px-6 py-3 text-center text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 active:translate-y-0"
             >
               {secondaryLabel}
             </Link>
