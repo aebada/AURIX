@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { CurrencyProvider } from "@/lib/currency-context";
 
 export const metadata: Metadata = {
   title: {
@@ -32,9 +33,11 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-full flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CurrencyProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </CurrencyProvider>
       </body>
     </html>
   );

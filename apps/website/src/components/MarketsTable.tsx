@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { METALS, CRYPTO, STOCKS, useLivePrices, formatPrice, type MarketInstrument } from "@/lib/live-market-data";
+import { useCurrency } from "@/lib/currency-context";
 
 const PAGE_SIZE = 25;
 
@@ -30,6 +31,7 @@ function CategorySection({
     [filtered, currentPage],
   );
   const rows = useLivePrices(pageSlice);
+  const { currency } = useCurrency();
 
   return (
     <div>
@@ -82,7 +84,7 @@ function CategorySection({
                           : "text-heading"
                     }`}
                   >
-                    {formatPrice(row.price)}
+                    {formatPrice(row.price, currency)}
                   </td>
                   <td
                     className={`px-6 py-4 font-semibold ${
