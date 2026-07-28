@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { footerLinks } from "./nav-links";
 import { AppStoreBadges } from "./AppStoreBadges";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="border-t border-white/10 bg-navy text-white/70">
       <div className="mx-auto w-full max-w-6xl px-6 py-16">
@@ -22,40 +27,40 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
-              Measured trust. Real digital money. A regulated orchestration
-              layer connecting real gold and silver reserves to instant
-              global payments.
+              {t.footer.tagline}
             </p>
             <p className="mt-6 text-xs uppercase tracking-wider text-white/40">
-              AURIX does not custody funds, metals, crypto, or securities.
+              {t.footer.disclaimer}
             </p>
             <div className="mt-6">
               <AppStoreBadges variant="dark" />
             </div>
           </div>
 
-          {Object.entries(footerLinks).map(([section, links]) => (
-            <div key={section}>
-              <h3 className="text-sm font-semibold text-white">{section}</h3>
-              <ul className="mt-4 space-y-3">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-white/60 transition-colors hover:text-gold-light"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {(Object.entries(footerLinks) as [keyof typeof footerLinks, (typeof footerLinks)[keyof typeof footerLinks]][]).map(
+            ([section, links]) => (
+              <div key={section}>
+                <h3 className="text-sm font-semibold text-white">{t.footer.sections[section]}</h3>
+                <ul className="mt-4 space-y-3">
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-white/60 transition-colors hover:text-gold-light"
+                      >
+                        {t.nav[link.key]}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ),
+          )}
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} AURIX. All rights reserved.</p>
-          <p>Real value, made digital.</p>
+          <p>&copy; {new Date().getFullYear()} {t.footer.rights}</p>
+          <p>{t.footer.tagline2}</p>
         </div>
       </div>
     </footer>

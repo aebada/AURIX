@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Eyebrow } from "@/components/Eyebrow";
@@ -8,140 +10,39 @@ import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { Reveal } from "@/components/Reveal";
 import { PointcoinCoin } from "@/components/PointcoinCoin";
 import { LivePrices } from "@/components/LivePrices";
-
-const problems = [
-  {
-    number: "01",
-    title: "Fiat Inflation",
-    body: "Traditional currencies are losing purchasing power at an accelerating rate. Savings are accessible, but no longer protected from systemic devaluation.",
-  },
-  {
-    number: "02",
-    title: "Crypto Volatility",
-    body: "Digital assets offer speed but lack the stability required for real-world commercial use. Speculation has replaced utility in the digital frontier.",
-  },
-  {
-    number: "03",
-    title: "The Ownership Gap",
-    body: "Modern platforms provide digital access but often lack true underlying asset ownership. Users hold promises, not physical reality.",
-  },
-];
-
-const solutions = [
-  {
-    title: "Hybrid Reserve System",
-    body: "Every unit is 100% backed by physical gold and silver stored in high-security, audited vaults. We bridge the gap between physical reality and digital speed.",
-  },
-  {
-    title: "Continuous AI Audit",
-    body: "Real-time cryptographic verification and AI-driven monitoring ensure that digital units always match physical reserves. Trust is measured, not promised.",
-  },
-  {
-    title: "Instant Global Utility",
-    body: "A high-performance payment network that makes precious metals as liquid as cash — instantly usable for transfers, retail payments, and savings.",
-  },
-];
-
-const insights = [
-  {
-    tag: "Market Update",
-    title: "Why gold is reclaiming its role as a monetary anchor",
-    excerpt:
-      "Central bank gold buying has hit multi-decade highs as institutions hedge against currency debasement — here's what it means for everyday savers.",
-  },
-  {
-    tag: "Regulation",
-    title: "The regulatory path for asset-backed digital money",
-    excerpt:
-      "How compliant, fully-allocated gold-backed tokens differ from algorithmic and fiat-collateralized stablecoins under emerging frameworks.",
-  },
-  {
-    tag: "Product",
-    title: "Inside AURIX's continuous proof-of-reserve",
-    excerpt:
-      "A look at how AI-driven reconciliation keeps issued Pointcoin balances cryptographically tied to vaulted metal, in real time.",
-  },
-];
-
-const pointcoinFacts = [
-  { value: "0.0001g", label: "Smallest unit — one Pointcoin, enabling true micro-ownership" },
-  { value: "1:1", label: "Every Pointcoin issued is matched by vaulted gold or silver" },
-  { value: "24/7", label: "AI-audited proof-of-reserve, continuously verified against vault APIs" },
-];
-
-const platform = [
-  {
-    title: "Unified Multi-Wallet",
-    items: [
-      "Real-time view of gold, silver, fiat, and crypto assets",
-      "Seamless asset switching and instant liquidity",
-      "Integrated market data for informed decision making",
-    ],
-  },
-  {
-    title: "Physical Asset Trading",
-    items: [
-      "Buy, sell, and store real gold instantly via mobile",
-      "Direct allocation to physical bars in audited vaults",
-      "Zero-friction entry into precious metal markets",
-    ],
-  },
-  {
-    title: "Global Payments",
-    items: [
-      "NFC, QR, and P2P payments for daily retail use",
-      "Sharia-compliant gold-backed credit lines",
-      '"Save Now Buy Later" innovative financial tools',
-    ],
-  },
-];
-
-const marketStats = [
-  { value: "$2T+", label: "Global payments market, ripe for stable, asset-backed disruption" },
-  { value: "$13T+", label: "Global gold market, now accessible via digital liquidity" },
-  { value: "$4T+", label: "Ethical finance sector seeking Sharia-compliant products" },
-  { value: "$1T+", label: "Real-World Asset (RWA) tokenization and digital ownership" },
-];
-
-const revenueStreams = [
-  { title: "Transactions", body: "Fees on instant payments, global transfers, and P2P settlements." },
-  { title: "Asset Spread", body: "Competitive spread on the buy/sell of physical gold and silver." },
-  { title: "Vault Partners", body: "Commissions from global vaulting and custody partners." },
-  { title: "Ethical Lending", body: "Sharia-compliant service fees on gold-backed credit lines." },
-  { title: "Subscriptions", body: "Tiered premium features for high-volume retail and institutional users." },
-  { title: "B2B Licensing", body: "API licensing for banks and fintechs to offer asset-backed services." },
-];
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export default function Home() {
+  const { t } = useLanguage();
+  const h = t.home;
+
   return (
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[var(--color-surface)]">
         <Container className="grid gap-12 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
           <Reveal>
-            <Eyebrow>The Fintech Revolution — 2026</Eyebrow>
+            <Eyebrow>{h.eyebrowHero}</Eyebrow>
             <h1 className="mt-5 font-extrabold tracking-tight text-4xl leading-[1.05] text-heading sm:text-5xl lg:text-7xl">
-              Measured Trust.
+              {h.h1Line1}
               <br />
-              <span className="text-gradient-gold">Real Digital Money.</span>
+              <span className="text-gradient-gold">{h.h1Line2}</span>
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
-              AURIX combines gold- and silver-backed reserves, AI-driven
-              auditing, and an instant global payment network — a new
-              category of money for the post-fiat era.
+              {h.sub}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/login?mode=register"
                 className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
               >
-                Create your account
+                {h.ctaPrimary}
               </Link>
               <Link
                 href="/how-it-works"
                 className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
               >
-                See How It Works
+                {h.ctaSecondary}
               </Link>
             </div>
             <div className="mt-8">
@@ -162,13 +63,13 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
           <Reveal>
-            <Eyebrow>The Problem</Eyebrow>
+            <Eyebrow>{h.problem.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-              A broken financial system
+              {h.problem.h2}
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-10 border-t border-[var(--color-line)] pt-10 sm:grid-cols-3">
-            {problems.map((p, i) => (
+            {h.problem.items.map((p, i) => (
               <Reveal key={p.number} delay={i * 100}>
                 <p className="font-extrabold tracking-tight text-2xl text-gold">{p.number}</p>
                 <h3 className="mt-2 text-lg font-semibold text-heading">
@@ -181,8 +82,7 @@ export default function Home() {
             ))}
           </div>
           <p className="mt-14 border-t border-[var(--color-line)] pt-8 font-extrabold tracking-tight text-xl italic text-heading/80">
-            &ldquo;There is no system that combines real value, stability, and
-            global usability.&rdquo;
+            &ldquo;{h.problem.quote}&rdquo;
           </p>
         </Container>
       </section>
@@ -191,13 +91,13 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
-            <Eyebrow>The Solution</Eyebrow>
+            <Eyebrow>{h.solution.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-              A new category of money
+              {h.solution.h2}
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-10 sm:grid-cols-3">
-            {solutions.map((s, i) => (
+            {h.solution.items.map((s, i) => (
               <Reveal key={s.title} delay={i * 100}>
                 <Card>
                   <h3 className="font-extrabold tracking-tight text-lg text-heading">
@@ -212,8 +112,7 @@ export default function Home() {
           </div>
           <div className="mt-14 rounded-3xl bg-navy px-8 py-6 text-center">
             <p className="font-extrabold tracking-tight text-lg text-white">
-              Real Asset Reserve + Digital Payment Network ={" "}
-              <span className="text-gold-light">AURIX</span>
+              {h.solution.formula}
             </p>
           </div>
         </Container>
@@ -227,33 +126,20 @@ export default function Home() {
               <PointcoinCoin className="h-64 w-64 drop-shadow-xl sm:h-80 sm:w-80" />
             </Reveal>
             <Reveal delay={100} className="order-1 lg:order-2">
-              <Eyebrow>Introducing Pointcoin</Eyebrow>
+              <Eyebrow>{h.pointcoin.eyebrow}</Eyebrow>
               <h2 className="mt-4 max-w-xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-                Real gold, down to the point.
+                {h.pointcoin.h2}
               </h2>
               <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted">
-                Pointcoin is AURIX&apos;s atomic unit of ownership — our BPC
-                (Base Precious Coin) standard. Every Pointcoin represents
-                exactly 0.0001g of vaulted gold or silver, minted the moment
-                a deposit is verified and burned the moment it&apos;s
-                redeemed. No promises, no synthetic exposure — just physical
-                reserves, tokenized down to a fractionable, spendable point.
+                {h.pointcoin.body}
               </p>
               <ul className="mt-6 space-y-3">
-                <CheckItem>
-                  Fully allocated ownership — legal, not just price exposure
-                </CheckItem>
-                <CheckItem>
-                  Used directly for payments, transfers, savings, and
-                  gold-backed collateral
-                </CheckItem>
-                <CheckItem>
-                  Continuous proof-of-reserve — issued supply can never
-                  exceed vaulted metal
-                </CheckItem>
+                {h.pointcoin.checks.map((c) => (
+                  <CheckItem key={c}>{c}</CheckItem>
+                ))}
               </ul>
               <div className="mt-8 grid grid-cols-3 gap-6 border-t border-[var(--color-line)] pt-6">
-                {pointcoinFacts.map((f) => (
+                {h.pointcoin.facts.map((f) => (
                   <div key={f.value}>
                     <p className="font-extrabold tracking-tight text-xl text-gradient-gold sm:text-2xl">
                       {f.value}
@@ -268,7 +154,7 @@ export default function Home() {
                 href="/whitepaper"
                 className="mt-8 inline-block text-sm font-semibold text-gold-dark hover:underline"
               >
-                Read the full tokenization model →
+                {h.pointcoin.link}
               </Link>
             </Reveal>
           </div>
@@ -279,13 +165,13 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
-            <Eyebrow>Revolutionizing Digital Ownership</Eyebrow>
+            <Eyebrow>{h.platform.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-              The all-in-one asset platform
+              {h.platform.h2}
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
-            {platform.map((p, i) => (
+            {h.platform.groups.map((p, i) => (
               <Reveal key={p.title} delay={i * 100}>
                 <h3 className="font-extrabold tracking-tight text-lg text-heading">
                   {p.title}
@@ -305,38 +191,35 @@ export default function Home() {
       <section className="border-b border-white/10 bg-navy py-24 text-white">
         <Container>
           <Reveal>
-            <Eyebrow tone="dark">Middleware Integration</Eyebrow>
+            <Eyebrow tone="dark">{h.architecture.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl sm:text-4xl">
-              The two-layer architecture
+              {h.architecture.h2}
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-14 lg:grid-cols-2">
             <Reveal>
               <p className="font-extrabold tracking-tight text-sm text-gold-light">
-                01 &nbsp; Reserve Layer
+                {h.architecture.layer1Label}
               </p>
               <ul className="mt-5 space-y-4 text-sm leading-relaxed text-white/70">
-                <li>Physical gold/silver stored in globally audited, secure vaults.</li>
-                <li>Zero-Knowledge Proof (ZKP) verification for asset allocation.</li>
-                <li>AI-driven anomaly detection for real-time reserve monitoring.</li>
-                <li>Cryptographic link between physical bars and digital units.</li>
+                {h.architecture.layer1Items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </Reveal>
             <Reveal delay={100}>
               <p className="font-extrabold tracking-tight text-sm text-gold-light">
-                02 &nbsp; Payment Layer
+                {h.architecture.layer2Label}
               </p>
               <ul className="mt-5 space-y-4 text-sm leading-relaxed text-white/70">
-                <li>High-performance wallet-based settlement for instant clearing.</li>
-                <li>Real-time reconciliation with the underlying Reserve Layer.</li>
-                <li>Seamless integration with NFC, QR, and P2P payment rails.</li>
-                <li>Scalable architecture designed for global retail transaction volume.</li>
+                {h.architecture.layer2Items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </Reveal>
           </div>
           <p className="mt-14 border-t border-white/10 pt-8 text-xs uppercase tracking-wider text-white/40">
-            System integrity — real-time reconciliation ensures 1:1 backing at
-            all times.
+            {h.architecture.footer}
           </p>
         </Container>
       </section>
@@ -345,13 +228,13 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
-            <Eyebrow>Market Opportunity</Eyebrow>
+            <Eyebrow>{h.market.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-              Intersection of four giants
+              {h.market.h2}
             </h2>
           </Reveal>
           <Reveal delay={100} className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {marketStats.map((s) => (
+            {h.market.stats.map((s) => (
               <StatCard key={s.value} value={s.value} label={s.label} />
             ))}
           </Reveal>
@@ -363,18 +246,16 @@ export default function Home() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr]">
             <Reveal>
-              <Eyebrow>Scalable &amp; Asset-Light</Eyebrow>
+              <Eyebrow>{h.revenue.eyebrow}</Eyebrow>
               <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
-                Diversified revenue streams
+                {h.revenue.h2}
               </h2>
               <p className="mt-6 text-sm leading-relaxed text-muted">
-                AURIX is an infrastructure layer — not a custodian. We do not
-                store assets; we connect users to physical reserves via
-                secure APIs.
+                {h.revenue.body}
               </p>
             </Reveal>
             <Reveal delay={100} className="grid gap-8 sm:grid-cols-2">
-              {revenueStreams.map((r) => (
+              {h.revenue.streams.map((r) => (
                 <div key={r.title}>
                   <p className="text-xs font-semibold uppercase tracking-wider text-gold-dark">
                     {r.title}
@@ -393,39 +274,32 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
-            <Eyebrow>Beyond Stablecoins</Eyebrow>
+            <Eyebrow>{h.competitive.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-              Competitive landscape
+              {h.competitive.h2}
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-10 lg:grid-cols-2">
             <Card>
               <h3 className="text-sm font-semibold uppercase tracking-wider text-muted">
-                The current market
+                {h.competitive.currentTitle}
               </h3>
               <ul className="mt-5 space-y-4 text-sm leading-relaxed text-ink/70">
-                <li>DeFi for real assets with complex, non-liquid structures.</li>
-                <li>Fractional ownership platforms for investment only.</li>
-                <li>Stablecoins backed by debt or algorithmic promises.</li>
+                {h.competitive.currentItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </Card>
             <Card className="border-gold/30 !bg-navy text-white">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-gold-light">
-                The AURIX standard
+                {h.competitive.standardTitle}
               </h3>
               <ul className="mt-5 space-y-4 text-sm leading-relaxed text-white/80">
-                <li>
-                  <strong className="text-white">Physical Reality:</strong>{" "}
-                  backed by real gold/silver, not just code.
-                </li>
-                <li>
-                  <strong className="text-white">Daily Utility:</strong>{" "}
-                  designed for instant retail transactions.
-                </li>
-                <li>
-                  <strong className="text-white">AI Verification:</strong>{" "}
-                  real-time audits via AI and physics.
-                </li>
+                {h.competitive.standardItems.map((item) => (
+                  <li key={item.strong}>
+                    <strong className="text-white">{item.strong}</strong> {item.rest}
+                  </li>
+                ))}
               </ul>
             </Card>
           </div>
@@ -436,13 +310,13 @@ export default function Home() {
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
           <Reveal>
-            <Eyebrow>AURIX Insights</Eyebrow>
+            <Eyebrow>{h.insights.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
-              News &amp; market perspective
+              {h.insights.h2}
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-8 lg:grid-cols-3">
-            {insights.map((post, i) => (
+            {h.insights.posts.map((post, i) => (
               <Reveal key={post.title} delay={i * 100}>
                 <Card className="h-full">
                   <span className="inline-flex rounded-full bg-gold/12 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-dark">
@@ -459,7 +333,7 @@ export default function Home() {
             ))}
           </div>
           <p className="mt-8 text-xs text-muted">
-            Illustrative content — the AURIX blog is coming soon.
+            {h.insights.note}
           </p>
         </Container>
       </section>

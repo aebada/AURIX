@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CurrencyProvider } from "@/lib/currency-context";
 import { AuthProvider } from "@/lib/auth-context";
+import { LanguageProvider } from "@/lib/i18n/language-context";
 
 export const metadata: Metadata = {
   title: {
@@ -23,24 +24,35 @@ const themeInitScript = `(function(){try{
   if (t === "dark") document.documentElement.classList.add("dark");
 }catch(e){}})();`;
 
+// Applies the stored language (and RTL direction for Arabic) before first
+// paint, same rationale as themeInitScript above.
+const langInitScript = `(function(){try{
+  var l = localStorage.getItem("aurix-lang") || "en";
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: langInitScript }} />
       </head>
       <body className="flex min-h-full flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
-        <AuthProvider>
-          <CurrencyProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </CurrencyProvider>
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <CurrencyProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </CurrencyProvider>
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

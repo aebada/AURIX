@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 // The mobile app hasn't shipped yet (see apps/mobile/README.md) — these
 // badges are honest "coming soon" placeholders that route to account
@@ -26,6 +29,7 @@ export function AppStoreBadges({
 }: {
   variant?: "dark" | "light";
 }) {
+  const { t } = useLanguage();
   const base =
     variant === "dark"
       ? "border-white/15 bg-white text-navy hover:bg-white/90"
@@ -40,9 +44,9 @@ export function AppStoreBadges({
         <AppleIcon />
         <span className="text-left leading-tight">
           <span className="block text-[10px] uppercase tracking-wider opacity-70">
-            Coming soon on the
+            {t.appStore.comingSoonApple}
           </span>
-          <span className="block text-sm font-semibold">App Store</span>
+          <span className="block text-sm font-semibold">{t.appStore.appStore}</span>
         </span>
       </Link>
       <Link
@@ -52,9 +56,9 @@ export function AppStoreBadges({
         <PlayIcon />
         <span className="text-left leading-tight">
           <span className="block text-[10px] uppercase tracking-wider opacity-70">
-            Coming soon on
+            {t.appStore.comingSoonGoogle}
           </span>
-          <span className="block text-sm font-semibold">Google Play</span>
+          <span className="block text-sm font-semibold">{t.appStore.googlePlay}</span>
         </span>
       </Link>
     </div>

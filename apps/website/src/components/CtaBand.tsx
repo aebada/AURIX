@@ -1,13 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { Container } from "./Container";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function CtaBand({
-  title = "Be first when AURIX opens its doors.",
-  description = "Create your account to get early access, founding-member pricing, and updates as we move from architecture to MVP.",
+  title,
+  description,
   primaryHref = "/login?mode=register",
-  primaryLabel = "Create your account",
+  primaryLabel,
   secondaryHref = "/whitepaper",
-  secondaryLabel = "Read the Whitepaper",
+  secondaryLabel,
 }: {
   title?: string;
   description?: string;
@@ -16,6 +19,12 @@ export function CtaBand({
   secondaryHref?: string;
   secondaryLabel?: string;
 }) {
+  const { t } = useLanguage();
+  title ??= t.cta.title;
+  description ??= t.cta.description;
+  primaryLabel ??= t.cta.primary;
+  secondaryLabel ??= t.cta.secondary;
+
   return (
     <section className="px-6 py-16 sm:py-20">
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-[2.5rem] bg-navy-glow px-8 py-16 text-white sm:px-14">
