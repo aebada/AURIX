@@ -6,13 +6,16 @@ import { useEffect, useState } from "react";
 import { navLinks } from "./nav-links";
 import { ThemeToggle } from "./ThemeToggle";
 import { CurrencySelector } from "./CurrencySelector";
+import { LanguageSelector } from "./LanguageSelector";
 import { useAuth } from "@/lib/auth-context";
 import { APP_URL } from "@/lib/auth-api";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { token, logout } = useAuth();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -51,7 +54,7 @@ export function Header() {
               href={link.href}
               className="rounded-full px-4 py-2 text-sm font-semibold text-muted transition-colors hover:bg-navy hover:text-white"
             >
-              {link.label}
+              {t.nav[link.key]}
             </Link>
           ))}
         </nav>
@@ -61,8 +64,9 @@ export function Header() {
             href="/contact"
             className="text-sm font-semibold text-muted transition-colors hover:text-heading"
           >
-            Contact
+            {t.nav.contact}
           </Link>
+          <LanguageSelector className="max-w-[7rem]" />
           <CurrencySelector className="max-w-[9rem]" />
           <ThemeToggle />
           {token ? (
@@ -71,14 +75,14 @@ export function Header() {
                 href={APP_URL}
                 className="text-sm font-semibold text-muted transition-colors hover:text-heading"
               >
-                Dashboard
+                {t.header.dashboard}
               </a>
               <button
                 type="button"
                 onClick={logout}
                 className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
               >
-                Sign out
+                {t.header.signout}
               </button>
             </>
           ) : (
@@ -87,19 +91,20 @@ export function Header() {
                 href="/login"
                 className="text-sm font-semibold text-muted transition-colors hover:text-heading"
               >
-                Log in
+                {t.header.login}
               </Link>
               <Link
                 href="/login?mode=register"
                 className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
               >
-                Sign up
+                {t.header.signup}
               </Link>
             </>
           )}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+          <LanguageSelector className="max-w-[5.5rem]" />
           <CurrencySelector className="max-w-[6.5rem]" />
           <ThemeToggle />
           <button
@@ -122,17 +127,26 @@ export function Header() {
       {open && (
         <nav className="border-t border-[var(--color-line)] px-6 py-4 lg:hidden">
           <ul className="flex flex-col gap-3">
-            {[...navLinks, { href: "/contact", label: "Contact" }].map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   className="block py-1 text-sm font-semibold text-ink"
                   onClick={() => setOpen(false)}
                 >
-                  {link.label}
+                  {t.nav[link.key]}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/contact"
+                className="block py-1 text-sm font-semibold text-ink"
+                onClick={() => setOpen(false)}
+              >
+                {t.nav.contact}
+              </Link>
+            </li>
             {token ? (
               <>
                 <li>
@@ -141,7 +155,7 @@ export function Header() {
                     className="block py-1 text-sm font-semibold text-ink"
                     onClick={() => setOpen(false)}
                   >
-                    Dashboard
+                    {t.header.dashboard}
                   </a>
                 </li>
                 <li>
@@ -153,7 +167,7 @@ export function Header() {
                     }}
                     className="mt-2 inline-block rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white"
                   >
-                    Sign out
+                    {t.header.signout}
                   </button>
                 </li>
               </>
@@ -165,7 +179,7 @@ export function Header() {
                     className="block py-1 text-sm font-semibold text-ink"
                     onClick={() => setOpen(false)}
                   >
-                    Log in
+                    {t.header.login}
                   </Link>
                 </li>
                 <li>
@@ -174,7 +188,7 @@ export function Header() {
                     className="mt-2 inline-block rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white"
                     onClick={() => setOpen(false)}
                   >
-                    Sign up
+                    {t.header.signup}
                   </Link>
                 </li>
               </>
