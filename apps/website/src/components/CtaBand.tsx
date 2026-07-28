@@ -3,9 +3,9 @@ import { Container } from "./Container";
 
 export function CtaBand({
   title = "Be first when AURIX opens its doors.",
-  description = "Join the waitlist to get early access, founding-member pricing, and updates as we move from architecture to MVP.",
-  primaryHref = "/waitlist",
-  primaryLabel = "Join the Waitlist",
+  description = "Create your account to get early access, founding-member pricing, and updates as we move from architecture to MVP.",
+  primaryHref = "/login?mode=register",
+  primaryLabel = "Create your account",
   secondaryHref = "/whitepaper",
   secondaryLabel = "Read the Whitepaper",
 }: {

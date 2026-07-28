@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CurrencyProvider } from "@/lib/currency-context";
+import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
   title: {
@@ -33,11 +34,13 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-full flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
-        <CurrencyProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </CurrencyProvider>
+        <AuthProvider>
+          <CurrencyProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </CurrencyProvider>
+        </AuthProvider>
       </body>
     </html>
   );
