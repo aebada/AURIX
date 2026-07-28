@@ -13,6 +13,7 @@ export const footerLinks = {
   Product: [
     { href: "/how-it-works", label: "How It Works" },
     { href: "/features", label: "Features" },
+    { href: "/markets", label: "Markets" },
     { href: "/pricing", label: "Pricing" },
     { href: "/ai-governance", label: "AI & Governance" },
   ],
