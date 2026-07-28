@@ -122,6 +122,24 @@ export const marketApi = {
   prices: () => request<{ asOf: string; prices: MarketPrices }>("/market-data/prices"),
 };
 
+export interface ChatReply {
+  reply: string;
+  provider: string;
+}
+
+export const chatApi = {
+  send: (
+    token: string,
+    message: string,
+    history: { role: "user" | "assistant"; content: string }[] = [],
+  ) =>
+    request<ChatReply>(
+      "/chat/message",
+      { method: "POST", body: JSON.stringify({ message, history }) },
+      token,
+    ),
+};
+
 export const kycApi = {
   status: (token: string) => request<{ kycStatus: string }>("/kyc/status", {}, token),
   submit: (token: string) =>

@@ -11,6 +11,7 @@ const navItems = [
   { href: "/statements", label: "Statements" },
   { href: "/business", label: "Business" },
   { href: "/partners", label: "Partners & API" },
+  { href: "/assistant", label: "AI Assistant" },
 ];
 
 export function Sidebar() {
