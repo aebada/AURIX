@@ -40,6 +40,13 @@ jobs:
       - name: Build static export
         working-directory: apps/website
         run: npm run build
+        env:
+          # Google OAuth 2.0 Client ID — safe to bake into the client build:
+          # it's only used as the "audience" the backend checks Google ID
+          # tokens against, never a secret. Renders the Google Sign-In
+          # button on /login when set; the button silently omits itself
+          # otherwise (see GoogleSignInButton.tsx).
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: "148156861979-ua974fq9iatjv2gvfneh9cga49efb0mm.apps.googleusercontent.com"
 
       - name: Deploy over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
