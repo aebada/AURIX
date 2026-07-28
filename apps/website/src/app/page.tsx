@@ -132,10 +132,10 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                href="/waitlist"
+                href="/login?mode=register"
                 className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
               >
-                Join the Waitlist
+                Create your account
               </Link>
               <Link
                 href="/how-it-works"

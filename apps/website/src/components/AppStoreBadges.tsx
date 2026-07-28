@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 // The mobile app hasn't shipped yet (see apps/mobile/README.md) — these
-// badges are honest "coming soon" placeholders that route to the waitlist,
-// not live store links.
+// badges are honest "coming soon" placeholders that route to account
+// creation, not live store links.
 function AppleIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
@@ -34,7 +34,7 @@ export function AppStoreBadges({
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Link
-        href="/waitlist"
+        href="/login?mode=register"
         className={`flex items-center gap-3 rounded-3xl border px-4 py-2.5 transition-colors ${base}`}
       >
         <AppleIcon />
@@ -46,7 +46,7 @@ export function AppStoreBadges({
         </span>
       </Link>
       <Link
-        href="/waitlist"
+        href="/login?mode=register"
         className={`flex items-center gap-3 rounded-3xl border px-4 py-2.5 transition-colors ${base}`}
       >
         <PlayIcon />

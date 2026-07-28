@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import { navLinks } from "./nav-links";
 import { ThemeToggle } from "./ThemeToggle";
 import { CurrencySelector } from "./CurrencySelector";
+import { useAuth } from "@/lib/auth-context";
+import { APP_URL } from "@/lib/auth-api";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { token, logout } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -62,12 +65,38 @@ export function Header() {
           </Link>
           <CurrencySelector className="max-w-[9rem]" />
           <ThemeToggle />
-          <Link
-            href="/waitlist"
-            className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
-          >
-            Join the Waitlist
-          </Link>
+          {token ? (
+            <>
+              <a
+                href={APP_URL}
+                className="text-sm font-semibold text-muted transition-colors hover:text-heading"
+              >
+                Dashboard
+              </a>
+              <button
+                type="button"
+                onClick={logout}
+                className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm font-semibold text-muted transition-colors hover:text-heading"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/login?mode=register"
+                className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -104,15 +133,52 @@ export function Header() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                href="/waitlist"
-                className="mt-2 inline-block rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white"
-                onClick={() => setOpen(false)}
-              >
-                Join the Waitlist
-              </Link>
-            </li>
+            {token ? (
+              <>
+                <li>
+                  <a
+                    href={APP_URL}
+                    className="block py-1 text-sm font-semibold text-ink"
+                    onClick={() => setOpen(false)}
+                  >
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      setOpen(false);
+                    }}
+                    className="mt-2 inline-block rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white"
+                  >
+                    Sign out
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    href="/login"
+                    className="block py-1 text-sm font-semibold text-ink"
+                    onClick={() => setOpen(false)}
+                  >
+                    Log in
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/login?mode=register"
+                    className="mt-2 inline-block rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white"
+                    onClick={() => setOpen(false)}
+                  >
+                    Sign up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       )}
