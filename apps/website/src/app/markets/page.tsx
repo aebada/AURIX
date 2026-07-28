@@ -15,7 +15,7 @@ export default function MarketsPage() {
       <PageHero
         eyebrow="Markets"
         title="Every asset AURIX connects to, in one place."
-        description="Precious metals, crypto, and equities — the same market data that powers the AURIX wallet and dashboard."
+        description="All traded precious metals, plus up to 1,000 cryptocurrencies and 1,000 stocks & indices — searchable, the same market data that powers the AURIX wallet and dashboard."
       />
       <section className="bg-[var(--color-paper)] py-20">
         <Container>
