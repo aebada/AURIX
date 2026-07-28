@@ -7,6 +7,7 @@ import { PhoneMockup } from "@/components/PhoneMockup";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { Reveal } from "@/components/Reveal";
 import { PointcoinCoin } from "@/components/PointcoinCoin";
+import { LivePrices } from "@/components/LivePrices";
 
 const problems = [
   {
@@ -38,6 +39,27 @@ const solutions = [
   {
     title: "Instant Global Utility",
     body: "A high-performance payment network that makes precious metals as liquid as cash — instantly usable for transfers, retail payments, and savings.",
+  },
+];
+
+const insights = [
+  {
+    tag: "Market Update",
+    title: "Why gold is reclaiming its role as a monetary anchor",
+    excerpt:
+      "Central bank gold buying has hit multi-decade highs as institutions hedge against currency debasement — here's what it means for everyday savers.",
+  },
+  {
+    tag: "Regulation",
+    title: "The regulatory path for asset-backed digital money",
+    excerpt:
+      "How compliant, fully-allocated gold-backed tokens differ from algorithmic and fiat-collateralized stablecoins under emerging frameworks.",
+  },
+  {
+    tag: "Product",
+    title: "Inside AURIX's continuous proof-of-reserve",
+    excerpt:
+      "A look at how AI-driven reconciliation keeps issued Pointcoin balances cryptographically tied to vaulted metal, in real time.",
   },
 ];
 
@@ -133,6 +155,8 @@ export default function Home() {
           </Reveal>
         </Container>
       </section>
+
+      <LivePrices />
 
       {/* Problem */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
@@ -405,6 +429,38 @@ export default function Home() {
               </ul>
             </Card>
           </div>
+        </Container>
+      </section>
+
+      {/* Insights */}
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
+        <Container>
+          <Reveal>
+            <Eyebrow>AURIX Insights</Eyebrow>
+            <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
+              News &amp; market perspective
+            </h2>
+          </Reveal>
+          <div className="mt-14 grid gap-8 lg:grid-cols-3">
+            {insights.map((post, i) => (
+              <Reveal key={post.title} delay={i * 100}>
+                <Card className="h-full">
+                  <span className="inline-flex rounded-full bg-gold/12 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-dark">
+                    {post.tag}
+                  </span>
+                  <h3 className="mt-4 font-extrabold tracking-tight text-lg text-heading">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    {post.excerpt}
+                  </p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-8 text-xs text-muted">
+            Illustrative content — the AURIX blog is coming soon.
+          </p>
         </Container>
       </section>
 
