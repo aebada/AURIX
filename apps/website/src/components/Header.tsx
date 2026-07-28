@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { navLinks } from "./nav-links";
 import { ThemeToggle } from "./ThemeToggle";
+import { CurrencySelector } from "./CurrencySelector";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -59,6 +60,7 @@ export function Header() {
           >
             Contact
           </Link>
+          <CurrencySelector className="max-w-[9rem]" />
           <ThemeToggle />
           <Link
             href="/waitlist"
@@ -69,6 +71,7 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+          <CurrencySelector className="max-w-[6.5rem]" />
           <ThemeToggle />
           <button
             type="button"

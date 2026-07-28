@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { Container } from "./Container";
 import { MARKET_SEED, useLivePrices, formatPrice } from "@/lib/live-market-data";
+import { useCurrency } from "@/lib/currency-context";
 
 const HEADLINE_SYMBOLS = ["XAU", "XAG", "BTC", "ETH", "SPX", "AAPL"];
 const HEADLINE_SEED = MARKET_SEED.filter((t) => HEADLINE_SYMBOLS.includes(t.symbol));
 
 export function LivePrices() {
   const tickers = useLivePrices(HEADLINE_SEED);
+  const { currency } = useCurrency();
 
   return (
     <div className="border-b border-[var(--color-line)] bg-[var(--color-surface)]">
@@ -43,7 +45,7 @@ export function LivePrices() {
                         : "text-heading"
                   }`}
                 >
-                  {formatPrice(t.price)}
+                  {formatPrice(t.price, currency)}
                 </p>
                 <p
                   className={`text-xs font-semibold ${

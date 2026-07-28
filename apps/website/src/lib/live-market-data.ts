@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import type { Currency } from "./currencies";
 
 // Illustrative only — jittered client-side, not a real market data feed.
 // Mirrors the same "simulate a live feed without an external dependency"
@@ -179,9 +180,23 @@ export function useLivePrices(seed: MarketInstrument[], intervalMs = 2500): Live
   );
 }
 
-export function formatPrice(value: number) {
-  return value.toLocaleString(undefined, {
-    maximumFractionDigits: value >= 1000 ? 0 : value >= 1 ? 2 : 6,
-    minimumFractionDigits: value >= 1000 ? 0 : 2,
-  });
+// All base prices above are in USD. Pass the selected currency (see
+// src/lib/currency-context.tsx) to convert and format using that
+// currency's real formatting conventions via Intl.
+export function formatPrice(value: number, currency: Currency): string {
+  const converted = value * currency.rateFromUsd;
+  const opts: Intl.NumberFormatOptions = { style: "currency", currency: currency.code };
+
+  if (Math.abs(converted) < 1) {
+    opts.minimumFractionDigits = 2;
+    opts.maximumFractionDigits = 6;
+  } else if (Math.abs(converted) >= 1000) {
+    opts.maximumFractionDigits = 0;
+  }
+
+  try {
+    return converted.toLocaleString(undefined, opts);
+  } catch {
+    return `${currency.code} ${converted.toFixed(2)}`;
+  }
 }
