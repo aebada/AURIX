@@ -11,15 +11,29 @@ interface Session {
 const STORAGE_KEY = "aurix.session";
 const CHANGE_EVENT = "aurix-session-change";
 
+// useSyncExternalStore requires getSnapshot to return a referentially
+// stable value when the underlying data hasn't changed — JSON.parse-ing
+// localStorage fresh on every call would return a new object each time
+// and trigger an infinite re-render loop. Cache by the raw string so
+// unchanged reads return the same parsed object.
+let cachedRaw: string | null = null;
+let cachedSession: Session | null = null;
+
 function readSession(): Session | null {
   const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return null;
+  if (raw === cachedRaw) return cachedSession;
+  cachedRaw = raw;
+  if (!raw) {
+    cachedSession = null;
+    return cachedSession;
+  }
   try {
-    return JSON.parse(raw) as Session;
+    cachedSession = JSON.parse(raw) as Session;
   } catch {
     window.localStorage.removeItem(STORAGE_KEY);
-    return null;
+    cachedSession = null;
   }
+  return cachedSession;
 }
 
 function subscribe(callback: () => void) {

@@ -103,6 +103,12 @@ export const paymentsApi = {
       { method: "POST", body: JSON.stringify({ asset, fiatAmount, pricePerUnit }) },
       token,
     ),
+  sell: (token: string, asset: "GOLD" | "SILVER", units: number, pricePerUnit: number) =>
+    request<{ transaction: Transaction }>(
+      "/payments/sell",
+      { method: "POST", body: JSON.stringify({ asset, units, pricePerUnit }) },
+      token,
+    ),
 };
 
 export interface MarketPrices {
