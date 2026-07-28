@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
 
 const navItems = [
   { href: "/", label: "Overview" },
@@ -15,6 +16,7 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
 
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-r border-[var(--color-line)] bg-white px-5 py-6 lg:flex">
@@ -48,13 +50,23 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto rounded-2xl border border-[var(--color-line)] bg-[var(--color-paper)] p-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-gold-dark">
-          Mock data, no auth
+        <p className="truncate text-xs font-semibold text-navy">{user?.email}</p>
+        <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gold-dark">
+          No role-based access control
         </p>
         <p className="mt-1 text-xs leading-relaxed text-muted">
-          Every route here needs role-based access control before this goes
-          near production.
+          Overview, Users, and KYC Queue are live via services/backend, but
+          any signed-up user can reach them — this needs real RBAC before it
+          goes near production. Monitoring, Partner Health, and AI Governance
+          are still mock.
         </p>
+        <button
+          type="button"
+          onClick={logout}
+          className="mt-3 text-xs font-semibold text-gold-dark hover:underline"
+        >
+          Sign out
+        </button>
       </div>
     </aside>
   );

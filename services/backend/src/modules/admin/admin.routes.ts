@@ -1,6 +1,8 @@
 import { Router } from "express";
+import { z } from "zod";
 import { db } from "../../data/mock-db.js";
 import { requireAuth } from "../../middleware/require-auth.js";
+import { ApiError } from "../../middleware/error-handler.js";
 
 export const adminRouter = Router();
 
@@ -27,4 +29,22 @@ adminRouter.get("/kyc-queue", requireAuth, (_req, res) => {
     .filter((u) => u.kycStatus === "pending")
     .map((u) => ({ id: u.id, email: u.email, fullName: u.fullName }));
   res.json({ pending });
+});
+
+const kycDecisionSchema = z.object({
+  decision: z.enum(["verified", "rejected"]),
+});
+
+adminRouter.post("/kyc/:userId/decision", requireAuth, (req, res, next) => {
+  try {
+    const { decision } = kycDecisionSchema.parse(req.body);
+    const user = db.users.get(req.params.userId);
+    if (!user) throw new ApiError(404, "User not found");
+
+    user.kycStatus = decision;
+    db.users.set(user.id, user);
+    res.json({ id: user.id, kycStatus: user.kycStatus });
+  } catch (err) {
+    next(err);
+  }
 });
