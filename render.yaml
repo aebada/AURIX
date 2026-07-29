@@ -1,0 +1,60 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+#
+# Deploys the two Node services that the live marketing site (aurixapp.de,
+# FTP-deployed separately, see .github/workflows/deploy-website.yml) needs
+# in order for login/register/Google sign-in and the wallet dashboard to
+# actually work for real visitors, not just locally.
+#
+# After the first deploy, both services need two more manual steps in the
+# Render dashboard (values can't be known until the services exist, and
+# secrets must never be committed to this file):
+#   1. services/backend: fill in whichever of CEREBRAS_API_KEY,
+#      GROQ_API_KEY, SAMBANOVA_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY,
+#      OPENAI_API_KEY you want the /chat/message AI router to use.
+#   2. apps/web: set NEXT_PUBLIC_API_URL to the aurix-backend service's
+#      public URL, then trigger a redeploy (this is a Next.js build-time
+#      var, so it must be set before `next build` runs).
+#      apps/website's own build (the separate FTP workflow) also needs
+#      NEXT_PUBLIC_API_URL and NEXT_PUBLIC_APP_URL (= this aurix-web
+#      service's URL) added once both services have real URLs.
+
+services:
+  - type: web
+    name: aurix-backend
+    runtime: node
+    plan: free
+    rootDir: services/backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      # Safe to commit — used only as the JWT "audience" checked against
+      # Google ID tokens, never a secret (see auth.routes.ts).
+      - key: GOOGLE_CLIENT_ID
+        value: "148156861979-ua974fq9iatjv2gvfneh9cga49efb0mm.apps.googleusercontent.com"
+      - key: CEREBRAS_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: SAMBANOVA_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+
+  - type: web
+    name: aurix-web
+    runtime: node
+    plan: free
+    rootDir: apps/web
+    buildCommand: npm ci && npm run build
+    startCommand: npm start -- -p $PORT
+    envVars:
+      # Set to the aurix-backend service's URL once it's deployed, then
+      # redeploy — see the note at the top of this file.
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
