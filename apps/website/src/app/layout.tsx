@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { CurrencyProvider } from "@/lib/currency-context";
 import { AuthProvider } from "@/lib/auth-context";
 import { LanguageProvider } from "@/lib/i18n/language-context";
+import { PhpAuthBridge } from "@/components/PhpAuthBridge";
 
 export const metadata: Metadata = {
   title: {
@@ -46,6 +47,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
         <LanguageProvider>
           <AuthProvider>
+            <PhpAuthBridge />
             <CurrencyProvider>
               <Header />
               <main className="flex-1">{children}</main>

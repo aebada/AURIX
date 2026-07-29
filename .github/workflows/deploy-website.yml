@@ -1,7 +1,9 @@
 name: Deploy Website (FTP)
 
 # Builds apps/website as a static export and uploads it to shared hosting
-# over FTP. Runs on pushes to main that touch the website, or manually.
+# over FTP, alongside php-auth (session-based Google OAuth + email/password
+# auth for PHP+MySQL shared hosting — see docs/PHP-AUTH.md). Runs on pushes
+# to main that touch either, or manually.
 #
 # Required repository secrets (Settings > Secrets and variables > Actions):
 #   FTP_SERVER       the FTP host (IP address or hostname)
@@ -10,12 +12,15 @@ name: Deploy Website (FTP)
 #   FTP_SERVER_DIR   remote target directory (the site's document root)
 #
 # Credentials are never stored in this repo — only referenced as secrets.
+# php-auth's own secrets (DB credentials, Google client secret, etc.) live
+# in auth-lib/.env on the server, created manually once — see docs/PHP-AUTH.md.
 
 on:
   push:
     branches: [main]
     paths:
       - "apps/website/**"
+      - "php-auth/**"
       - ".github/workflows/deploy-website.yml"
   workflow_dispatch: {}
 
@@ -47,8 +52,12 @@ jobs:
           # button on /login when set; the button silently omits itself
           # otherwise (see GoogleSignInButton.tsx).
           NEXT_PUBLIC_GOOGLE_CLIENT_ID: "148156861979-ua974fq9iatjv2gvfneh9cga49efb0mm.apps.googleusercontent.com"
+          # Hands off /login to php-auth (see docs/PHP-AUTH.md) instead of
+          # calling services/backend, which isn't hosted anywhere the live
+          # site can reach.
+          NEXT_PUBLIC_USE_PHP_AUTH: "1"
 
-      - name: Deploy over FTP
+      - name: Deploy static site over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -56,3 +65,33 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: apps/website/out/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+
+      - name: Install php-auth dependencies
+        working-directory: php-auth
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Deploy php-auth over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: php-auth/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          state-name: .ftp-deploy-sync-state-php-auth.json
+          exclude: |
+            **/.git*
+            **/.git*/**
+            sql/**
+            composer.json
+            composer.lock
+            .gitignore
+            .env.example
+            auth-lib/.env
+            auth-lib/.env.example
