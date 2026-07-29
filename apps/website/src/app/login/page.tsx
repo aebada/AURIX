@@ -1,10 +1,10 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/lib/auth-context";
+import { useAuth, USE_PHP_AUTH } from "@/lib/auth-context";
 import { ApiError, buildHandoffUrl } from "@/lib/auth-api";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -16,11 +16,29 @@ function LoginForm() {
   const [mode, setMode] = useState<"login" | "register">(
     searchParams.get("mode") === "register" ? "register" : "login",
   );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  // This site is a fully static export with no live services/backend to
+  // reach (see docs/PHP-AUTH.md) — when the build is configured to use
+  // php-auth instead, hand off to its server-rendered login/register
+  // pages rather than trying to POST to a backend that isn't there.
+  useEffect(() => {
+    if (!USE_PHP_AUTH) return;
+    window.location.href = mode === "register" ? "/auth/register.php" : "/auth/login.php";
+  }, [mode]);
+
+  if (USE_PHP_AUTH) {
+    return (
+      <div className="flex min-h-[calc(100vh-4.5rem)] w-full items-center justify-center bg-[var(--color-paper)] px-4 py-16">
+        <p className="text-sm font-medium text-muted">Redirecting…</p>
+      </div>
+    );
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

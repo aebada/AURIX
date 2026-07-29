@@ -1,0 +1,5 @@
+# PHP auth (Google OAuth + email/password) — secrets and vendor/ never committed.
+
+auth-lib/.env
+auth-lib/vendor/
+composer.lock

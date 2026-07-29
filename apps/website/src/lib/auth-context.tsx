@@ -58,6 +58,18 @@ function getServerSnapshot(): Session | null {
   return null;
 }
 
+export const USE_PHP_AUTH = process.env.NEXT_PUBLIC_USE_PHP_AUTH === "1";
+
+// Called by PhpAuthBridge to mirror the PHP session (auth-lib/, see
+// docs/PHP-AUTH.md) into this same localStorage-backed store, so the rest
+// of the site (Header, CtaBand, etc.) doesn't need to know PHP auth exists
+// — it just sees a normal session. There's no JWT under PHP auth (session
+// cookie only), so `token` is a non-empty marker rather than a real
+// credential; nothing here calls services/backend with it.
+export function syncSessionFromPhpAuth(user: AuthUser | null) {
+  writeSession(user ? { token: "php-session", user } : null);
+}
+
 interface AuthContextValue {
   token: string | null;
   user: AuthUser | null;
@@ -95,6 +107,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     writeSession(null);
+    if (USE_PHP_AUTH) {
+      window.location.href = "/auth/logout.php";
+    }
   }, []);
 
   return (
