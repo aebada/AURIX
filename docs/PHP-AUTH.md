@@ -30,7 +30,7 @@ Browser
 | PHP library | `php-auth/auth-lib/` |
 | Public routes | `php-auth/auth/` |
 | SQL migration | `php-auth/sql/001_users.sql` |
-| Composer deps | `google/apiclient`, `vlucas/phpdotenv` |
+| Composer deps | `vlucas/phpdotenv` only — Google OAuth uses plain cURL against Google's endpoints directly (`google/apiclient` pulls in ~370MB of generated bindings for every Google API just to use two HTTP calls) |
 
 ## Local development
 
