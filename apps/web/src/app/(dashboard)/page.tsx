@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { Topbar } from "@/components/Topbar";
 import { Card, StatusBadge } from "@/components/Card";
 import { WalletCard } from "@/components/WalletCard";
+import { TaxIdPrompt } from "@/components/TaxIdPrompt";
 import { useAuth } from "@/lib/auth-context";
 import {
   walletApi,
   marketApi,
   paymentsApi,
+  usersApi,
   ApiError,
   type Asset,
   type WalletBalance,
@@ -31,6 +33,7 @@ export default function OverviewPage() {
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [version, setVersion] = useState(0);
+  const [needsTaxId, setNeedsTaxId] = useState(false);
 
   const [selectedAsset, setSelectedAsset] = useState<Asset>("FIAT");
   const [topupAmount, setTopupAmount] = useState("1000");
@@ -45,10 +48,11 @@ export default function OverviewPage() {
 
     (async () => {
       try {
-        const [w, t, m] = await Promise.all([
+        const [w, t, m, me] = await Promise.all([
           walletApi.balances(token),
           walletApi.transactions(token),
           marketApi.prices(),
+          usersApi.me(token),
         ]);
         if (ignore) return;
         setBalances(w.balances);
@@ -58,6 +62,7 @@ export default function OverviewPage() {
           ),
         );
         setPrices(m.prices);
+        setNeedsTaxId(!me.taxId);
         setError(null);
       } catch (e) {
         if (ignore) return;
@@ -145,6 +150,7 @@ export default function OverviewPage() {
             {error}
           </div>
         )}
+        {needsTaxId && <TaxIdPrompt onSaved={() => setNeedsTaxId(false)} />}
         {notice && (
           <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
             {notice}

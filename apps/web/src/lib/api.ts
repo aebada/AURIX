@@ -37,6 +37,7 @@ export interface AuthUser {
   email: string;
   fullName: string;
   kycStatus: "unverified" | "pending" | "verified" | "rejected";
+  taxId?: string | null;
 }
 
 export interface AuthResponse {
@@ -144,4 +145,14 @@ export const kycApi = {
   status: (token: string) => request<{ kycStatus: string }>("/kyc/status", {}, token),
   submit: (token: string) =>
     request<{ kycStatus: string }>("/kyc/submit", { method: "POST" }, token),
+};
+
+export const usersApi = {
+  me: (token: string) => request<AuthUser>("/users/me", {}, token),
+  setTaxId: (token: string, taxId: string) =>
+    request<{ taxId: string }>(
+      "/users/me/tax-id",
+      { method: "POST", body: JSON.stringify({ taxId }) },
+      token,
+    ),
 };
