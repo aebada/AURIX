@@ -15,6 +15,9 @@ export interface User {
   fullName: string;
   createdAt: string;
   kycStatus: "unverified" | "pending" | "verified" | "rejected";
+  // Not collected at registration — the user is prompted for it afterward
+  // from the dashboard, since it's not needed to create the account.
+  taxId?: string;
 }
 
 export interface WalletBalance {
