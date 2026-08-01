@@ -13,10 +13,11 @@ interface PendingUser {
 }
 
 export default function KycQueuePage() {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const [pending, setPending] = useState<PendingUser[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const canDecide = user?.role !== "support";
 
   useEffect(() => {
     if (!token) return;
@@ -56,6 +57,7 @@ export default function KycQueuePage() {
             provider (SumSub / Onfido / Veriff / Persona) — approve/reject
             here never performs verification itself, it just sets the
             user&apos;s kycStatus directly.
+            {!canDecide && " Your role (Support) has read-only access — decisions require Admin or above."}
           </p>
           <div className="mt-4 divide-y divide-[var(--color-line)]">
             {pending.length === 0 && (
@@ -70,7 +72,7 @@ export default function KycQueuePage() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    disabled={busyId === u.id}
+                    disabled={busyId === u.id || !canDecide}
                     onClick={() => decide(u.id, "verified")}
                     className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
                   >
@@ -78,7 +80,7 @@ export default function KycQueuePage() {
                   </button>
                   <button
                     type="button"
-                    disabled={busyId === u.id}
+                    disabled={busyId === u.id || !canDecide}
                     onClick={() => decide(u.id, "rejected")}
                     className="rounded-full border border-[var(--color-line)] px-4 py-2 text-xs font-semibold text-navy disabled:opacity-50"
                   >

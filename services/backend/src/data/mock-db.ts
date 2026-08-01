@@ -6,7 +6,16 @@
 // brokers), not the source of truth. This mock store simulates that shape
 // so the API surface is realistic, without any real provider integration.
 
+import { hashPassword } from "../lib/password.js";
+
 export type Asset = "GOLD" | "SILVER" | "FIAT";
+
+// Ranked low to high — see middleware/require-role.ts. "user" is every
+// regular customer (apps/website, apps/web) and has no admin-portal
+// access at all; "support" is read-only ops access; "admin" can act on
+// users/KYC/monitoring; "super_admin" can additionally change other
+// users' roles.
+export type Role = "user" | "support" | "admin" | "super_admin";
 
 export interface User {
   id: string;
@@ -15,6 +24,7 @@ export interface User {
   fullName: string;
   createdAt: string;
   kycStatus: "unverified" | "pending" | "verified" | "rejected";
+  role: Role;
   // Not collected at registration — the user is prompted for it afterward
   // from the dashboard, since it's not needed to create the account.
   taxId?: string;
@@ -86,6 +96,23 @@ export const db: Db = {
   etfOrders: [],
   etfWatchlists: new Map(),
 };
+
+// Bootstrap account so apps/admin is reachable at all on a fresh instance —
+// there's no other way to create the first super_admin, since every other
+// registration path (auth.routes.ts) defaults new users to "user". This is
+// a demo credential for an in-memory store that resets on every restart,
+// not a production secret; a real deployment would provision this out of
+// band instead of shipping it in source.
+db.users.set("usr_bootstrap_admin", {
+  id: "usr_bootstrap_admin",
+  email: "admin@aurix.com",
+  passwordHash: hashPassword("AurixAdmin!2026"),
+  fullName: "AURIX Super Admin",
+  createdAt: new Date(0).toISOString(),
+  kycStatus: "verified",
+  role: "super_admin",
+});
+db.usersByEmail.set("admin@aurix.com", "usr_bootstrap_admin");
 
 export function etfHoldingKey(userId: string, ticker: string): string {
   return `${userId}:${ticker}`;
