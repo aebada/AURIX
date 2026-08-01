@@ -12,24 +12,29 @@ interface DisplayMessage {
   provider?: string;
 }
 
+const SUGGESTIONS = [
+  "I have $5,000 and want steady, low-risk growth — what should I invest in?",
+  "What's the difference between my gold wallet and an ETF?",
+  "I'm saving for a goal 10 years out and can handle some risk — any ideas?",
+];
+
 export default function AssistantPage() {
   const { token } = useAuth();
   const [messages, setMessages] = useState<DisplayMessage[]>([
     {
       role: "assistant",
       content:
-        "Hi, I'm the AURIX AI assistant. Ask me about your wallet, transactions, or how AURIX works.",
+        "Hi, I'm the AURIX AI assistant. Ask me about your wallet, transactions, how AURIX works, or describe your goals for illustrative investment ideas from our gold, silver, and ETF catalog.",
     },
   ]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!token || !input.trim() || sending) return;
+  async function sendMessage(text: string) {
+    if (!token || !text.trim() || sending) return;
 
-    const userMessage: DisplayMessage = { role: "user", content: input.trim() };
+    const userMessage: DisplayMessage = { role: "user", content: text.trim() };
     const history = messages.map(({ role, content }) => ({ role, content }));
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
@@ -47,6 +52,11 @@ export default function AssistantPage() {
     } finally {
       setSending(false);
     }
+  }
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    await sendMessage(input);
   }
 
   return (
@@ -86,6 +96,21 @@ export default function AssistantPage() {
               </div>
             )}
           </div>
+          {messages.length === 1 && (
+            <div className="flex flex-wrap gap-2 border-t border-[var(--color-line)] px-4 pt-4">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => sendMessage(s)}
+                  disabled={sending}
+                  className="rounded-full border border-[var(--color-line)] px-3 py-1.5 text-xs font-medium text-muted transition-colors hover:border-navy hover:text-navy disabled:opacity-50"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
           <form
             onSubmit={handleSubmit}
             className="flex items-center gap-3 border-t border-[var(--color-line)] p-4"
@@ -93,7 +118,7 @@ export default function AssistantPage() {
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about your wallet, transactions, or AURIX..."
+              placeholder="Ask about your wallet, or describe your goals for investment ideas..."
               className="flex-1 rounded-xl border border-[var(--color-line)] px-4 py-2.5 text-sm outline-none focus:border-navy"
               disabled={sending}
             />
