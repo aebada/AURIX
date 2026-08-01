@@ -32,6 +32,7 @@ authRouter.post("/register", (req, res) => {
     fullName,
     createdAt: new Date().toISOString(),
     kycStatus: "unverified" as const,
+    role: "user" as const,
   };
   db.users.set(id, user);
   db.usersByEmail.set(user.email, id);
@@ -39,7 +40,7 @@ authRouter.post("/register", (req, res) => {
   const token = signToken({ sub: id, email: user.email });
   res.status(201).json({
     token,
-    user: { id, email: user.email, fullName, kycStatus: user.kycStatus },
+    user: { id, email: user.email, fullName, kycStatus: user.kycStatus, role: user.role },
   });
 });
 
@@ -65,6 +66,7 @@ authRouter.post("/login", (req, res) => {
       email: user.email,
       fullName: user.fullName,
       kycStatus: user.kycStatus,
+      role: user.role,
     },
   });
 });
@@ -115,6 +117,7 @@ authRouter.post("/google", async (req, res, next) => {
         fullName: name ?? normalizedEmail,
         createdAt: new Date().toISOString(),
         kycStatus: "unverified" as const,
+        role: "user" as const,
       };
       db.users.set(userId, user);
       db.usersByEmail.set(normalizedEmail, userId);
@@ -128,6 +131,7 @@ authRouter.post("/google", async (req, res, next) => {
         email: user.email,
         fullName: user.fullName,
         kycStatus: user.kycStatus,
+        role: user.role,
       },
     });
   } catch (err) {

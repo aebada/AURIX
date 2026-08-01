@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useMobileNav } from "@/lib/mobile-nav-context";
+import type { Role } from "@/lib/api";
 
 const navItems = [
   { href: "/", label: "Overview" },
@@ -14,6 +15,13 @@ const navItems = [
   { href: "/partners", label: "Partner Health" },
   { href: "/governance", label: "AI Governance" },
 ];
+
+const ROLE_LABELS: Record<Role, string> = {
+  user: "User",
+  support: "Support (read-only)",
+  admin: "Admin",
+  super_admin: "Super Admin",
+};
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
@@ -54,13 +62,13 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       <div className="mt-auto rounded-2xl border border-[var(--color-line)] bg-[var(--color-paper)] p-4">
         <p className="truncate text-xs font-semibold text-navy">{user?.email}</p>
         <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gold-dark">
-          No role-based access control
+          {user ? ROLE_LABELS[user.role] : "—"}
         </p>
         <p className="mt-1 text-xs leading-relaxed text-muted">
-          Overview, Users, and KYC Queue are live via services/backend, but
-          any signed-up user can reach them — this needs real RBAC before it
-          goes near production. Monitoring, Partner Health, and AI Governance
-          are still mock.
+          Overview, Users, and KYC Queue are live via services/backend and
+          role-gated server-side (Support is read-only; Admin can act on
+          KYC; only Super Admin can change roles, from the Users page).
+          Monitoring, Partner Health, and AI Governance are still mock.
         </p>
         <button
           type="button"

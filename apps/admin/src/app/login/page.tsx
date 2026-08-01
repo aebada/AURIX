@@ -44,9 +44,10 @@ export default function LoginPage() {
           Sign in to the ops portal
         </h1>
         <p className="mt-1 text-sm text-muted">
-          Uses the same accounts as the rest of AURIX — any signed-up user can
-          sign in here. There is no role-based access control yet, so treat
-          this as an internal preview, not a production admin surface.
+          Uses the same accounts as the rest of AURIX. Access is role-gated
+          server-side — signing in works for anyone, but admin actions
+          require an Admin, Support, or Super Admin role assigned by a
+          Super Admin.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">

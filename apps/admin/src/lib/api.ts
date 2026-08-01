@@ -32,11 +32,14 @@ async function request<T>(
   return body as T;
 }
 
+export type Role = "user" | "support" | "admin" | "super_admin";
+
 export interface AuthUser {
   id: string;
   email: string;
   fullName: string;
   kycStatus: "unverified" | "pending" | "verified" | "rejected";
+  role: Role;
 }
 
 export interface AuthResponse {
@@ -57,6 +60,7 @@ export interface AdminUser {
   email: string;
   fullName: string;
   kycStatus: "unverified" | "pending" | "verified" | "rejected";
+  role: Role;
   createdAt: string;
 }
 
@@ -87,6 +91,12 @@ export const adminApi = {
     request<{ id: string; kycStatus: string }>(
       `/admin/kyc/${userId}/decision`,
       { method: "POST", body: JSON.stringify({ decision }) },
+      token,
+    ),
+  setRole: (token: string, userId: string, role: Role) =>
+    request<{ id: string; role: Role }>(
+      `/admin/users/${userId}/role`,
+      { method: "POST", body: JSON.stringify({ role }) },
       token,
     ),
 };
