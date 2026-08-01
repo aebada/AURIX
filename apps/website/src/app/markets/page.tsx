@@ -6,7 +6,7 @@ import { MarketsTable } from "@/components/MarketsTable";
 export const metadata: Metadata = {
   title: "Markets",
   description:
-    "Live prices across gold, silver, and other precious metals, major cryptocurrencies, and leading stocks and indices — all in one place.",
+    "Live prices across gold, silver, and other precious metals, major cryptocurrencies, leading stocks and indices, and global ETFs — all in one place.",
 };
 
 export default function MarketsPage() {
@@ -15,7 +15,7 @@ export default function MarketsPage() {
       <PageHero
         eyebrow="Markets"
         title="Every asset AURIX connects to, in one place."
-        description="All traded precious metals, plus up to 1,000 cryptocurrencies and 1,000 stocks & indices — searchable, the same market data that powers the AURIX wallet and dashboard."
+        description="All traded precious metals, plus up to 1,000 cryptocurrencies, 1,000 stocks & indices, and 1,000 ETFs — searchable, the same market data that powers the AURIX wallet and dashboard."
       />
       <section className="bg-[var(--color-paper)] py-20">
         <Container>

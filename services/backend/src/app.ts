@@ -9,6 +9,7 @@ import { paymentsRouter } from "./modules/payments/payments.routes.js";
 import { notificationsRouter } from "./modules/notifications/notifications.routes.js";
 import { adminRouter } from "./modules/admin/admin.routes.js";
 import { chatRouter } from "./modules/chat/chat.routes.js";
+import { etfsRouter } from "./modules/etfs/etfs.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 export function createApp() {
@@ -30,6 +31,7 @@ export function createApp() {
   app.use("/notifications", notificationsRouter);
   app.use("/admin", adminRouter);
   app.use("/chat", chatRouter);
+  app.use("/etfs", etfsRouter);
 
   app.use(errorHandler);
 

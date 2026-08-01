@@ -156,3 +156,93 @@ export const usersApi = {
       token,
     ),
 };
+
+export type EtfCategory =
+  | "equity"
+  | "bond"
+  | "dividend"
+  | "esg"
+  | "sector"
+  | "commodity"
+  | "islamic";
+
+export interface Etf {
+  ticker: string;
+  isin: string;
+  name: string;
+  provider: string;
+  category: EtfCategory;
+  theme: string;
+  exchange: string;
+  currency: string;
+  price: number;
+  expenseRatioPct: number;
+  dividendYieldPct: number;
+  oneYearReturnPct: number;
+  riskLevel: "low" | "medium" | "high";
+  minInvestment: number;
+  fractionalSupported: boolean;
+  description: string;
+  topHoldings: string[];
+}
+
+export interface EtfOrder {
+  id: string;
+  userId: string;
+  ticker: string;
+  side: "buy" | "sell";
+  units: number;
+  pricePerUnitUsd: number;
+  fiatAmountUsd: number;
+  feeUsd: number;
+  status: "settled";
+  createdAt: string;
+}
+
+export interface EtfHoldingRow {
+  ticker: string;
+  name: string;
+  units: number;
+  avgCostUsd: number;
+  price: number;
+  currentValue: number;
+  costBasis: number;
+  gainLossUsd: number;
+  gainLossPct: number;
+}
+
+export const etfApi = {
+  list: (params: { country?: string; category?: string; q?: string } = {}) => {
+    const search = new URLSearchParams();
+    if (params.country) search.set("country", params.country);
+    if (params.category) search.set("category", params.category);
+    if (params.q) search.set("q", params.q);
+    const qs = search.toString();
+    return request<{ categories: EtfCategory[]; etfs: Etf[] }>(`/etfs${qs ? `?${qs}` : ""}`);
+  },
+  detail: (ticker: string) => request<Etf>(`/etfs/${ticker}`),
+  portfolio: (token: string) =>
+    request<{ holdings: EtfHoldingRow[]; totalValue: number; totalCost: number; totalGainLossUsd: number }>(
+      "/etfs/me/portfolio",
+      {},
+      token,
+    ),
+  watchlist: (token: string) => request<{ etfs: Etf[] }>("/etfs/me/watchlist", {}, token),
+  addToWatchlist: (token: string, ticker: string) =>
+    request<{ watchlisted: boolean }>(`/etfs/${ticker}/watchlist`, { method: "POST" }, token),
+  removeFromWatchlist: (token: string, ticker: string) =>
+    request<{ watchlisted: boolean }>(`/etfs/${ticker}/watchlist`, { method: "DELETE" }, token),
+  buy: (token: string, ticker: string, fiatAmount: number) =>
+    request<{ order: EtfOrder; balance: WalletBalance }>(
+      `/etfs/${ticker}/buy`,
+      { method: "POST", body: JSON.stringify({ fiatAmount }) },
+      token,
+    ),
+  sell: (token: string, ticker: string, units: number) =>
+    request<{ order: EtfOrder; balance: WalletBalance }>(
+      `/etfs/${ticker}/sell`,
+      { method: "POST", body: JSON.stringify({ units }) },
+      token,
+    ),
+  orders: (token: string) => request<{ orders: EtfOrder[] }>("/etfs/me/orders", {}, token),
+};
