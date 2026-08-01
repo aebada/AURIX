@@ -49,6 +49,8 @@ export interface Dictionary {
     description: string;
     primary: string;
     secondary: string;
+    loggedInTitle: string;
+    loggedInDescription: string;
   };
   home: {
     eyebrowHero: string;
@@ -180,6 +182,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Create your account to get early access, founding-member pricing, and updates as we move from architecture to MVP.",
       primary: "Create your account",
       secondary: "Read the Whitepaper",
+      loggedInTitle: "Welcome back.",
+      loggedInDescription:
+        "Head to your dashboard to check balances, move money, and manage your account.",
     },
     home: {
       eyebrowHero: "The Fintech Revolution — 2026",
@@ -420,6 +425,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Erstellen Sie Ihr Konto für frühzeitigen Zugang, Preise für Gründungsmitglieder und Updates auf dem Weg von der Architektur zum MVP.",
       primary: "Konto erstellen",
       secondary: "Whitepaper lesen",
+      loggedInTitle: "Willkommen zurück.",
+      loggedInDescription:
+        "Gehen Sie zu Ihrem Dashboard, um Guthaben zu prüfen, Geld zu bewegen und Ihr Konto zu verwalten.",
     },
     home: {
       eyebrowHero: "Die Fintech-Revolution — 2026",
@@ -660,6 +668,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "أنشئ حسابك للحصول على وصول مبكر، وأسعار الأعضاء المؤسسين، وتحديثات مع انتقالنا من التصميم إلى المنتج الأولي.",
       primary: "أنشئ حسابك",
       secondary: "اقرأ الورقة البيضاء",
+      loggedInTitle: "مرحبًا بعودتك.",
+      loggedInDescription: "انتقل إلى لوحة التحكم للتحقق من الأرصدة، وتحويل الأموال، وإدارة حسابك.",
     },
     home: {
       eyebrowHero: "ثورة التكنولوجيا المالية — 2026",

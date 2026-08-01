@@ -3,13 +3,19 @@ import { ReactNode } from "react";
 export function Card({
   children,
   className = "",
+  padding = "p-6",
 }: {
   children: ReactNode;
   className?: string;
+  // A padding utility passed in `className` can't reliably override the
+  // default `p-6` — both end up on the element and Tailwind's generated
+  // stylesheet order (not className string order) decides which wins. Use
+  // this prop instead when a caller needs different padding (e.g. "p-0").
+  padding?: string;
 }) {
   return (
     <div
-      className={`rounded-2xl border border-[var(--color-line)] bg-white p-6 ${className}`}
+      className={`rounded-2xl border border-[var(--color-line)] bg-white ${padding} ${className}`}
     >
       {children}
     </div>

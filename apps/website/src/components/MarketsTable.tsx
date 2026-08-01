@@ -9,7 +9,8 @@ import {
   useLivePrices,
   formatPrice,
   changeForTimeframe,
-  TIMEFRAME_LABELS,
+  TIMEFRAME_OPTION_LABELS,
+  TIMEFRAME_COLUMN_LABELS,
   type MarketInstrument,
   type ChangeTimeframe,
 } from "@/lib/live-market-data";
@@ -17,19 +18,29 @@ import { useCurrency } from "@/lib/currency-context";
 
 const PAGE_SIZE = 25;
 
-const TIMEFRAME_OPTIONS: ChangeTimeframe[] = ["24h", "7d", "30d", "90d", "ytd", "1y"];
+const TIMEFRAME_OPTIONS: ChangeTimeframe[] = [
+  "24h",
+  "7d",
+  "1m",
+  "3m",
+  "6m",
+  "ytd",
+  "1y",
+  "2y",
+  "3y",
+  "5y",
+];
 
 function CategorySection({
   label,
   fullList,
-  timeframe,
 }: {
   label: string;
   fullList: MarketInstrument[];
-  timeframe: ChangeTimeframe;
 }) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
+  const [timeframe, setTimeframe] = useState<ChangeTimeframe>("24h");
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -47,6 +58,7 @@ function CategorySection({
   );
   const rows = useLivePrices(pageSlice);
   const { currency } = useCurrency();
+  const timeframeId = `timeframe-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   return (
     <div>
@@ -54,16 +66,33 @@ function CategorySection({
         <h2 className="font-extrabold tracking-tight text-xl text-heading">
           {label} <span className="text-sm font-medium text-muted">({filtered.length})</span>
         </h2>
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setPage(0);
-          }}
-          placeholder={`Search ${label.toLowerCase()}…`}
-          className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
-        />
+        <div className="flex flex-wrap items-center gap-3">
+          <label htmlFor={timeframeId} className="text-sm font-semibold text-heading">
+            Change over
+          </label>
+          <select
+            id={timeframeId}
+            value={timeframe}
+            onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
+            className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm font-semibold text-heading focus:border-gold focus:outline-none"
+          >
+            {TIMEFRAME_OPTIONS.map((tf) => (
+              <option key={tf} value={tf}>
+                {TIMEFRAME_OPTION_LABELS[tf]}
+              </option>
+            ))}
+          </select>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setPage(0);
+            }}
+            placeholder={`Search ${label.toLowerCase()}…`}
+            className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
+          />
+        </div>
       </div>
 
       <div className="mt-5 overflow-x-auto rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)]">
@@ -73,7 +102,7 @@ function CategorySection({
               <th className="px-6 py-4 font-semibold">Symbol</th>
               <th className="px-6 py-4 font-semibold">Name</th>
               <th className="px-6 py-4 font-semibold">Price</th>
-              <th className="px-6 py-4 font-semibold">{TIMEFRAME_LABELS[timeframe]}</th>
+              <th className="px-6 py-4 font-semibold">{TIMEFRAME_COLUMN_LABELS[timeframe]}</th>
             </tr>
           </thead>
           <tbody>
@@ -146,32 +175,12 @@ function CategorySection({
 }
 
 export function MarketsTable() {
-  const [timeframe, setTimeframe] = useState<ChangeTimeframe>("24h");
-
   return (
     <div className="space-y-16">
-      <div className="flex flex-wrap items-center gap-3">
-        <label htmlFor="markets-timeframe" className="text-sm font-semibold text-heading">
-          Change over
-        </label>
-        <select
-          id="markets-timeframe"
-          value={timeframe}
-          onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
-          className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm font-semibold text-heading focus:border-gold focus:outline-none"
-        >
-          {TIMEFRAME_OPTIONS.map((tf) => (
-            <option key={tf} value={tf}>
-              {TIMEFRAME_LABELS[tf]}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <CategorySection label="Metals" fullList={METALS} timeframe={timeframe} />
-      <CategorySection label="Crypto" fullList={CRYPTO} timeframe={timeframe} />
-      <CategorySection label="Stocks & Indices" fullList={STOCKS} timeframe={timeframe} />
-      <CategorySection label="ETFs" fullList={ETFS} timeframe={timeframe} />
+      <CategorySection label="Metals" fullList={METALS} />
+      <CategorySection label="Crypto" fullList={CRYPTO} />
+      <CategorySection label="Stocks & Indices" fullList={STOCKS} />
+      <CategorySection label="ETFs" fullList={ETFS} />
     </div>
   );
 }
