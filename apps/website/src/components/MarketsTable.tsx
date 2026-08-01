@@ -9,14 +9,39 @@ import {
   useLivePrices,
   formatPrice,
   changeForTimeframe,
-  TIMEFRAME_OPTION_LABELS,
+  momentumSignal,
+  MOMENTUM_LABELS,
   TIMEFRAME_COLUMN_LABELS,
   type MarketInstrument,
   type ChangeTimeframe,
+  type MomentumSignal,
 } from "@/lib/live-market-data";
 import { useCurrency } from "@/lib/currency-context";
 
 const PAGE_SIZE = 25;
+
+const SIGNAL_STYLES: Record<MomentumSignal, string> = {
+  bullish: "bg-emerald-50 text-emerald-700",
+  neutral: "bg-zinc-100 text-zinc-600",
+  bearish: "bg-red-50 text-red-600",
+};
+
+function SignalBadge({ signal }: { signal: MomentumSignal }) {
+  return (
+    <span
+      title="Illustrative momentum read from recent price trend — not financial advice."
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${SIGNAL_STYLES[signal]}`}
+    >
+      <span
+        aria-hidden
+        className={`h-1.5 w-1.5 rounded-full ${
+          signal === "bullish" ? "bg-emerald-500" : signal === "bearish" ? "bg-red-500" : "bg-zinc-400"
+        }`}
+      />
+      {MOMENTUM_LABELS[signal]}
+    </span>
+  );
+}
 
 const TIMEFRAME_OPTIONS: ChangeTimeframe[] = [
   "24h",
@@ -66,49 +91,49 @@ function CategorySection({
         <h2 className="font-extrabold tracking-tight text-xl text-heading">
           {label} <span className="text-sm font-medium text-muted">({filtered.length})</span>
         </h2>
-        <div className="flex flex-wrap items-center gap-3">
-          <label htmlFor={timeframeId} className="text-sm font-semibold text-heading">
-            Change over
-          </label>
-          <select
-            id={timeframeId}
-            value={timeframe}
-            onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
-            className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm font-semibold text-heading focus:border-gold focus:outline-none"
-          >
-            {TIMEFRAME_OPTIONS.map((tf) => (
-              <option key={tf} value={tf}>
-                {TIMEFRAME_OPTION_LABELS[tf]}
-              </option>
-            ))}
-          </select>
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setPage(0);
-            }}
-            placeholder={`Search ${label.toLowerCase()}…`}
-            className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
-          />
-        </div>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setPage(0);
+          }}
+          placeholder={`Search ${label.toLowerCase()}…`}
+          className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
+        />
       </div>
 
       <div className="mt-5 overflow-x-auto rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)]">
-        <table className="w-full min-w-[520px] text-left text-sm">
+        <table className="w-full min-w-[640px] text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--color-line)] text-xs uppercase tracking-wider text-muted">
               <th className="px-6 py-4 font-semibold">Symbol</th>
               <th className="px-6 py-4 font-semibold">Name</th>
               <th className="px-6 py-4 font-semibold">Price</th>
-              <th className="px-6 py-4 font-semibold">{TIMEFRAME_COLUMN_LABELS[timeframe]}</th>
+              <th className="px-6 py-4 font-semibold">
+                <select
+                  id={timeframeId}
+                  value={timeframe}
+                  onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
+                  title="Change the timeframe for this column"
+                  aria-label={`${label} change timeframe`}
+                  className="w-11 cursor-pointer appearance-none border-0 bg-transparent p-0 text-xs font-semibold uppercase tracking-wider text-muted outline-none hover:text-heading focus:text-heading"
+                >
+                  {TIMEFRAME_OPTIONS.map((tf) => (
+                    <option key={tf} value={tf}>
+                      {TIMEFRAME_COLUMN_LABELS[tf]}
+                    </option>
+                  ))}
+                </select>
+                <span aria-hidden className="ml-1 text-[10px]">▾</span>
+              </th>
+              <th className="px-6 py-4 font-semibold">Signal</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-6 py-8 text-center text-muted">
+                <td colSpan={5} className="px-6 py-8 text-center text-muted">
                   No matches for &ldquo;{query}&rdquo;.
                 </td>
               </tr>
@@ -138,6 +163,9 @@ function CategorySection({
                       }`}
                     >
                       {change >= 0 ? "▲" : "▼"} {Math.abs(change).toFixed(1)}%
+                    </td>
+                    <td className="px-6 py-4">
+                      <SignalBadge signal={momentumSignal(row)} />
                     </td>
                   </tr>
                 );

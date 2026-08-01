@@ -22,7 +22,8 @@ export default function MarketsPage() {
           <MarketsTable />
           <p className="mt-10 text-xs text-muted">
             Illustrative pricing — simulated client-side for demonstration, not
-            a real-time market data feed.
+            a real-time market data feed. The Signal column is an algorithmic
+            momentum read on that same illustrative data, not financial advice.
           </p>
         </Container>
       </section>

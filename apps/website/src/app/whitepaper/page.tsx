@@ -8,7 +8,7 @@ import { CtaBand } from "@/components/CtaBand";
 export const metadata: Metadata = {
   title: "Whitepaper",
   description:
-    "The AURIX whitepaper: vision, architecture, tokenization model, revenue model, and roadmap.",
+    "The AURIX whitepaper: vision, architecture, tokenization model, and AI governance.",
 };
 
 const sections = [
@@ -33,15 +33,6 @@ const sections = [
     title: "5. AI Governance",
     body: "AI trust orchestration replaces blockchain consensus — anomaly validation, voting, and consensus scoring generate recommendations, but irreversible governance actions always require human approval.",
     href: "/ai-governance",
-  },
-  {
-    title: "6. Revenue Model",
-    body: "Transaction fees, buy/sell spread, subscription tiers, B2B/enterprise API licensing, merchant fees, and lending service fees.",
-    href: "/pricing",
-  },
-  {
-    title: "7. MVP & Roadmap",
-    body: "MVP target: September 2026 — authentication, KYC, multi-wallet, gold/silver buying, transfers, QR payments, real-time pricing, AI insights, and a basic admin portal. Full roadmap runs through 2027 with lending, merchant tools, and B2B API expansion.",
   },
 ];
 
