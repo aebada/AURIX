@@ -1,25 +1,66 @@
-import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { useThemeColors } from '@/components/useThemeColors';
-import { marketPrices, wallet } from '@/lib/mock-data';
+import { useAuth } from '@/lib/auth-context';
+import { marketApi, paymentsApi, walletApi, ApiError, type MarketPrices, type WalletBalance } from '@/lib/api';
 
 type Side = 'buy' | 'sell';
 type AssetChoice = 'GOLD' | 'SILVER';
 
 export default function BuySellScreen() {
   const colors = useThemeColors();
+  const { token } = useAuth();
   const [side, setSide] = useState<Side>('buy');
   const [asset, setAsset] = useState<AssetChoice>('GOLD');
   const [amount, setAmount] = useState('');
+  const [prices, setPrices] = useState<MarketPrices | null>(null);
+  const [balances, setBalances] = useState<WalletBalance[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
-  const price = marketPrices.find((p) => p.symbol === (asset === 'GOLD' ? 'XAU' : 'XAG'));
-  const fiatBalance = wallet.find((w) => w.asset === 'FIAT');
+  useEffect(() => {
+    if (!token) return;
+    marketApi.prices().then((r) => setPrices(r.prices)).catch(() => {});
+    walletApi.balances(token).then((r) => setBalances(r.balances)).catch(() => {});
+  }, [token]);
+
+  const pricePerUnit = prices
+    ? asset === 'GOLD'
+      ? prices.goldUsdPerGram
+      : prices.silverUsdPerGram
+    : null;
+  const fiatBalance = balances.find((b) => b.asset === 'FIAT')?.balance ?? 0;
+  const assetBalance = balances.find((b) => b.asset === asset)?.balance ?? 0;
 
   const amountNumber = Number(amount) || 0;
   const fee = amountNumber * 0.005;
   const total = amountNumber + fee;
+
+  async function handleSubmit() {
+    if (!token || !pricePerUnit || amountNumber <= 0) return;
+    setBusy(true);
+    setError(null);
+    setNotice(null);
+    try {
+      if (side === 'buy') {
+        await paymentsApi.buy(token, asset, amountNumber, pricePerUnit);
+        setNotice(`Bought ${asset.toLowerCase()} with $${amountNumber.toFixed(2)}.`);
+      } else {
+        await paymentsApi.sell(token, asset, amountNumber, pricePerUnit);
+        setNotice(`Sold ${amountNumber} g of ${asset.toLowerCase()}.`);
+      }
+      setAmount('');
+      const [w] = await Promise.all([walletApi.balances(token)]);
+      setBalances(w.balances);
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : `${side === 'buy' ? 'Buy' : 'Sell'} failed`);
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -64,7 +105,7 @@ export default function BuySellScreen() {
           { backgroundColor: colors.card, borderColor: colors.border },
         ]}>
         <Text style={[styles.label, { color: colors.muted }]}>
-          Amount ({side === 'buy' ? 'fiat to spend' : 'units to sell'})
+          Amount ({side === 'buy' ? 'fiat to spend' : 'grams to sell'})
         </Text>
         <TextInput
           value={amount}
@@ -77,33 +118,53 @@ export default function BuySellScreen() {
 
         <View style={styles.row}>
           <Text style={[styles.rowLabel, { color: colors.muted }]}>Live price</Text>
-          <Text style={styles.rowValue}>{price?.price} / gram</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={[styles.rowLabel, { color: colors.muted }]}>Fee (~0.5%)</Text>
-          <Text style={styles.rowValue}>${fee.toFixed(2)}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={[styles.rowLabel, { color: colors.muted }]}>
-            {side === 'buy' ? 'Total to pay' : 'You receive'}
+          <Text style={styles.rowValue}>
+            {pricePerUnit ? `$${pricePerUnit.toFixed(2)} / gram` : '…'}
           </Text>
-          <Text style={styles.rowValueStrong}>${total.toFixed(2)}</Text>
         </View>
+        {side === 'buy' && (
+          <>
+            <View style={styles.row}>
+              <Text style={[styles.rowLabel, { color: colors.muted }]}>Fee (~0.5%)</Text>
+              <Text style={styles.rowValue}>${fee.toFixed(2)}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={[styles.rowLabel, { color: colors.muted }]}>Total to pay</Text>
+              <Text style={styles.rowValueStrong}>${total.toFixed(2)}</Text>
+            </View>
+          </>
+        )}
 
         <Text style={[styles.helper, { color: colors.muted }]}>
-          Fiat balance available: {fiatBalance?.displayValue}
+          {side === 'buy'
+            ? `Fiat balance available: $${fiatBalance.toFixed(2)}`
+            : `${asset === 'GOLD' ? 'Gold' : 'Silver'} balance available: ${assetBalance.toFixed(4)} g`}
         </Text>
       </View>
 
-      <Pressable style={[styles.cta, { backgroundColor: colors.tint }]}>
-        <Text style={[styles.ctaLabel, { color: colors.background }]}>
-          {side === 'buy' ? 'Review buy' : 'Review sell'}
-        </Text>
+      {error && (
+        <Text style={{ color: '#ef4444', fontSize: 13, textAlign: 'center' }}>{error}</Text>
+      )}
+      {notice && (
+        <Text style={{ color: '#22c55e', fontSize: 13, textAlign: 'center' }}>{notice}</Text>
+      )}
+
+      <Pressable
+        onPress={handleSubmit}
+        disabled={busy || !pricePerUnit || amountNumber <= 0}
+        style={[styles.cta, { backgroundColor: colors.tint, opacity: busy ? 0.6 : 1 }]}>
+        {busy ? (
+          <ActivityIndicator color={colors.background} />
+        ) : (
+          <Text style={[styles.ctaLabel, { color: colors.background }]}>
+            {side === 'buy' ? 'Buy' : 'Sell'}
+          </Text>
+        )}
       </Pressable>
 
       <Text style={[styles.disclaimer, { color: colors.muted }]}>
-        This screen is mock UI only — no order is routed to a vault partner
-        yet. See services/backend POST /payments/buy and /sell.
+        Prices are simulated for this demo — see services/backend GET
+        /market-data/prices and POST /payments/buy, /sell.
       </Text>
     </ScrollView>
   );

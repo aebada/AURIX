@@ -1,21 +1,65 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { useThemeColors } from '@/components/useThemeColors';
-import { marketPrices, savingsGoal } from '@/lib/mock-data';
+import { savingsGoal } from '@/lib/mock-data';
+import { marketApi, ApiError, type MarketPrices } from '@/lib/api';
+
+interface PriceRow {
+  symbol: string;
+  label: string;
+  price: string;
+}
+
+function toRows(prices: MarketPrices): PriceRow[] {
+  return [
+    { symbol: 'XAU', label: 'Gold / gram', price: `$${prices.goldUsdPerGram.toFixed(2)}` },
+    { symbol: 'XAG', label: 'Silver / gram', price: `$${prices.silverUsdPerGram.toFixed(2)}` },
+    { symbol: 'BTC', label: 'Bitcoin', price: `$${prices.btcUsd.toLocaleString()}` },
+    { symbol: 'EURUSD', label: 'EUR / USD', price: prices.eurUsd.toFixed(4) },
+  ];
+}
 
 export default function MarketScreen() {
   const colors = useThemeColors();
+  const [rows, setRows] = useState<PriceRow[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
   const goalPct = Math.round((savingsGoal.currentGrams / savingsGoal.targetGrams) * 100);
+
+  async function load() {
+    try {
+      const res = await marketApi.prices();
+      setRows(toRows(res.prices));
+      setError(null);
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Failed to load market prices');
+    }
+  }
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function onRefresh() {
+    setRefreshing(true);
+    await load();
+    setRefreshing(false);
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={marketPrices}
+        data={rows}
         keyExtractor={(item) => item.symbol}
         contentContainerStyle={styles.listContent}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <View>
+            {error && (
+              <Text style={{ color: '#ef4444', fontSize: 13, marginBottom: 12 }}>{error}</Text>
+            )}
             <Text style={styles.sectionTitle}>Live prices</Text>
           </View>
         }
@@ -31,17 +75,7 @@ export default function MarketScreen() {
                 {item.symbol}
               </Text>
             </View>
-            <View style={{ backgroundColor: 'transparent', alignItems: 'flex-end' }}>
-              <Text style={styles.priceValue}>{item.price}</Text>
-              <Text
-                style={[
-                  styles.priceChange,
-                  { color: item.changePct >= 0 ? '#22c55e' : '#ef4444' },
-                ]}>
-                {item.changePct >= 0 ? '+' : ''}
-                {item.changePct}%
-              </Text>
-            </View>
+            <Text style={styles.priceValue}>{item.price}</Text>
           </View>
         )}
         ListFooterComponent={
@@ -60,7 +94,7 @@ export default function MarketScreen() {
               />
             </View>
             <Text style={[styles.goalDetail, { color: colors.muted }]}>
-              {savingsGoal.currentGrams}g of {savingsGoal.targetGrams}g goal ({goalPct}%)
+              {savingsGoal.currentGrams}g of {savingsGoal.targetGrams}g goal ({goalPct}%) — illustrative, savings goals aren&apos;t wired to the backend yet
             </Text>
           </View>
         }
@@ -84,7 +118,6 @@ const styles = StyleSheet.create({
   priceLabel: { fontSize: 14, fontWeight: '600' },
   priceSymbol: { fontSize: 12, marginTop: 2 },
   priceValue: { fontSize: 15, fontWeight: '700' },
-  priceChange: { fontSize: 12, fontWeight: '600', marginTop: 2 },
   goalCard: { borderWidth: 1, borderRadius: 20, padding: 20, marginTop: 16 },
   progressTrack: {
     height: 10,
