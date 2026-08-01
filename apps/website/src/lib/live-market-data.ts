@@ -142,6 +142,53 @@ function seededRandom(seed: number) {
   return x - Math.floor(x);
 }
 
+function hashString(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 31 + s.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+// Longer lookback windows than 24h aren't backed by any real historical
+// series (there is no live feed underneath this page) — each is derived
+// deterministically from the instrument's authored 24h change plus a
+// per-symbol/timeframe seeded wobble, with amplitude growing ~sqrt(days)
+// the way a random walk's would. Illustrative only, like the rest of this
+// page's pricing.
+export type ChangeTimeframe = "24h" | "7d" | "30d" | "90d" | "ytd" | "1y";
+
+export const TIMEFRAME_LABELS: Record<ChangeTimeframe, string> = {
+  "24h": "24H",
+  "7d": "7D",
+  "30d": "30D",
+  "90d": "90D",
+  ytd: "YTD",
+  "1y": "1Y",
+};
+
+const TIMEFRAME_DAYS: Record<ChangeTimeframe, number> = {
+  "24h": 1,
+  "7d": 7,
+  "30d": 30,
+  "90d": 90,
+  ytd: 213, // ~days elapsed between Jan 1 and Aug 1
+  "1y": 365,
+};
+
+export function changeForTimeframe(
+  instrument: Pick<MarketInstrument, "symbol" | "changePct">,
+  timeframe: ChangeTimeframe,
+): number {
+  if (timeframe === "24h") return instrument.changePct;
+
+  const days = TIMEFRAME_DAYS[timeframe];
+  const seed = hashString(`${instrument.symbol}:${timeframe}`);
+  const drift = instrument.changePct * Math.sqrt(days) * 0.3;
+  const wobble = (seededRandom(seed) - 0.5) * 2 * Math.sqrt(days) * 1.2;
+  return Number((drift + wobble).toFixed(2));
+}
+
 const SYNTHETIC_NAME_WORD: Record<"Crypto" | "Stock" | "ETF", string> = {
   Crypto: "Coin",
   Stock: "Company",

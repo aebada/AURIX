@@ -1,17 +1,32 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { METALS, CRYPTO, STOCKS, ETFS, useLivePrices, formatPrice, type MarketInstrument } from "@/lib/live-market-data";
+import {
+  METALS,
+  CRYPTO,
+  STOCKS,
+  ETFS,
+  useLivePrices,
+  formatPrice,
+  changeForTimeframe,
+  TIMEFRAME_LABELS,
+  type MarketInstrument,
+  type ChangeTimeframe,
+} from "@/lib/live-market-data";
 import { useCurrency } from "@/lib/currency-context";
 
 const PAGE_SIZE = 25;
 
+const TIMEFRAME_OPTIONS: ChangeTimeframe[] = ["24h", "7d", "30d", "90d", "ytd", "1y"];
+
 function CategorySection({
   label,
   fullList,
+  timeframe,
 }: {
   label: string;
   fullList: MarketInstrument[];
+  timeframe: ChangeTimeframe;
 }) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
@@ -58,7 +73,7 @@ function CategorySection({
               <th className="px-6 py-4 font-semibold">Symbol</th>
               <th className="px-6 py-4 font-semibold">Name</th>
               <th className="px-6 py-4 font-semibold">Price</th>
-              <th className="px-6 py-4 font-semibold">24h</th>
+              <th className="px-6 py-4 font-semibold">{TIMEFRAME_LABELS[timeframe]}</th>
             </tr>
           </thead>
           <tbody>
@@ -69,32 +84,35 @@ function CategorySection({
                 </td>
               </tr>
             ) : (
-              rows.map((row) => (
-                <tr key={row.symbol} className="border-b border-[var(--color-line)] last:border-0">
-                  <td className="px-6 py-4 font-mono text-xs font-semibold text-muted">
-                    {row.symbol}
-                  </td>
-                  <td className="px-6 py-4 font-medium text-heading">{row.name}</td>
-                  <td
-                    className={`px-6 py-4 font-mono font-semibold transition-colors duration-300 ${
-                      row.direction === "up"
-                        ? "text-emerald-600"
-                        : row.direction === "down"
-                          ? "text-red-500"
-                          : "text-heading"
-                    }`}
-                  >
-                    {formatPrice(row.price, currency)}
-                  </td>
-                  <td
-                    className={`px-6 py-4 font-semibold ${
-                      row.changePct >= 0 ? "text-emerald-600" : "text-red-500"
-                    }`}
-                  >
-                    {row.changePct >= 0 ? "▲" : "▼"} {Math.abs(row.changePct).toFixed(1)}%
-                  </td>
-                </tr>
-              ))
+              rows.map((row) => {
+                const change = changeForTimeframe(row, timeframe);
+                return (
+                  <tr key={row.symbol} className="border-b border-[var(--color-line)] last:border-0">
+                    <td className="px-6 py-4 font-mono text-xs font-semibold text-muted">
+                      {row.symbol}
+                    </td>
+                    <td className="px-6 py-4 font-medium text-heading">{row.name}</td>
+                    <td
+                      className={`px-6 py-4 font-mono font-semibold transition-colors duration-300 ${
+                        row.direction === "up"
+                          ? "text-emerald-600"
+                          : row.direction === "down"
+                            ? "text-red-500"
+                            : "text-heading"
+                      }`}
+                    >
+                      {formatPrice(row.price, currency)}
+                    </td>
+                    <td
+                      className={`px-6 py-4 font-semibold ${
+                        change >= 0 ? "text-emerald-600" : "text-red-500"
+                      }`}
+                    >
+                      {change >= 0 ? "▲" : "▼"} {Math.abs(change).toFixed(1)}%
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
@@ -128,12 +146,32 @@ function CategorySection({
 }
 
 export function MarketsTable() {
+  const [timeframe, setTimeframe] = useState<ChangeTimeframe>("24h");
+
   return (
     <div className="space-y-16">
-      <CategorySection label="Metals" fullList={METALS} />
-      <CategorySection label="Crypto" fullList={CRYPTO} />
-      <CategorySection label="Stocks & Indices" fullList={STOCKS} />
-      <CategorySection label="ETFs" fullList={ETFS} />
+      <div className="flex flex-wrap items-center gap-3">
+        <label htmlFor="markets-timeframe" className="text-sm font-semibold text-heading">
+          Change over
+        </label>
+        <select
+          id="markets-timeframe"
+          value={timeframe}
+          onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
+          className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm font-semibold text-heading focus:border-gold focus:outline-none"
+        >
+          {TIMEFRAME_OPTIONS.map((tf) => (
+            <option key={tf} value={tf}>
+              {TIMEFRAME_LABELS[tf]}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <CategorySection label="Metals" fullList={METALS} timeframe={timeframe} />
+      <CategorySection label="Crypto" fullList={CRYPTO} timeframe={timeframe} />
+      <CategorySection label="Stocks & Indices" fullList={STOCKS} timeframe={timeframe} />
+      <CategorySection label="ETFs" fullList={ETFS} timeframe={timeframe} />
     </div>
   );
 }
