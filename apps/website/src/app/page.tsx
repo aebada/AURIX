@@ -11,9 +11,12 @@ import { Reveal } from "@/components/Reveal";
 import { PointcoinCoin } from "@/components/PointcoinCoin";
 import { LivePrices } from "@/components/LivePrices";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { useAuth } from "@/lib/auth-context";
+import { APP_URL } from "@/lib/auth-api";
 
 export default function Home() {
   const { t } = useLanguage();
+  const { token } = useAuth();
   const h = t.home;
 
   return (
@@ -32,12 +35,21 @@ export default function Home() {
               {h.sub}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/login?mode=register"
-                className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
-              >
-                {h.ctaPrimary}
-              </Link>
+              {token ? (
+                <a
+                  href={APP_URL}
+                  className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
+                >
+                  {t.header.dashboard}
+                </a>
+              ) : (
+                <Link
+                  href="/login?mode=register"
+                  className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
+                >
+                  {h.ctaPrimary}
+                </Link>
+              )}
               <Link
                 href="/how-it-works"
                 className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"

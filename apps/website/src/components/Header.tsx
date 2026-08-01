@@ -32,8 +32,12 @@ export function Header() {
           : "border-transparent"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
-        <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80" onClick={() => setOpen(false)}>
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-2 transition-opacity hover:opacity-80"
+          onClick={() => setOpen(false)}
+        >
           <Image
             src="/brand/aurix-mark.png"
             alt=""
@@ -47,25 +51,23 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 p-1 lg:flex">
+        {/* The full inline nav + selectors + auth actions need real room to
+            avoid wrapping into the logo — that only reliably fits from xl
+            (1280px) up. Everything from tablet through small laptops
+            (<1280px) gets the compact bar + drawer instead, same as phones. */}
+        <nav className="hidden items-center gap-1 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 p-1 xl:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full px-4 py-2 text-sm font-semibold text-muted transition-colors hover:bg-navy hover:text-white"
+              className="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold text-muted transition-colors hover:bg-navy hover:text-white"
             >
               {t.nav[link.key]}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <Link
-            href="/contact"
-            className="text-sm font-semibold text-muted transition-colors hover:text-heading"
-          >
-            {t.nav.contact}
-          </Link>
+        <div className="hidden shrink-0 items-center gap-2 xl:flex">
           <LanguageSelector className="max-w-[7rem]" />
           <CurrencySelector className="max-w-[9rem]" />
           <ThemeToggle />
@@ -73,14 +75,14 @@ export function Header() {
             <>
               <a
                 href={APP_URL}
-                className="text-sm font-semibold text-muted transition-colors hover:text-heading"
+                className="whitespace-nowrap text-sm font-semibold text-muted transition-colors hover:text-heading"
               >
                 {t.header.dashboard}
               </a>
               <button
                 type="button"
                 onClick={logout}
-                className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
+                className="whitespace-nowrap rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
               >
                 {t.header.signout}
               </button>
@@ -89,13 +91,13 @@ export function Header() {
             <>
               <Link
                 href="/login"
-                className="text-sm font-semibold text-muted transition-colors hover:text-heading"
+                className="whitespace-nowrap text-sm font-semibold text-muted transition-colors hover:text-heading"
               >
                 {t.header.login}
               </Link>
               <Link
                 href="/login?mode=register"
-                className="rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
+                className="whitespace-nowrap rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
               >
                 {t.header.signup}
               </Link>
@@ -103,9 +105,7 @@ export function Header() {
           )}
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
-          <LanguageSelector className="max-w-[5.5rem]" />
-          <CurrencySelector className="max-w-[6.5rem]" />
+        <div className="flex shrink-0 items-center gap-2 xl:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -125,7 +125,11 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-[var(--color-line)] px-6 py-4 lg:hidden">
+        <nav className="border-t border-[var(--color-line)] px-4 py-4 sm:px-6 xl:hidden">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <LanguageSelector className="max-w-[7rem]" />
+            <CurrencySelector className="max-w-[9rem]" />
+          </div>
           <ul className="flex flex-col gap-3">
             {navLinks.map((link) => (
               <li key={link.href}>

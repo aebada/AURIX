@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Container } from "./Container";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { useAuth } from "@/lib/auth-context";
+import { APP_URL } from "@/lib/auth-api";
 
 export function CtaBand({
   title,
   description,
-  primaryHref = "/login?mode=register",
+  primaryHref,
   primaryLabel,
   secondaryHref = "/whitepaper",
   secondaryLabel,
@@ -20,9 +21,25 @@ export function CtaBand({
   secondaryLabel?: string;
 }) {
   const { t } = useLanguage();
-  title ??= t.cta.title;
-  description ??= t.cta.description;
-  primaryLabel ??= t.cta.primary;
+  const { token } = useAuth();
+  // Callers that pass their own primaryHref/primaryLabel (e.g. "Contact
+  // Us", "Reserve Transparency") already point somewhere sensible
+  // regardless of auth state — only the signed-out signup default needs
+  // swapping to "go to your dashboard" once the visitor already has an
+  // account.
+  const usingDefaultPrimary = primaryHref === undefined && primaryLabel === undefined;
+
+  if (token && usingDefaultPrimary) {
+    title ??= t.cta.loggedInTitle;
+    description ??= t.cta.loggedInDescription;
+    primaryHref = APP_URL;
+    primaryLabel = t.header.dashboard;
+  } else {
+    title ??= t.cta.title;
+    description ??= t.cta.description;
+    primaryHref ??= "/login?mode=register";
+    primaryLabel ??= t.cta.primary;
+  }
   secondaryLabel ??= t.cta.secondary;
 
   return (

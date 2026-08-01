@@ -156,24 +156,57 @@ function hashString(s: string): number {
 // per-symbol/timeframe seeded wobble, with amplitude growing ~sqrt(days)
 // the way a random walk's would. Illustrative only, like the rest of this
 // page's pricing.
-export type ChangeTimeframe = "24h" | "7d" | "30d" | "90d" | "ytd" | "1y";
+export type ChangeTimeframe =
+  | "24h"
+  | "7d"
+  | "1m"
+  | "3m"
+  | "6m"
+  | "ytd"
+  | "1y"
+  | "2y"
+  | "3y"
+  | "5y";
 
-export const TIMEFRAME_LABELS: Record<ChangeTimeframe, string> = {
+// Full wording for the dropdown the user picks from.
+export const TIMEFRAME_OPTION_LABELS: Record<ChangeTimeframe, string> = {
+  "24h": "24 Hours",
+  "7d": "7 Days",
+  "1m": "1 Month",
+  "3m": "3 Months",
+  "6m": "6 Months",
+  ytd: "Year to Date",
+  "1y": "1 Year",
+  "2y": "2 Years",
+  "3y": "3 Years",
+  "5y": "5 Years",
+};
+
+// Compact form for the table's column header, where space is tight.
+export const TIMEFRAME_COLUMN_LABELS: Record<ChangeTimeframe, string> = {
   "24h": "24H",
   "7d": "7D",
-  "30d": "30D",
-  "90d": "90D",
+  "1m": "1M",
+  "3m": "3M",
+  "6m": "6M",
   ytd: "YTD",
   "1y": "1Y",
+  "2y": "2Y",
+  "3y": "3Y",
+  "5y": "5Y",
 };
 
 const TIMEFRAME_DAYS: Record<ChangeTimeframe, number> = {
   "24h": 1,
   "7d": 7,
-  "30d": 30,
-  "90d": 90,
+  "1m": 30,
+  "3m": 90,
+  "6m": 182,
   ytd: 213, // ~days elapsed between Jan 1 and Aug 1
   "1y": 365,
+  "2y": 730,
+  "3y": 1095,
+  "5y": 1825,
 };
 
 export function changeForTimeframe(

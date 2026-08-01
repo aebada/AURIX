@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { useAuth } from "@/lib/auth-context";
+import { MobileNavProvider } from "@/lib/mobile-nav-context";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { token } = useAuth();
@@ -32,9 +33,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex min-h-screen w-full">
-      <Sidebar />
-      <div className="flex min-h-screen flex-1 flex-col">{children}</div>
-    </div>
+    <MobileNavProvider>
+      <div className="flex min-h-screen w-full">
+        <Sidebar />
+        <div className="flex min-h-screen min-w-0 flex-1 flex-col">{children}</div>
+      </div>
+    </MobileNavProvider>
   );
 }

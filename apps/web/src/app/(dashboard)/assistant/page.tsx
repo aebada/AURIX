@@ -58,7 +58,7 @@ export default function AssistantPage() {
             {error}
           </div>
         )}
-        <Card className="flex h-[70vh] flex-col p-0">
+        <Card className="flex h-[70vh] flex-col" padding="p-0">
           <div className="flex-1 space-y-4 overflow-y-auto p-6">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
