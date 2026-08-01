@@ -1,8 +1,11 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 
 import { Text, View } from '@/components/Themed';
 import { useThemeColors } from '@/components/useThemeColors';
+import { useAuth } from '@/lib/auth-context';
+import { walletApi, ApiError, type Asset } from '@/lib/api';
 
 const actions = [
   { key: 'send', label: 'Send', ios: 'arrow.up.circle.fill', android: 'arrow_upward' },
@@ -11,11 +14,39 @@ const actions = [
   { key: 'nfc', label: 'Tap to Pay', ios: 'wave.3.right.circle.fill', android: 'nfc' },
 ] as const;
 
+const ASSETS: Asset[] = ['FIAT', 'GOLD', 'SILVER'];
+
 export default function PaymentsScreen() {
   const colors = useThemeColors();
+  const { token } = useAuth();
+  const [sendOpen, setSendOpen] = useState(false);
+  const [asset, setAsset] = useState<Asset>('FIAT');
+  const [toEmail, setToEmail] = useState('');
+  const [amount, setAmount] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  async function handleSend() {
+    if (!token || !toEmail || !amount) return;
+    setBusy(true);
+    setError(null);
+    setNotice(null);
+    try {
+      await walletApi.transfer(token, toEmail, asset, Number(amount));
+      setNotice(`Sent ${amount} ${asset.toLowerCase()} to ${toEmail}.`);
+      setToEmail('');
+      setAmount('');
+      setSendOpen(false);
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Transfer failed');
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View
         style={[
           styles.qrCard,
@@ -37,9 +68,11 @@ export default function PaymentsScreen() {
         {actions.map((action) => (
           <Pressable
             key={action.key}
+            onPress={() => action.key === 'send' && setSendOpen((v) => !v)}
             style={[
               styles.actionTile,
               { backgroundColor: colors.card, borderColor: colors.border },
+              action.key === 'send' && sendOpen && { borderColor: colors.tint, borderWidth: 2 },
             ]}>
             <SymbolView
               name={{ ios: action.ios, android: action.android, web: action.android }}
@@ -51,16 +84,76 @@ export default function PaymentsScreen() {
         ))}
       </View>
 
+      {sendOpen && (
+        <View
+          style={[
+            styles.sendCard,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}>
+          <Text style={styles.sendTitle}>Send to another AURIX wallet</Text>
+
+          <View style={styles.assetRow}>
+            {ASSETS.map((a) => (
+              <Pressable
+                key={a}
+                onPress={() => setAsset(a)}
+                style={[
+                  styles.assetChip,
+                  { borderColor: colors.border },
+                  asset === a && { borderColor: colors.tint, borderWidth: 2 },
+                ]}>
+                <Text style={styles.assetChipLabel}>{a}</Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <TextInput
+            value={toEmail}
+            onChangeText={setToEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="recipient@example.com"
+            placeholderTextColor={colors.muted}
+            style={[styles.input, { color: colors.text, borderColor: colors.border }]}
+          />
+          <TextInput
+            value={amount}
+            onChangeText={setAmount}
+            keyboardType="decimal-pad"
+            placeholder={asset === 'FIAT' ? 'Amount ($)' : 'Amount (g)'}
+            placeholderTextColor={colors.muted}
+            style={[styles.input, { color: colors.text, borderColor: colors.border }]}
+          />
+
+          {error && <Text style={{ color: '#ef4444', fontSize: 13 }}>{error}</Text>}
+
+          <Pressable
+            onPress={handleSend}
+            disabled={busy || !toEmail || !amount}
+            style={[styles.sendCta, { backgroundColor: colors.tint, opacity: busy ? 0.6 : 1 }]}>
+            {busy ? (
+              <ActivityIndicator color={colors.background} />
+            ) : (
+              <Text style={[styles.sendCtaLabel, { color: colors.background }]}>Send</Text>
+            )}
+          </Pressable>
+        </View>
+      )}
+
+      {notice && (
+        <Text style={{ color: '#22c55e', fontSize: 13, textAlign: 'center' }}>{notice}</Text>
+      )}
+
       <Text style={[styles.disclaimer, { color: colors.muted }]}>
-        NFC / QR / P2P payment flows are mock UI only in this scaffold — see
-        services/backend POST /wallet/transfer for the underlying API.
+        Send is wired to services/backend POST /wallet/transfer. QR / Tap to
+        Pay / Request are still mock UI in this scaffold.
       </Text>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, gap: 20 },
+  container: { flexGrow: 1, padding: 20, gap: 20 },
   qrCard: {
     borderRadius: 24,
     borderWidth: 1,
@@ -92,5 +185,25 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   actionLabel: { fontSize: 14, fontWeight: '700' },
+  sendCard: { borderWidth: 1, borderRadius: 20, padding: 20, gap: 12 },
+  sendTitle: { fontSize: 15, fontWeight: '700' },
+  assetRow: { flexDirection: 'row', gap: 8, backgroundColor: 'transparent' },
+  assetChip: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  assetChipLabel: { fontSize: 13, fontWeight: '600' },
+  input: {
+    fontSize: 14,
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  sendCta: { borderRadius: 999, paddingVertical: 14, alignItems: 'center' },
+  sendCtaLabel: { fontSize: 14, fontWeight: '800' },
   disclaimer: { fontSize: 11, textAlign: 'center', lineHeight: 16, marginTop: 'auto' },
 });
