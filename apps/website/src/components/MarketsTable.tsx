@@ -9,7 +9,6 @@ import {
   useLivePrices,
   formatPrice,
   changeForTimeframe,
-  TIMEFRAME_OPTION_LABELS,
   TIMEFRAME_COLUMN_LABELS,
   type MarketInstrument,
   type ChangeTimeframe,
@@ -66,33 +65,16 @@ function CategorySection({
         <h2 className="font-extrabold tracking-tight text-xl text-heading">
           {label} <span className="text-sm font-medium text-muted">({filtered.length})</span>
         </h2>
-        <div className="flex flex-wrap items-center gap-3">
-          <label htmlFor={timeframeId} className="text-sm font-semibold text-heading">
-            Change over
-          </label>
-          <select
-            id={timeframeId}
-            value={timeframe}
-            onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
-            className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm font-semibold text-heading focus:border-gold focus:outline-none"
-          >
-            {TIMEFRAME_OPTIONS.map((tf) => (
-              <option key={tf} value={tf}>
-                {TIMEFRAME_OPTION_LABELS[tf]}
-              </option>
-            ))}
-          </select>
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setPage(0);
-            }}
-            placeholder={`Search ${label.toLowerCase()}…`}
-            className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
-          />
-        </div>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setPage(0);
+          }}
+          placeholder={`Search ${label.toLowerCase()}…`}
+          className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
+        />
       </div>
 
       <div className="mt-5 overflow-x-auto rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)]">
@@ -102,7 +84,25 @@ function CategorySection({
               <th className="px-6 py-4 font-semibold">Symbol</th>
               <th className="px-6 py-4 font-semibold">Name</th>
               <th className="px-6 py-4 font-semibold">Price</th>
-              <th className="px-6 py-4 font-semibold">{TIMEFRAME_COLUMN_LABELS[timeframe]}</th>
+              <th className="px-6 py-4 font-semibold">
+                <label htmlFor={timeframeId} className="sr-only">
+                  {label} change timeframe
+                </label>
+                <select
+                  id={timeframeId}
+                  value={timeframe}
+                  onChange={(e) => setTimeframe(e.target.value as ChangeTimeframe)}
+                  title="Change the timeframe for this column"
+                  className="cursor-pointer appearance-none border-0 bg-transparent p-0 text-xs font-semibold uppercase tracking-wider text-muted outline-none hover:text-heading focus:text-heading"
+                >
+                  {TIMEFRAME_OPTIONS.map((tf) => (
+                    <option key={tf} value={tf}>
+                      {TIMEFRAME_COLUMN_LABELS[tf]}
+                    </option>
+                  ))}
+                </select>
+                <span aria-hidden className="ml-1 text-[10px]">▾</span>
+              </th>
             </tr>
           </thead>
           <tbody>
