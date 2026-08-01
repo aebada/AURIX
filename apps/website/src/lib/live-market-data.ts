@@ -222,6 +222,29 @@ export function changeForTimeframe(
   return Number((drift + wobble).toFixed(2));
 }
 
+// A quantitative momentum read derived from the same illustrative price
+// series as the rest of this page — NOT financial advice, and deliberately
+// not phrased as one ("buy"/"sell"). Weights recent (1M) trend more heavily
+// than the 1Y trend, the way a simple momentum indicator would.
+export type MomentumSignal = "bullish" | "neutral" | "bearish";
+
+export function momentumSignal(
+  instrument: Pick<MarketInstrument, "symbol" | "changePct">,
+): MomentumSignal {
+  const shortTerm = changeForTimeframe(instrument, "1m");
+  const longTerm = changeForTimeframe(instrument, "1y");
+  const score = shortTerm * 0.7 + longTerm * 0.1;
+  if (score > 3) return "bullish";
+  if (score < -3) return "bearish";
+  return "neutral";
+}
+
+export const MOMENTUM_LABELS: Record<MomentumSignal, string> = {
+  bullish: "Bullish",
+  neutral: "Neutral",
+  bearish: "Bearish",
+};
+
 const SYNTHETIC_NAME_WORD: Record<"Crypto" | "Stock" | "ETF", string> = {
   Crypto: "Coin",
   Stock: "Company",
