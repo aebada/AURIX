@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/auth-context";
 
 const navItems = [
   { href: "/", label: "Overview" },
+  { href: "/invest", label: "Invest" },
   { href: "/transactions", label: "Transactions" },
   { href: "/statements", label: "Statements" },
   { href: "/business", label: "Business" },
@@ -47,8 +48,9 @@ export function Sidebar() {
       <div className="mt-auto rounded-2xl border border-[var(--color-line)] bg-[var(--color-paper)] p-4">
         <p className="truncate text-xs font-semibold text-navy">{user?.email}</p>
         <p className="mt-1 text-xs leading-relaxed text-muted">
-          Overview &amp; Transactions are live via services/backend. Statements,
-          Business, and Partners are still mock — no backend endpoints yet.
+          Overview, Invest &amp; Transactions are live via services/backend.
+          Statements, Business, and Partners are still mock — no backend
+          endpoints yet.
         </p>
         <button
           type="button"

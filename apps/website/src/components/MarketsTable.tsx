@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { METALS, CRYPTO, STOCKS, useLivePrices, formatPrice, type MarketInstrument } from "@/lib/live-market-data";
+import { METALS, CRYPTO, STOCKS, ETFS, useLivePrices, formatPrice, type MarketInstrument } from "@/lib/live-market-data";
 import { useCurrency } from "@/lib/currency-context";
 
 const PAGE_SIZE = 25;
@@ -133,6 +133,7 @@ export function MarketsTable() {
       <CategorySection label="Metals" fullList={METALS} />
       <CategorySection label="Crypto" fullList={CRYPTO} />
       <CategorySection label="Stocks & Indices" fullList={STOCKS} />
+      <CategorySection label="ETFs" fullList={ETFS} />
     </div>
   );
 }

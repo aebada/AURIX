@@ -16,7 +16,7 @@ import type { Currency } from "./currencies";
 export interface MarketInstrument {
   symbol: string;
   name: string;
-  category: "Metal" | "Crypto" | "Stock";
+  category: "Metal" | "Crypto" | "Stock" | "ETF";
   price: number;
   changePct: number;
 }
@@ -107,6 +107,33 @@ const REAL_STOCKS: MarketInstrument[] = [
   { symbol: "BA", name: "Boeing", category: "Stock", price: 178.6, changePct: -1.1 },
 ];
 
+const REAL_ETFS: MarketInstrument[] = [
+  { symbol: "URTH", name: "MSCI World ETF", category: "ETF", price: 168.42, changePct: 0.4 },
+  { symbol: "VWRL", name: "FTSE All-World UCITS ETF", category: "ETF", price: 129.87, changePct: 0.3 },
+  { symbol: "VOO", name: "S&P 500 ETF", category: "ETF", price: 512.3, changePct: 0.5 },
+  { symbol: "QQQ", name: "Nasdaq-100 ETF", category: "ETF", price: 478.6, changePct: 0.8 },
+  { symbol: "EXW1", name: "Euro Stoxx 50 ETF", category: "ETF", price: 55.14, changePct: -0.2 },
+  { symbol: "IEMG", name: "Core MSCI Emerging Markets ETF", category: "ETF", price: 54.21, changePct: -0.4 },
+  { symbol: "AGGG", name: "Global Aggregate Bond ETF", category: "ETF", price: 5.32, changePct: 0.1 },
+  { symbol: "IEF", name: "7-10 Year Treasury Bond ETF", category: "ETF", price: 94.15, changePct: 0.1 },
+  { symbol: "LQD", name: "Investment Grade Corporate Bond ETF", category: "ETF", price: 108.7, changePct: 0.2 },
+  { symbol: "VYM", name: "High Dividend Yield ETF", category: "ETF", price: 132.9, changePct: 0.3 },
+  { symbol: "NOBL", name: "Dividend Aristocrats ETF", category: "ETF", price: 101.4, changePct: 0.2 },
+  { symbol: "ESGU", name: "ESG Aware MSCI USA ETF", category: "ETF", price: 112.6, changePct: 0.5 },
+  { symbol: "ICLN", name: "Global Clean Energy ETF", category: "ETF", price: 13.8, changePct: -1.2 },
+  { symbol: "BOTZ", name: "Robotics & Artificial Intelligence ETF", category: "ETF", price: 32.5, changePct: 1.4 },
+  { symbol: "CIBR", name: "Cybersecurity ETF", category: "ETF", price: 58.9, changePct: 0.9 },
+  { symbol: "XLV", name: "Health Care Select Sector ETF", category: "ETF", price: 145.2, changePct: 0.2 },
+  { symbol: "SOXX", name: "Semiconductor ETF", category: "ETF", price: 236.4, changePct: 1.8 },
+  { symbol: "SKYY", name: "Cloud Computing ETF", category: "ETF", price: 87.3, changePct: 1.1 },
+  { symbol: "ARKX", name: "Space Exploration & Innovation ETF", category: "ETF", price: 14.6, changePct: -0.6 },
+  { symbol: "GLD", name: "Gold Trust ETF", category: "ETF", price: 241.8, changePct: 0.7 },
+  { symbol: "SLV", name: "Silver Trust ETF", category: "ETF", price: 27.3, changePct: 1.2 },
+  { symbol: "DBA", name: "Agriculture Fund ETF", category: "ETF", price: 21.9, changePct: 0.1 },
+  { symbol: "HLAL", name: "Wahed FTSE USA Sharia ETF", category: "ETF", price: 42.7, changePct: 0.6 },
+  { symbol: "SPSK", name: "Sukuk ETF", category: "ETF", price: 21.4, changePct: 0.1 },
+];
+
 // A simple deterministic pseudo-random generator so synthetic entries and
 // jitter ticks are stable/reproducible from an integer seed rather than
 // truly random (avoids hydration mismatches and gives consistent demos).
@@ -115,8 +142,14 @@ function seededRandom(seed: number) {
   return x - Math.floor(x);
 }
 
+const SYNTHETIC_NAME_WORD: Record<"Crypto" | "Stock" | "ETF", string> = {
+  Crypto: "Coin",
+  Stock: "Company",
+  ETF: "Fund",
+};
+
 function generateSynthetic(
-  category: "Crypto" | "Stock",
+  category: "Crypto" | "Stock" | "ETF",
   count: number,
   startIndex: number,
   priceRange: [number, number],
@@ -132,7 +165,7 @@ function generateSynthetic(
     const label = String(idx).padStart(4, "0");
     out.push({
       symbol: `${prefix}${label}`,
-      name: `${category === "Crypto" ? "Coin" : "Company"} #${label}`,
+      name: `${SYNTHETIC_NAME_WORD[category]} #${label}`,
       category,
       price,
       changePct,
@@ -150,8 +183,12 @@ export const STOCKS: MarketInstrument[] = [
   ...REAL_STOCKS,
   ...generateSynthetic("Stock", 1000 - REAL_STOCKS.length, REAL_STOCKS.length, [1, 800], "STK"),
 ];
+export const ETFS: MarketInstrument[] = [
+  ...REAL_ETFS,
+  ...generateSynthetic("ETF", 1000 - REAL_ETFS.length, REAL_ETFS.length, [5, 550], "ETF"),
+];
 
-export const MARKET_SEED: MarketInstrument[] = [...METALS, ...CRYPTO, ...STOCKS];
+export const MARKET_SEED: MarketInstrument[] = [...METALS, ...CRYPTO, ...STOCKS, ...ETFS];
 
 export interface LiveInstrument extends MarketInstrument {
   direction: "up" | "down" | null;

@@ -41,11 +41,40 @@ export interface Transaction {
   createdAt: string;
 }
 
+// ETF holdings/orders are tracked separately from the GOLD/SILVER/FIAT
+// wallet ledger above rather than widening Transaction/Asset to an open
+// set of tickers — an ETF buy still debits the FIAT balance via
+// adjustBalance, but its own record lives here. See modules/etfs.
+export interface EtfHolding {
+  userId: string;
+  ticker: string;
+  units: number;
+  // Cost basis in USD, running average across buys — used for unrealized
+  // gain/loss on the portfolio view.
+  avgCostUsd: number;
+}
+
+export interface EtfOrder {
+  id: string;
+  userId: string;
+  ticker: string;
+  side: "buy" | "sell";
+  units: number;
+  pricePerUnitUsd: number;
+  fiatAmountUsd: number;
+  feeUsd: number;
+  status: "settled";
+  createdAt: string;
+}
+
 export interface Db {
   users: Map<string, User>;
   usersByEmail: Map<string, string>;
   balances: Map<string, WalletBalance>; // key: `${userId}:${asset}`
   transactions: Transaction[];
+  etfHoldings: Map<string, EtfHolding>; // key: `${userId}:${ticker}`
+  etfOrders: EtfOrder[];
+  etfWatchlists: Map<string, Set<string>>; // key: userId -> tickers
 }
 
 export const db: Db = {
@@ -53,7 +82,14 @@ export const db: Db = {
   usersByEmail: new Map(),
   balances: new Map(),
   transactions: [],
+  etfHoldings: new Map(),
+  etfOrders: [],
+  etfWatchlists: new Map(),
 };
+
+export function etfHoldingKey(userId: string, ticker: string): string {
+  return `${userId}:${ticker}`;
+}
 
 export function balanceKey(userId: string, asset: Asset): string {
   return `${userId}:${asset}`;
