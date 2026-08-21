@@ -10,38 +10,15 @@ import {
   formatPrice,
   changeForTimeframe,
   momentumSignal,
-  MOMENTUM_LABELS,
   TIMEFRAME_COLUMN_LABELS,
   type MarketInstrument,
   type ChangeTimeframe,
-  type MomentumSignal,
 } from "@/lib/live-market-data";
 import { useCurrency } from "@/lib/currency-context";
+import { SignalBadge } from "./SignalBadge";
+import { InstrumentDetailModal } from "./InstrumentDetailModal";
 
 const PAGE_SIZE = 25;
-
-const SIGNAL_STYLES: Record<MomentumSignal, string> = {
-  bullish: "bg-emerald-50 text-emerald-700",
-  neutral: "bg-zinc-100 text-zinc-600",
-  bearish: "bg-red-50 text-red-600",
-};
-
-function SignalBadge({ signal }: { signal: MomentumSignal }) {
-  return (
-    <span
-      title="Illustrative momentum read from recent price trend — not financial advice."
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${SIGNAL_STYLES[signal]}`}
-    >
-      <span
-        aria-hidden
-        className={`h-1.5 w-1.5 rounded-full ${
-          signal === "bullish" ? "bg-emerald-500" : signal === "bearish" ? "bg-red-500" : "bg-zinc-400"
-        }`}
-      />
-      {MOMENTUM_LABELS[signal]}
-    </span>
-  );
-}
 
 const TIMEFRAME_OPTIONS: ChangeTimeframe[] = [
   "24h",
@@ -59,9 +36,11 @@ const TIMEFRAME_OPTIONS: ChangeTimeframe[] = [
 function CategorySection({
   label,
   fullList,
+  onSelectInstrument,
 }: {
   label: string;
   fullList: MarketInstrument[];
+  onSelectInstrument: (instrument: MarketInstrument) => void;
 }) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
@@ -141,7 +120,11 @@ function CategorySection({
               rows.map((row) => {
                 const change = changeForTimeframe(row, timeframe);
                 return (
-                  <tr key={row.symbol} className="border-b border-[var(--color-line)] last:border-0">
+                  <tr
+                    key={row.symbol}
+                    onClick={() => onSelectInstrument(row)}
+                    className="cursor-pointer border-b border-[var(--color-line)] last:border-0 hover:bg-[var(--color-paper)]"
+                  >
                     <td className="px-6 py-4 font-mono text-xs font-semibold text-muted">
                       {row.symbol}
                     </td>
@@ -203,12 +186,16 @@ function CategorySection({
 }
 
 export function MarketsTable() {
+  const [selected, setSelected] = useState<MarketInstrument | null>(null);
+
   return (
     <div className="space-y-16">
-      <CategorySection label="Metals" fullList={METALS} />
-      <CategorySection label="Crypto" fullList={CRYPTO} />
-      <CategorySection label="Stocks & Indices" fullList={STOCKS} />
-      <CategorySection label="ETFs" fullList={ETFS} />
+      <CategorySection label="Metals" fullList={METALS} onSelectInstrument={setSelected} />
+      <CategorySection label="Crypto" fullList={CRYPTO} onSelectInstrument={setSelected} />
+      <CategorySection label="Stocks & Indices" fullList={STOCKS} onSelectInstrument={setSelected} />
+      <CategorySection label="ETFs" fullList={ETFS} onSelectInstrument={setSelected} />
+
+      {selected && <InstrumentDetailModal instrument={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }
