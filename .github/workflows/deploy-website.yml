@@ -14,6 +14,9 @@ name: Deploy Website (FTP)
 # Credentials are never stored in this repo — only referenced as secrets.
 # php-auth's own secrets (DB credentials, Google client secret, etc.) live
 # in auth-lib/.env on the server, created manually once — see docs/PHP-AUTH.md.
+#
+# NEVER use rsync --delete on the full docroot without excluding auth/ and
+# auth-lib/. For SSH deploys use scripts/deploy-website.sh.
 
 on:
   push:
@@ -65,6 +68,13 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: apps/website/out/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          state-name: .ftp-deploy-sync-state-website.json
+          # Keep php-auth paths out of publish/delete — docroot is shared with php-auth
+          exclude: |
+            **/.git*
+            **/.git*/**
+            auth/**
+            auth-lib/**
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -75,6 +85,29 @@ jobs:
       - name: Install php-auth dependencies
         working-directory: php-auth
         run: composer install --no-dev --optimize-autoloader
+
+      - name: Assert php-auth deploy payload
+        run: |
+          set -euo pipefail
+          test -f php-auth/auth/login.php
+          test -f php-auth/auth/register.php
+          test -f php-auth/auth/google.php
+          test -f php-auth/auth/google-callback.php
+          test -f php-auth/auth/me.php
+          test -f php-auth/auth/logout.php
+          test -f php-auth/auth/chat.php
+          test -f php-auth/auth/investor-inquiry.php
+          test -f php-auth/auth/styles.css
+          test -f php-auth/auth/_layout.php
+          test -f php-auth/auth-lib/bootstrap.php
+          test -f php-auth/auth-lib/src/ChatAssistant.php
+          test -f php-auth/auth-lib/src/CrmLeadClient.php
+          test -f php-auth/auth-lib/src/InquiryNotifier.php
+          test -f php-auth/auth-lib/src/SmtpMailer.php
+          test -f php-auth/auth-lib/.htaccess
+          test -f php-auth/auth-lib/vendor/autoload.php
+          # Never ship a real secrets file from CI
+          test ! -f php-auth/auth-lib/.env
 
       - name: Deploy php-auth over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

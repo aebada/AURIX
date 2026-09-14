@@ -2,4 +2,5 @@
 
 auth-lib/.env
 auth-lib/vendor/
+auth-lib/data/
 composer.lock

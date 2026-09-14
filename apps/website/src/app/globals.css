@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
-/* Dark mode is toggled manually (ThemeToggle sets/removes .dark on <html>),
-   not driven by prefers-color-scheme, so `dark:` utilities must target the
-   class rather than Tailwind v4's default OS-preference media query. */
+/* Dark themes set .dark on <html> (ThemeToggle / theme init script).
+   `dark:` utilities target that class — not prefers-color-scheme. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
+/* ── Light (default) ─────────────────────────────────────────── */
+:root,
+:root[data-theme="light"] {
   --color-navy: #12162c;
   --color-navy-deep: #0b0e1f;
   --color-navy-soft: #1c2340;
@@ -16,21 +17,106 @@
   --color-gold-light: #e3ac4c;
   --color-gold-dark: #a86c1f;
   --color-line: #e7e5e0;
-
-  /* Theme-adaptive tokens: unlike --color-navy (a fixed brand color used
-     for always-dark surfaces like the header pill hover state, hero, and
-     footer), these two flip between light and dark mode. */
   --color-surface: #ffffff;
   --color-heading: var(--color-navy);
+  --glow-gold: rgba(227, 172, 76, 0.25);
+  --glow-gold-soft: rgba(227, 172, 76, 0.12);
+  --hover-lift-shadow: rgba(18, 22, 44, 0.25);
+  --selection-fg: var(--color-navy);
 }
 
-:root.dark {
+/* ── Night (deep navy) ───────────────────────────────────────── */
+:root[data-theme="dark"] {
+  --color-navy: #12162c;
+  --color-navy-deep: #070a16;
+  --color-navy-soft: #1c2340;
+  --color-paper: #0b0e1f;
+  --color-ink: #eef0f6;
+  --color-muted: #9098b5;
+  --color-gold: #c8912f;
+  --color-gold-light: #e3ac4c;
+  --color-gold-dark: #a86c1f;
+  --color-line: #262c4a;
+  --color-surface: #161b34;
+  --color-heading: #f5f6fa;
+  --glow-gold: rgba(227, 172, 76, 0.28);
+  --glow-gold-soft: rgba(227, 172, 76, 0.14);
+  --hover-lift-shadow: rgba(0, 0, 0, 0.45);
+  --selection-fg: #0b0e1f;
+}
+
+/* ── Prestige (warm gold on charcoal) ────────────────────────── */
+:root[data-theme="gold"] {
+  --color-navy: #1a1612;
+  --color-navy-deep: #0f0d0b;
+  --color-navy-soft: #2a241c;
+  --color-paper: #14110e;
+  --color-ink: #f3ebe0;
+  --color-muted: #a89b88;
+  --color-gold: #d4a54a;
+  --color-gold-light: #e8c06a;
+  --color-gold-dark: #b8892e;
+  --color-line: #2e2922;
+  --color-surface: #1e1a15;
+  --color-heading: #faf6ef;
+  --glow-gold: rgba(212, 165, 74, 0.32);
+  --glow-gold-soft: rgba(212, 165, 74, 0.14);
+  --hover-lift-shadow: rgba(0, 0, 0, 0.5);
+  --selection-fg: #14110e;
+}
+
+/* ── Ocean (cool blue-teal trust) ────────────────────────────── */
+:root[data-theme="ocean"] {
+  --color-navy: #0c2430;
+  --color-navy-deep: #06141c;
+  --color-navy-soft: #153544;
+  --color-paper: #07151c;
+  --color-ink: #e6f2f4;
+  --color-muted: #7fa0ab;
+  --color-gold: #3ea8a0;
+  --color-gold-light: #5ec4bb;
+  --color-gold-dark: #2d857e;
+  --color-line: #1a3542;
+  --color-surface: #0f2430;
+  --color-heading: #f0f8fa;
+  --glow-gold: rgba(62, 168, 160, 0.3);
+  --glow-gold-soft: rgba(62, 168, 160, 0.12);
+  --hover-lift-shadow: rgba(0, 0, 0, 0.45);
+  --selection-fg: #07151c;
+}
+
+/* ── Classic (crisp cool editorial — not cream/terracotta) ───── */
+:root[data-theme="classic"] {
+  --color-navy: #12162c;
+  --color-navy-deep: #0b0e1f;
+  --color-navy-soft: #1c2340;
+  --color-paper: #f5f7fa;
+  --color-ink: #12162c;
+  --color-muted: #5a6478;
+  --color-gold: #b8892e;
+  --color-gold-light: #d4a84a;
+  --color-gold-dark: #956f1f;
+  --color-line: #dde3eb;
+  --color-surface: #ffffff;
+  --color-heading: #12162c;
+  --glow-gold: rgba(184, 137, 46, 0.22);
+  --glow-gold-soft: rgba(184, 137, 46, 0.1);
+  --hover-lift-shadow: rgba(18, 22, 44, 0.2);
+  --selection-fg: var(--color-navy);
+}
+
+/* Legacy: old installs only had .dark with no data-theme. */
+:root.dark:not([data-theme]) {
   --color-paper: #0b0e1f;
   --color-ink: #eef0f6;
   --color-muted: #9098b5;
   --color-line: #262c4a;
   --color-surface: #161b34;
   --color-heading: #f5f6fa;
+  --glow-gold: rgba(227, 172, 76, 0.28);
+  --glow-gold-soft: rgba(227, 172, 76, 0.14);
+  --hover-lift-shadow: rgba(0, 0, 0, 0.45);
+  --selection-fg: #0b0e1f;
 }
 
 @theme inline {
@@ -64,7 +150,7 @@ body {
 
 ::selection {
   background: var(--color-gold-light);
-  color: var(--color-navy);
+  color: var(--selection-fg);
 }
 
 .hover-lift {
@@ -73,7 +159,7 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -20px rgba(18, 22, 44, 0.25);
+  box-shadow: 0 20px 40px -20px var(--hover-lift-shadow);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -111,7 +197,97 @@ body {
 
 .bg-navy-glow {
   background:
-    radial-gradient(60% 60% at 85% 15%, rgba(227, 172, 76, 0.25), transparent 60%),
-    radial-gradient(50% 50% at 10% 90%, rgba(227, 172, 76, 0.12), transparent 60%),
+    radial-gradient(60% 60% at 85% 15%, var(--glow-gold), transparent 60%),
+    radial-gradient(50% 50% at 10% 90%, var(--glow-gold-soft), transparent 60%),
     var(--color-navy-deep);
+}
+
+/* Interactive product demo (apps/website demo page) */
+@keyframes demo-screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes demo-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes demo-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-gold-light) 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+.demo-screen-enter {
+  animation: demo-screen-in 0.45s ease-out both;
+}
+
+.demo-fade-up {
+  animation: demo-fade-up 0.4s ease-out both;
+}
+
+.demo-pulse {
+  animation: demo-pulse 1.4s ease-in-out infinite;
+}
+
+/* Pointcoin product stage (home tokenization section) */
+@keyframes pointcoin-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.pointcoin-stage {
+  --pc-tilt-x: 0deg;
+  --pc-tilt-y: 0deg;
+  transform-style: preserve-3d;
+  perspective: 900px;
+}
+
+.pointcoin-float {
+  animation: pointcoin-float 5.5s ease-in-out infinite;
+}
+
+.pointcoin-tilt {
+  transform: rotateX(var(--pc-tilt-x)) rotateY(var(--pc-tilt-y));
+  transition: transform 0.35s ease-out;
+  transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-screen-enter,
+  .demo-fade-up,
+  .demo-pulse {
+    animation: none;
+  }
+
+  .pointcoin-float {
+    animation: none;
+  }
+
+  .pointcoin-tilt {
+    transition: none;
+    transform: none;
+  }
 }

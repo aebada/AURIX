@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { footerLinks } from "./nav-links";
 import { AppStoreBadges } from "./AppStoreBadges";
+import { BrandLogo } from "@/components/BrandLogo";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 export function Footer() {
@@ -14,20 +14,24 @@ export function Footer() {
       <div className="mx-auto w-full max-w-6xl px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2">
-              <Image
-                src="/brand/aurix-mark.png"
-                alt=""
-                width={28}
-                height={26}
+            <Link href="/" className="inline-block transition-opacity hover:opacity-80">
+              <BrandLogo
+                variant="onDark"
+                width={95}
+                height={28}
                 className="h-7 w-auto"
               />
-              <span className="font-extrabold tracking-tight text-lg text-white">
-                AURIX
-              </span>
-            </div>
+            </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
               {t.footer.tagline}
+            </p>
+            <p className="mt-4 text-sm">
+              <a
+                href="mailto:contact@aurixapp.de"
+                className="text-white/60 transition-colors hover:text-gold-light"
+              >
+                contact@aurixapp.de
+              </a>
             </p>
             <p className="mt-6 text-xs uppercase tracking-wider text-white/40">
               {t.footer.disclaimer}

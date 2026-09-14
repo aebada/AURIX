@@ -15,6 +15,7 @@ import {
   type ChangeTimeframe,
 } from "@/lib/live-market-data";
 import { useCurrency } from "@/lib/currency-context";
+import { useLanguage } from "@/lib/i18n/language-context";
 import { SignalBadge } from "./SignalBadge";
 import { InstrumentDetailModal } from "./InstrumentDetailModal";
 
@@ -45,6 +46,8 @@ function CategorySection({
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
   const [timeframe, setTimeframe] = useState<ChangeTimeframe>("24h");
+  const { t } = useLanguage();
+  const m = t.pages.markets;
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -77,7 +80,7 @@ function CategorySection({
             setQuery(e.target.value);
             setPage(0);
           }}
-          placeholder={`Search ${label.toLowerCase()}…`}
+          placeholder={m.search.replace("{label}", label.toLowerCase())}
           className="w-full max-w-xs rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2 text-sm text-heading focus:border-gold focus:outline-none"
         />
       </div>
@@ -86,9 +89,9 @@ function CategorySection({
         <table className="w-full min-w-[640px] text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--color-line)] text-xs uppercase tracking-wider text-muted">
-              <th className="px-6 py-4 font-semibold">Symbol</th>
-              <th className="px-6 py-4 font-semibold">Name</th>
-              <th className="px-6 py-4 font-semibold">Price</th>
+              <th className="px-6 py-4 font-semibold">{m.symbol}</th>
+              <th className="px-6 py-4 font-semibold">{m.name}</th>
+              <th className="px-6 py-4 font-semibold">{m.price}</th>
               <th className="px-6 py-4 font-semibold">
                 <select
                   id={timeframeId}
@@ -104,7 +107,9 @@ function CategorySection({
                     </option>
                   ))}
                 </select>
-                <span aria-hidden className="ml-1 text-[10px]">▾</span>
+                <span aria-hidden className="ml-1 text-[10px]">
+                  ▾
+                </span>
               </th>
               <th className="px-6 py-4 font-semibold">Signal</th>
             </tr>
@@ -113,7 +118,7 @@ function CategorySection({
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-6 py-8 text-center text-muted">
-                  No matches for &ldquo;{query}&rdquo;.
+                  {m.noMatches.replace("{query}", query)}
                 </td>
               </tr>
             ) : (
@@ -166,10 +171,12 @@ function CategorySection({
             disabled={currentPage === 0}
             className="rounded-full border border-[var(--color-line)] px-4 py-2 font-semibold text-heading disabled:opacity-40"
           >
-            Previous
+            {m.previous}
           </button>
           <p className="text-muted">
-            Page {currentPage + 1} of {totalPages}
+            {m.pageOf
+              .replace("{current}", String(currentPage + 1))
+              .replace("{total}", String(totalPages))}
           </p>
           <button
             type="button"
@@ -177,7 +184,7 @@ function CategorySection({
             disabled={currentPage >= totalPages - 1}
             className="rounded-full border border-[var(--color-line)] px-4 py-2 font-semibold text-heading disabled:opacity-40"
           >
-            Next
+            {m.next}
           </button>
         </div>
       )}
@@ -187,12 +194,14 @@ function CategorySection({
 
 export function MarketsTable() {
   const [selected, setSelected] = useState<MarketInstrument | null>(null);
+  const { t } = useLanguage();
+  const m = t.pages.markets;
 
   return (
     <div className="space-y-16">
-      <CategorySection label="Metals" fullList={METALS} onSelectInstrument={setSelected} />
-      <CategorySection label="Crypto" fullList={CRYPTO} onSelectInstrument={setSelected} />
-      <CategorySection label="Stocks & Indices" fullList={STOCKS} onSelectInstrument={setSelected} />
+      <CategorySection label={m.metals} fullList={METALS} onSelectInstrument={setSelected} />
+      <CategorySection label={m.crypto} fullList={CRYPTO} onSelectInstrument={setSelected} />
+      <CategorySection label={m.stocks} fullList={STOCKS} onSelectInstrument={setSelected} />
       <CategorySection label="ETFs" fullList={ETFS} onSelectInstrument={setSelected} />
 
       {selected && <InstrumentDetailModal instrument={selected} onClose={() => setSelected(null)} />}

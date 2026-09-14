@@ -9,7 +9,9 @@ use Aurix\Auth\SessionAuth;
 $user = SessionAuth::user();
 
 if ($user === null) {
-    SessionAuth::json(['authenticated' => false], 401);
+    // 200 (not 401) so same-origin fetch from PhpAuthBridge stays quiet
+    // in the browser console when the visitor is simply signed out.
+    SessionAuth::json(['authenticated' => false]);
 }
 
 SessionAuth::json([

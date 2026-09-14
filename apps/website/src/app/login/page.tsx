@@ -2,10 +2,11 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { useAuth, USE_PHP_AUTH } from "@/lib/auth-context";
+import { AUTH_GOOGLE_HREF, AUTH_LOGIN_HREF, AUTH_REGISTER_HREF } from "@/lib/auth-urls";
 import { ApiError, buildHandoffUrl } from "@/lib/auth-api";
+import { BrandLogo } from "@/components/BrandLogo";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -27,15 +28,33 @@ function LoginForm() {
   // reach (see docs/PHP-AUTH.md) — when the build is configured to use
   // php-auth instead, hand off to its server-rendered login/register
   // pages rather than trying to POST to a backend that isn't there.
+  const phpTarget = mode === "register" ? AUTH_REGISTER_HREF : AUTH_LOGIN_HREF;
+
   useEffect(() => {
     if (!USE_PHP_AUTH) return;
-    window.location.href = mode === "register" ? "/auth/register.php" : "/auth/login.php";
-  }, [mode]);
+    window.location.replace(phpTarget);
+  }, [phpTarget]);
 
   if (USE_PHP_AUTH) {
     return (
       <div className="flex min-h-[calc(100vh-4.5rem)] w-full items-center justify-center bg-[var(--color-paper)] px-4 py-16">
-        <p className="text-sm font-medium text-muted">Redirecting…</p>
+        <div className="w-full max-w-sm rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)] p-8 text-center shadow-sm">
+          <p className="text-sm font-medium text-muted">Redirecting to secure sign-in…</p>
+          <div className="mt-6 flex flex-col gap-3">
+            <a
+              href={phpTarget}
+              className="rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white"
+            >
+              Continue to sign {mode === "register" ? "up" : "in"}
+            </a>
+            <a
+              href={AUTH_GOOGLE_HREF}
+              className="rounded-full border border-[var(--color-line)] px-4 py-2.5 text-sm font-semibold text-heading"
+            >
+              Continue with Google
+            </a>
+          </div>
+        </div>
       </div>
     );
   }
@@ -58,9 +77,8 @@ function LoginForm() {
   return (
     <div className="flex min-h-[calc(100vh-4.5rem)] w-full items-center justify-center bg-[var(--color-paper)] px-4 py-16">
       <div className="w-full max-w-sm rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)] p-8 shadow-sm">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/brand/aurix-mark.png" alt="" width={26} height={24} className="h-6 w-auto" />
-          <span className="text-lg font-extrabold tracking-tight text-heading">AURIX</span>
+        <Link href="/" className="inline-block transition-opacity hover:opacity-80">
+          <BrandLogo width={109} height={32} className="h-8 w-auto" />
         </Link>
         <h1 className="mt-6 text-xl font-extrabold tracking-tight text-heading">
           {mode === "login" ? t.login.signInTitle : t.login.registerTitle}

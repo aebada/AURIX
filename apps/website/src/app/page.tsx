@@ -5,28 +5,33 @@ import { Container } from "@/components/Container";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Card, StatCard, CheckItem } from "@/components/Card";
 import { CtaBand } from "@/components/CtaBand";
-import { PhoneMockup } from "@/components/PhoneMockup";
+import { HeroShowcase } from "@/components/HeroShowcase";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { AuthNavLink } from "@/components/AuthNavLink";
 import { Reveal } from "@/components/Reveal";
 import { PointcoinCoin } from "@/components/PointcoinCoin";
 import { LivePrices } from "@/components/LivePrices";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { useAuth } from "@/lib/auth-context";
-import { APP_URL } from "@/lib/auth-api";
 
 export default function Home() {
   const { t } = useLanguage();
-  const { token } = useAuth();
   const h = t.home;
 
   return (
     <>
-      {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[var(--color-surface)]">
-        <Container className="grid gap-12 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-80"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 50% at 85% 20%, var(--glow-gold-soft), transparent 60%), radial-gradient(ellipse 50% 40% at 10% 80%, var(--glow-gold-soft), transparent 55%)",
+          }}
+          aria-hidden
+        />
+        <Container className="relative grid gap-12 py-16 lg:grid-cols-2 lg:items-center lg:py-24">
           <Reveal>
             <Eyebrow>{h.eyebrowHero}</Eyebrow>
-            <h1 className="mt-5 font-extrabold tracking-tight text-4xl leading-[1.05] text-heading sm:text-5xl lg:text-7xl">
+            <h1 className="mt-5 font-extrabold tracking-tight text-4xl leading-[1.05] text-heading sm:text-5xl lg:text-6xl xl:text-7xl">
               {h.h1Line1}
               <br />
               <span className="text-gradient-gold">{h.h1Line2}</span>
@@ -34,27 +39,30 @@ export default function Home() {
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
               {h.sub}
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              {token ? (
-                <a
-                  href={APP_URL}
-                  className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
-                >
-                  {t.header.dashboard}
-                </a>
-              ) : (
-                <Link
-                  href="/login?mode=register"
-                  className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
-                >
-                  {h.ctaPrimary}
-                </Link>
-              )}
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/how-it-works"
-                className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
+                href="/app/?tour=1"
+                className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
+              >
+                {h.ctaPrimary}
+              </Link>
+              <Link
+                href="/demo"
+                className="rounded-full border border-[var(--color-line)] bg-[var(--color-paper)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
               >
                 {h.ctaSecondary}
+              </Link>
+              <Link
+                href="/business"
+                className="rounded-full border border-[var(--color-line)] bg-[var(--color-paper)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
+              >
+                {h.ctaBusiness}
+              </Link>
+              <Link
+                href="/investors"
+                className="rounded-full px-5 py-3.5 text-sm font-bold text-gold-dark underline-offset-4 transition-colors hover:underline"
+              >
+                Investors
               </Link>
             </div>
             <div className="mt-8">
@@ -62,16 +70,59 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={150} className="flex items-center justify-center">
-            <div className="relative flex w-full max-w-md items-center justify-center overflow-hidden rounded-[2.5rem] bg-navy-glow p-10 sm:p-14">
-              <PhoneMockup />
-            </div>
+            <HeroShowcase />
           </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-16">
+        <Container>
+          <Reveal>
+            <Eyebrow>{h.pathsEyebrow}</Eyebrow>
+            <h2 className="mt-3 max-w-2xl font-extrabold tracking-tight text-2xl text-heading sm:text-3xl">
+              {h.pathsH2}
+            </h2>
+          </Reveal>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {h.paths.map((path, i) => {
+              const inner = (
+                <>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gold-dark">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-3 font-extrabold tracking-tight text-lg text-heading">
+                    {path.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                    {path.body}
+                  </p>
+                  <span className="mt-5 inline-flex text-sm font-bold text-navy dark:text-gold-light">
+                    {path.cta} →
+                  </span>
+                </>
+              );
+              const className =
+                "flex h-full flex-col rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)] p-6 transition-all hover:-translate-y-0.5 hover:border-navy/30 hover:shadow-lg";
+              return (
+                <Reveal key={path.title} delay={i * 80}>
+                  {path.href.startsWith("/auth/") ? (
+                    <AuthNavLink href={path.href} className={className}>
+                      {inner}
+                    </AuthNavLink>
+                  ) : (
+                    <Link href={path.href} className={className}>
+                      {inner}
+                    </Link>
+                  )}
+                </Reveal>
+              );
+            })}
+          </div>
         </Container>
       </section>
 
       <LivePrices />
 
-      {/* Problem */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
           <Reveal>
@@ -84,12 +135,8 @@ export default function Home() {
             {h.problem.items.map((p, i) => (
               <Reveal key={p.number} delay={i * 100}>
                 <p className="font-extrabold tracking-tight text-2xl text-gold">{p.number}</p>
-                <h3 className="mt-2 text-lg font-semibold text-heading">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {p.body}
-                </p>
+                <h3 className="mt-2 text-lg font-semibold text-heading">{p.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{p.body}</p>
               </Reveal>
             ))}
           </div>
@@ -99,7 +146,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Solution */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
@@ -112,68 +158,81 @@ export default function Home() {
             {h.solution.items.map((s, i) => (
               <Reveal key={s.title} delay={i * 100}>
                 <Card>
-                  <h3 className="font-extrabold tracking-tight text-lg text-heading">
-                    {s.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {s.body}
-                  </p>
+                  <h3 className="font-extrabold tracking-tight text-lg text-heading">{s.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{s.body}</p>
                 </Card>
               </Reveal>
             ))}
           </div>
           <div className="mt-14 rounded-3xl bg-navy px-8 py-6 text-center">
-            <p className="font-extrabold tracking-tight text-lg text-white">
-              {h.solution.formula}
-            </p>
+            <p className="font-extrabold tracking-tight text-lg text-white">{h.solution.formula}</p>
           </div>
         </Container>
       </section>
 
-      {/* Pointcoin */}
-      <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
-        <Container>
-          <div className="grid items-center gap-14 lg:grid-cols-2">
+      <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24 lg:py-32">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 55% 45% at 18% 55%, var(--glow-gold-soft), transparent 70%), radial-gradient(ellipse 40% 35% at 88% 20%, var(--glow-gold-soft), transparent 65%)",
+          }}
+          aria-hidden
+        />
+        <Container className="relative">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 xl:gap-20">
             <Reveal className="order-2 flex justify-center lg:order-1">
-              <PointcoinCoin className="h-64 w-64 drop-shadow-xl sm:h-80 sm:w-80" />
+              <PointcoinCoin className="h-72 w-72 sm:h-80 sm:w-80 lg:h-[22rem] lg:w-[22rem]" />
             </Reveal>
             <Reveal delay={100} className="order-1 lg:order-2">
               <Eyebrow>{h.pointcoin.eyebrow}</Eyebrow>
-              <h2 className="mt-4 max-w-xl font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
+              <h2 className="mt-5 max-w-xl font-extrabold tracking-tight text-4xl leading-[1.05] text-heading sm:text-5xl">
                 {h.pointcoin.h2}
               </h2>
-              <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted">
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">
                 {h.pointcoin.body}
               </p>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-8 space-y-3.5">
                 {h.pointcoin.checks.map((c) => (
                   <CheckItem key={c}>{c}</CheckItem>
                 ))}
               </ul>
-              <div className="mt-8 grid grid-cols-3 gap-6 border-t border-[var(--color-line)] pt-6">
-                {h.pointcoin.facts.map((f) => (
-                  <div key={f.value}>
-                    <p className="font-extrabold tracking-tight text-xl text-gradient-gold sm:text-2xl">
-                      {f.value}
-                    </p>
-                    <p className="mt-1 text-xs leading-snug text-muted">
-                      {f.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
               <Link
                 href="/whitepaper"
-                className="mt-8 inline-block text-sm font-semibold text-gold-dark hover:underline"
+                className="group mt-10 inline-flex items-center gap-2 text-sm font-bold text-gold-dark transition-colors hover:text-heading"
               >
-                {h.pointcoin.link}
+                <span className="underline-offset-4 group-hover:underline">
+                  {h.pointcoin.link.replace(/\s*→\s*$/, "")}
+                </span>
+                <span
+                  aria-hidden
+                  className="translate-x-0 transition-transform duration-200 group-hover:translate-x-1"
+                >
+                  →
+                </span>
               </Link>
             </Reveal>
+          </div>
+
+          <div className="mt-16 grid gap-10 border-t border-[var(--color-line)] pt-12 sm:mt-20 sm:grid-cols-3 sm:gap-0 lg:mt-24 lg:pt-14">
+            {h.pointcoin.facts.map((f, i) => (
+              <Reveal
+                key={f.value}
+                delay={80 + i * 100}
+                className={`sm:px-8 ${i > 0 ? "sm:border-l sm:border-[var(--color-line)]" : "sm:pl-0"}`}
+              >
+                <p className="font-extrabold tracking-tighter text-4xl text-gradient-gold sm:text-5xl lg:text-6xl">
+                  {f.value}
+                </p>
+                <p className="mt-3 max-w-[17rem] text-sm leading-relaxed text-muted">
+                  {f.label}
+                </p>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>
 
-      {/* Platform */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
@@ -185,9 +244,7 @@ export default function Home() {
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {h.platform.groups.map((p, i) => (
               <Reveal key={p.title} delay={i * 100}>
-                <h3 className="font-extrabold tracking-tight text-lg text-heading">
-                  {p.title}
-                </h3>
+                <h3 className="font-extrabold tracking-tight text-lg text-heading">{p.title}</h3>
                 <ul className="mt-4 space-y-3">
                   {p.items.map((item) => (
                     <CheckItem key={item}>{item}</CheckItem>
@@ -199,7 +256,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Two-layer architecture */}
       <section className="border-b border-white/10 bg-navy py-24 text-white">
         <Container>
           <Reveal>
@@ -236,7 +292,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Market opportunity */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
@@ -253,7 +308,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Revenue */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
           <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr]">
@@ -262,9 +316,7 @@ export default function Home() {
               <h2 className="mt-4 font-extrabold tracking-tight text-3xl text-heading">
                 {h.revenue.h2}
               </h2>
-              <p className="mt-6 text-sm leading-relaxed text-muted">
-                {h.revenue.body}
-              </p>
+              <p className="mt-6 text-sm leading-relaxed text-muted">{h.revenue.body}</p>
             </Reveal>
             <Reveal delay={100} className="grid gap-8 sm:grid-cols-2">
               {h.revenue.streams.map((r) => (
@@ -272,9 +324,7 @@ export default function Home() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-gold-dark">
                     {r.title}
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/80">
-                    {r.body}
-                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink/80">{r.body}</p>
                 </div>
               ))}
             </Reveal>
@@ -282,7 +332,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Competitive landscape */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-24">
         <Container>
           <Reveal>
@@ -318,7 +367,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Insights */}
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-24">
         <Container>
           <Reveal>
@@ -337,16 +385,12 @@ export default function Home() {
                   <h3 className="mt-4 font-extrabold tracking-tight text-lg text-heading">
                     {post.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {post.excerpt}
-                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{post.excerpt}</p>
                 </Card>
               </Reveal>
             ))}
           </div>
-          <p className="mt-8 text-xs text-muted">
-            {h.insights.note}
-          </p>
+          <p className="mt-8 text-xs text-muted">{h.insights.note}</p>
         </Container>
       </section>
 

@@ -25,7 +25,7 @@ function auth_render_page(array $page): void
 <body>
   <div class="page">
     <header class="nav">
-      <a class="brand" href="/">AURIX</a>
+      <a class="brand" href="/"><img class="brand-logo" src="/brand/aurix-logo.png" alt="AURIX" width="109" height="32" /></a>
       <a class="nav-link" href="/">Home</a>
     </header>
     <main class="main">

@@ -1,0 +1,22 @@
+# Local secrets — never commit
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+.DS_Store
+*.pem
+
+# Local Next.js / build artifacts
+.next/
+**/.next/
+node_modules/
+**/node_modules/
+out/
+apps/website/out/
+
+# Large binaries — upload APK to hosting separately if needed
+*.apk
+apps/website/public/downloads/*.apk

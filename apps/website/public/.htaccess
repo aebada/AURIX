@@ -8,3 +8,13 @@ DirectoryIndex index.html index.php
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 </IfModule>
+
+# Live auth is php-auth (see docs/PHP-AUTH.md). Keep /login as a stable
+# marketing URL, but hand off to the PHP forms so users never hit the
+# static Next.js mock that POSTs to an unhosted services/backend.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{QUERY_STRING} (^|&)mode=register(&|$) [NC]
+  RewriteRule ^login/?$ /auth/register.php [R=302,L,QSD]
+  RewriteRule ^login/?$ /auth/login.php [R=302,L]
+</IfModule>

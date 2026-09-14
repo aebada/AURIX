@@ -6,6 +6,8 @@ import { CurrencyProvider } from "@/lib/currency-context";
 import { AuthProvider } from "@/lib/auth-context";
 import { LanguageProvider } from "@/lib/i18n/language-context";
 import { PhpAuthBridge } from "@/components/PhpAuthBridge";
+import { ChatWidget } from "@/components/ChatWidget";
+import { MarketingChrome } from "@/components/MarketingChrome";
 
 export const metadata: Metadata = {
   title: {
@@ -17,12 +19,16 @@ export const metadata: Metadata = {
 };
 
 // Applies the stored/system theme before first paint so there's no
-// light-mode flash for users who prefer/chose dark. Runs from a plain
-// inline script (not next/script) since this is a fully static export.
+// light-mode flash. Sets data-theme + .dark for dark themes (night /
+// prestige / ocean). Runs from a plain inline script (not next/script)
+// since this is a fully static export.
 const themeInitScript = `(function(){try{
+  var allowed = {light:1,dark:1,gold:1,ocean:1,classic:1};
   var t = localStorage.getItem("aurix-theme");
-  if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  if (t === "dark") document.documentElement.classList.add("dark");
+  if (!t || !allowed[t]) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  var dark = t === "dark" || t === "gold" || t === "ocean";
+  document.documentElement.setAttribute("data-theme", t);
+  document.documentElement.classList.toggle("dark", dark);
 }catch(e){}})();`;
 
 // Applies the stored language (and RTL direction for Arabic) before first
@@ -49,9 +55,13 @@ export default function RootLayout({
           <AuthProvider>
             <PhpAuthBridge />
             <CurrencyProvider>
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
+              <MarketingChrome
+                header={<Header />}
+                footer={<Footer />}
+                chat={<ChatWidget />}
+              >
+                {children}
+              </MarketingChrome>
             </CurrencyProvider>
           </AuthProvider>
         </LanguageProvider>

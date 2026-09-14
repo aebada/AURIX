@@ -1,86 +1,92 @@
-import type { Metadata } from "next";
+"use client";
+
+import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/Container";
 import { Eyebrow } from "@/components/Eyebrow";
 import { CtaBand } from "@/components/CtaBand";
+import { useLanguage } from "@/lib/i18n/language-context";
 
-export const metadata: Metadata = {
-  title: "Partners",
-  description:
-    "The categories of licensed providers AURIX orchestrates: vaults, payments, banking, crypto, brokerage, gift cards, and compliance.",
-};
-
-const categories = [
+const VERTICALS = [
   {
-    title: "Vault Providers",
-    body: "Gold and silver custody, allocation, and redemption.",
-    candidates: ["BullionVault", "OneGold", "MetalPay", "Tradewind Markets"],
+    id: "banks",
+    title: "Banks",
+    body: "Open banking, account linking, and settlement visibility with licensed banking partners. AURIX is an orchestration layer — not a bank.",
+    candidates: ["Plaid", "TrueLayer", "Tink", "Regional bank APIs"],
+    cta: { href: "/contact?role=partner&vertical=banks", label: "Bank partnership inquiry" },
   },
   {
-    title: "Payment Providers",
-    body: "Card payments, wallet top-ups, settlements, and payouts.",
-    candidates: ["Stripe", "PayPal", "Adyen", "Tap Payments", "Wise"],
+    id: "payments",
+    title: "Payments",
+    body: "Card acquiring, wallet top-ups, merchant QR/NFC acceptance concepts, and payout rails through payment processors — practice UI now, live when certified.",
+    candidates: ["Stripe", "Adyen", "PayPal", "Tap Payments", "Wise"],
+    cta: { href: "/app/business/", label: "Try merchant practice flows" },
   },
   {
-    title: "Banking / Open Banking",
-    body: "Bank linking, account verification, and transfers.",
-    candidates: ["Plaid", "TrueLayer", "Tink"],
-  },
-  {
-    title: "Crypto",
-    body: "Price feed, liquidity, and wallet connections.",
-    candidates: ["Binance", "Coinbase", "Kraken", "Fireblocks"],
-  },
-  {
-    title: "Stocks & ETFs",
-    body: "Investing, portfolio data, and market prices.",
+    id: "investments",
+    title: "Investments",
+    body: "Brokerage and RWA-adjacent rails for future investment products. Investor relations and diligence live on /investors — no live custody claims.",
     candidates: ["Alpaca", "DriveWealth", "Interactive Brokers"],
+    cta: { href: "/investors#inquiry", label: "Investor inquiry" },
   },
   {
-    title: "Gift Cards & Rewards",
-    body: "Digital gift cards, merchant integrations, and rewards.",
-    candidates: ["Tremendous", "Reloadly", "Tango Card", "Bitrefill"],
-  },
-  {
-    title: "KYC & Compliance",
-    body: "Identity verification, AML, and sanctions screening.",
-    candidates: ["SumSub", "Onfido", "Veriff", "Persona"],
-  },
-  {
-    title: "Market Data",
-    body: "Live gold, silver, FX, and equity pricing feeds.",
-    candidates: ["LBMA pricing feeds", "Refinitiv"],
+    id: "partners",
+    title: "Partners",
+    body: "Vault/custody candidates, KYC/AML, market data, gift cards, and crypto liquidity — evaluated categories, not signed live integrations yet.",
+    candidates: [
+      "BullionVault / Malca-Amit (custody candidates)",
+      "SumSub / Onfido / Veriff",
+      "LBMA pricing feeds",
+      "Fireblocks / exchanges",
+    ],
+    cta: { href: "/contact?role=partner", label: "Become a partner" },
   },
 ];
 
 export default function PartnersPage() {
+  const { t } = useLanguage();
+  const p = t.pages.partners;
+
   return (
     <>
-      <PageHero
-        eyebrow="Partners"
-        title="AURIX doesn't custody assets. Licensed partners do."
-        description="Every category below represents a class of regulated provider that AURIX orchestrates through secure APIs. Names listed are best-fit candidates the team is evaluating — not yet signed commercial partners."
-      />
+      <PageHero eyebrow={p.eyebrow} title={p.title} description={p.description} />
 
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-20">
         <Container>
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {categories.map((c) => (
-              <div key={c.title}>
-                <h3 className="text-base font-semibold text-heading">
-                  {c.title}
+          <Eyebrow>Four partnership verticals</Eyebrow>
+          <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-3xl text-heading">
+            Banks · Payments · Investments · Partners
+          </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
+            Names below are evaluation candidates — not commercial partners yet.
+            Live custody and money movement stay off until RESERVE_LIVE and
+            processor certification allow it.
+          </p>
+          <div className="mt-14 grid gap-8 lg:grid-cols-2">
+            {VERTICALS.map((v) => (
+              <div
+                key={v.id}
+                id={v.id}
+                className="scroll-mt-28 rounded-3xl border border-[var(--color-line)] bg-[var(--color-paper)] p-8"
+              >
+                <h3 className="font-extrabold tracking-tight text-xl text-heading">
+                  {v.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {c.body}
-                </p>
-                <p className="mt-4 text-xs uppercase tracking-wider text-gold-dark">
-                  Candidates
+                <p className="mt-3 text-sm leading-relaxed text-muted">{v.body}</p>
+                <p className="mt-6 text-xs font-bold uppercase tracking-wider text-gold-dark">
+                  {p.candidates}
                 </p>
                 <ul className="mt-2 space-y-1 text-sm text-ink/70">
-                  {c.candidates.map((name) => (
+                  {v.candidates.map((name) => (
                     <li key={name}>{name}</li>
                   ))}
                 </ul>
+                <Link
+                  href={v.cta.href}
+                  className="mt-6 inline-flex text-sm font-bold text-navy hover:underline dark:text-gold-light"
+                >
+                  {v.cta.label} →
+                </Link>
               </div>
             ))}
           </div>
@@ -89,19 +95,31 @@ export default function PartnersPage() {
 
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-16">
         <Container>
-          <Eyebrow>Become a Partner</Eyebrow>
+          <Eyebrow>{p.becomeEyebrow}</Eyebrow>
           <h2 className="mt-4 max-w-2xl font-extrabold tracking-tight text-2xl text-heading">
-            Vault operators, payment providers, and compliance partners —
-            we&apos;d like to hear from you.
+            {p.becomeH2}
           </h2>
+          <p className="mt-4 max-w-2xl text-sm text-muted">
+            Also explore the{" "}
+            <Link href="/business" className="font-semibold text-gold-dark hover:underline">
+              business
+            </Link>{" "}
+            and{" "}
+            <Link href="/investors" className="font-semibold text-gold-dark hover:underline">
+              investors
+            </Link>{" "}
+            pathways for institutional conversations.
+          </p>
         </Container>
       </section>
 
       <CtaBand
-        title="Explore a partnership."
-        description="Reach out and our partnerships team will follow up as vendor selection opens up."
-        primaryHref="/contact"
-        primaryLabel="Contact Us"
+        title={p.ctaTitle}
+        description={p.ctaDescription}
+        primaryHref="/contact?role=partner"
+        primaryLabel={p.ctaPrimary}
+        secondaryHref="/business"
+        secondaryLabel="Business overview"
       />
     </>
   );

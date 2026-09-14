@@ -1,3 +1,5 @@
+import { pageDictionaries, type PageDictionaries } from "./pages";
+
 export type Locale = "en" | "de" | "ar";
 
 export const LOCALES: { code: Locale; label: string; dir: "ltr" | "rtl" }[] = [
@@ -7,9 +9,12 @@ export const LOCALES: { code: Locale; label: string; dir: "ltr" | "rtl" }[] = [
 ];
 
 export interface Dictionary {
+  pages: PageDictionaries;
   nav: {
+    personal: string;
     howItWorks: string;
     features: string;
+    demo: string;
     markets: string;
     pricing: string;
     security: string;
@@ -20,12 +25,17 @@ export interface Dictionary {
     whitepaper: string;
     partners: string;
     careers: string;
+    investors: string;
+    download: string;
+    webApp: string;
+    business: string;
   };
   header: {
     login: string;
     signup: string;
     dashboard: string;
     signout: string;
+    tryDemo: string;
   };
   footer: {
     tagline: string;
@@ -43,6 +53,7 @@ export interface Dictionary {
     appStore: string;
     comingSoonGoogle: string;
     googlePlay: string;
+    downloadAndroid: string;
   };
   cta: {
     title: string;
@@ -59,6 +70,11 @@ export interface Dictionary {
     sub: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    ctaDemo: string;
+    ctaBusiness: string;
+    pathsEyebrow: string;
+    pathsH2: string;
+    paths: { title: string; body: string; href: string; cta: string }[];
     problem: {
       eyebrow: string;
       h2: string;
@@ -138,9 +154,12 @@ export interface Dictionary {
 
 export const dictionaries: Record<Locale, Dictionary> = {
   en: {
+    pages: pageDictionaries.en,
     nav: {
+      personal: "Personal",
       howItWorks: "How It Works",
       features: "Features",
+      demo: "Demo",
       markets: "Markets",
       pricing: "Pricing",
       security: "Security",
@@ -151,12 +170,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
       whitepaper: "Whitepaper",
       partners: "Partners",
       careers: "Careers",
+      investors: "Investors",
+      download: "Download",
+      webApp: "Open web app",
+      business: "Business",
     },
     header: {
       login: "Log in",
       signup: "Sign up",
-      dashboard: "Dashboard",
+      dashboard: "Open web app",
       signout: "Sign out",
+      tryDemo: "Try demo",
     },
     footer: {
       tagline:
@@ -175,6 +199,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       appStore: "App Store",
       comingSoonGoogle: "Coming soon on",
       googlePlay: "Google Play",
+      downloadAndroid: "Preview available —",
     },
     cta: {
       title: "Be first when AURIX opens its doors.",
@@ -190,9 +215,33 @@ export const dictionaries: Record<Locale, Dictionary> = {
       eyebrowHero: "The Fintech Revolution — 2026",
       h1Line1: "Measured Trust.",
       h1Line2: "Real Digital Money.",
-      sub: "AURIX combines gold- and silver-backed reserves, AI-driven auditing, and an instant global payment network — a new category of money for the post-fiat era.",
-      ctaPrimary: "Create your account",
-      ctaSecondary: "See How It Works",
+      sub: "One account for customers, businesses, and partners — multi-wallets, payments, and gold-linked value. Practice the product today; live custody stays gated until certification.",
+      ctaPrimary: "Try practice mode",
+      ctaSecondary: "Watch walkthrough",
+      ctaDemo: "Watch product demo",
+      ctaBusiness: "For businesses",
+      pathsEyebrow: "Three audiences",
+      pathsH2: "Customers · Investors · Businesses",
+      paths: [
+        {
+          title: "Customers",
+          body: "Personal multi-wallets, practice pay & trade, and a modern neobank-style app — try the demo or download.",
+          href: "/app/?tour=1",
+          cta: "Try practice mode",
+        },
+        {
+          title: "Investors",
+          body: "Platform thesis, milestones, and a direct IR inquiry form — honest early-stage status, no fake live vault claims.",
+          href: "/investors",
+          cta: "Investor relations",
+        },
+        {
+          title: "Businesses",
+          body: "Treasury, payroll, merchant payments, and partner verticals for banks, payments, and investments.",
+          href: "/business",
+          cta: "Business & partners",
+        },
+      ],
       problem: {
         eyebrow: "The Problem",
         h2: "A broken financial system",
@@ -221,32 +270,32 @@ export const dictionaries: Record<Locale, Dictionary> = {
         items: [
           {
             title: "Hybrid Reserve System",
-            body: "Every unit is 100% backed by physical gold and silver stored in high-security, audited vaults. We bridge the gap between physical reality and digital speed.",
+            body: "Designed so digital units map to physical gold and silver held by licensed custodians — not AURIX. Live vault allocation is in certification (RESERVE_LIVE=false).",
           },
           {
-            title: "Continuous AI Audit",
-            body: "Real-time cryptographic verification and AI-driven monitoring ensure that digital units always match physical reserves. Trust is measured, not promised.",
+            title: "AI Governance Layer",
+            body: "Anomaly detection and governance scoring are built for continuous verification when partner reserve feeds go live. Irreversible actions stay human-approved.",
           },
           {
             title: "Instant Global Utility",
-            body: "A high-performance payment network that makes precious metals as liquid as cash — instantly usable for transfers, retail payments, and savings.",
+            body: "Practice payments, transfers, and business payouts today. Live fiat and metal rails activate only with certified payment and custody partners.",
           },
         ],
-        formula: "Real Asset Reserve + Digital Payment Network = AURIX",
+        formula: "Partner Reserves + Payment Network + Governance = AURIX",
       },
       pointcoin: {
         eyebrow: "Introducing Pointcoin",
-        h2: "Real gold, down to the point.",
-        body: "Pointcoin is AURIX's atomic unit of ownership — our BPC (Base Precious Coin) standard. Every Pointcoin represents exactly 0.0001g of vaulted gold or silver, minted the moment a deposit is verified and burned the moment it's redeemed. No promises, no synthetic exposure — just physical reserves, tokenized down to a fractionable, spendable point.",
+        h2: "Gold-linked units, down to the point.",
+        body: "Pointcoin is AURIX's atomic unit standard (BPC): 0.0001g of gold or silver per unit when custody partners are live. Until then, the app uses practice balances — no claim that metal is vaulted or redeemable today.",
         checks: [
-          "Fully allocated ownership — legal, not just price exposure",
-          "Used directly for payments, transfers, savings, and gold-backed collateral",
-          "Continuous proof-of-reserve — issued supply can never exceed vaulted metal",
+          "Designed for allocated ownership via licensed partners — not AURIX custody",
+          "Practice payments, transfers, and savings in the web and mobile apps",
+          "Proof-of-reserve roadmap — issued supply must never exceed vaulted metal when live",
         ],
         facts: [
-          { value: "0.0001g", label: "Smallest unit — one Pointcoin, enabling true micro-ownership" },
-          { value: "1:1", label: "Every Pointcoin issued is matched by vaulted gold or silver" },
-          { value: "24/7", label: "AI-audited proof-of-reserve, continuously verified against vault APIs" },
+          { value: "0.0001g", label: "Designed smallest unit — one Pointcoin for micro-ownership when live" },
+          { value: "1:1", label: "Target rule: issued units never exceed partner-vaulted metal (gated)" },
+          { value: "Practice", label: "Web & mobile practice balances today — live reserves coming soon" },
         ],
         link: "Read the full tokenization model →",
       },
@@ -381,9 +430,12 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
   },
   de: {
+    pages: pageDictionaries.de,
     nav: {
+      personal: "Privat",
       howItWorks: "So funktioniert's",
       features: "Funktionen",
+      demo: "Demo",
       markets: "Märkte",
       pricing: "Preise",
       security: "Sicherheit",
@@ -394,12 +446,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
       whitepaper: "Whitepaper",
       partners: "Partner",
       careers: "Karriere",
+      investors: "Investoren",
+      download: "Download",
+      webApp: "Web-App öffnen",
+      business: "Business",
     },
     header: {
       login: "Anmelden",
       signup: "Registrieren",
-      dashboard: "Dashboard",
+      dashboard: "Web-App öffnen",
       signout: "Abmelden",
+      tryDemo: "Demo testen",
     },
     footer: {
       tagline:
@@ -418,6 +475,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       appStore: "App Store",
       comingSoonGoogle: "Demnächst bei",
       googlePlay: "Google Play",
+      downloadAndroid: "Vorschau verfügbar —",
     },
     cta: {
       title: "Seien Sie dabei, wenn AURIX seine Türen öffnet.",
@@ -433,9 +491,33 @@ export const dictionaries: Record<Locale, Dictionary> = {
       eyebrowHero: "Die Fintech-Revolution — 2026",
       h1Line1: "Verlässliches Vertrauen.",
       h1Line2: "Echtes digitales Geld.",
-      sub: "AURIX verbindet gold- und silberbesicherte Reserven, KI-gestützte Prüfung und ein sofortiges globales Zahlungsnetzwerk — eine neue Geldkategorie für die Zeit nach dem Fiatgeld.",
-      ctaPrimary: "Konto erstellen",
-      ctaSecondary: "So funktioniert's",
+      sub: "Ein Konto für Kunden, Unternehmen und Partner — Multi-Wallets, Zahlungen und goldverknüpfter Wert. Produkt heute üben; Live-Verwahrung bleibt bis zur Zertifizierung gesperrt.",
+      ctaPrimary: "Übungsmodus starten",
+      ctaSecondary: "Rundgang ansehen",
+      ctaDemo: "Produktdemo ansehen",
+      ctaBusiness: "Für Unternehmen",
+      pathsEyebrow: "Drei Zielgruppen",
+      pathsH2: "Kunden · Investoren · Unternehmen",
+      paths: [
+        {
+          title: "Kunden",
+          body: "Persönliche Multi-Wallets, Übungszahlungen & Handel — Demo testen oder Download.",
+          href: "/app/?tour=1",
+          cta: "Übungsmodus starten",
+        },
+        {
+          title: "Investoren",
+          body: "These, Meilensteine und direktes IR-Formular — ehrlicher Early-Stage-Status, keine Fake-Vault-Claims.",
+          href: "/investors",
+          cta: "Investor Relations",
+        },
+        {
+          title: "Unternehmen",
+          body: "Treasury, Payroll, Händlerzahlungen und Partner-Vertikalen für Banken, Payments und Investments.",
+          href: "/business",
+          cta: "Business & Partner",
+        },
+      ],
       problem: {
         eyebrow: "Das Problem",
         h2: "Ein kaputtes Finanzsystem",
@@ -624,9 +706,12 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
   },
   ar: {
+    pages: pageDictionaries.ar,
     nav: {
+      personal: "الأفراد",
       howItWorks: "كيف يعمل",
       features: "المزايا",
+      demo: "عرض توضيحي",
       markets: "الأسواق",
       pricing: "الأسعار",
       security: "الأمان",
@@ -637,12 +722,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
       whitepaper: "الورقة البيضاء",
       partners: "الشركاء",
       careers: "الوظائف",
+      investors: "المستثمرون",
+      download: "تحميل",
+      webApp: "فتح تطبيق الويب",
+      business: "الأعمال",
     },
     header: {
       login: "تسجيل الدخول",
       signup: "إنشاء حساب",
-      dashboard: "لوحة التحكم",
+      dashboard: "فتح تطبيق الويب",
       signout: "تسجيل الخروج",
+      tryDemo: "جرّب العرض",
     },
     footer: {
       tagline:
@@ -661,6 +751,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       appStore: "App Store",
       comingSoonGoogle: "قريبًا على",
       googlePlay: "Google Play",
+      downloadAndroid: "معاينة متاحة —",
     },
     cta: {
       title: "كن أول من ينضم عند افتتاح أبواب AURIX.",
@@ -675,9 +766,33 @@ export const dictionaries: Record<Locale, Dictionary> = {
       eyebrowHero: "ثورة التكنولوجيا المالية — 2026",
       h1Line1: "ثقة مُقاسة.",
       h1Line2: "مال رقمي حقيقي.",
-      sub: "تجمع AURIX بين احتياطيات مدعومة بالذهب والفضة، وتدقيق مدفوع بالذكاء الاصطناعي، وشبكة مدفوعات عالمية فورية — فئة جديدة من المال لعصر ما بعد العملات الورقية.",
-      ctaPrimary: "أنشئ حسابك",
-      ctaSecondary: "كيف يعمل",
+      sub: "حساب واحد. محافظ متعددة — شخصية وتجارية وللأطفال — مدعومة بالذهب والفضة، مع دفع فوري وقسائم واحتياطيات تدققها الذكاء الاصطناعي.",
+      ctaPrimary: "بدء وضع التدريب",
+      ctaSecondary: "شاهد الجولة",
+      ctaDemo: "شاهد عرض المنتج",
+      ctaBusiness: "حسابات الأعمال",
+      pathsEyebrow: "ابدأ من هنا",
+      pathsH2: "ماذا تريد أن تفعل؟",
+      paths: [
+        {
+          title: "افتح حسابًا شخصيًا",
+          body: "جيوب متعددة للعملات للذهب والفضة والنقد — ادفع وادّخر وبدّل كما في بنك رقمي حديث.",
+          href: "/app/?tour=1",
+          cta: "بدء وضع التدريب",
+        },
+        {
+          title: "إدارة خزينة الأعمال",
+          body: "محافظ شركات ومقاعد فريق وجيوب رواتب وقسائم — مبنية للمشغّلين لا للمستهلكين فقط.",
+          href: "/app/business/",
+          cta: "فتح محفظة الأعمال",
+        },
+        {
+          title: "شاهده يعمل",
+          body: "عرض تلقائي قصير للمحافظ والتداول والمدفوعات والاحتياطيات — دون تسجيل.",
+          href: "/demo",
+          cta: "تشغيل العرض",
+        },
+      ],
       problem: {
         eyebrow: "المشكلة",
         h2: "نظام مالي مُختل",

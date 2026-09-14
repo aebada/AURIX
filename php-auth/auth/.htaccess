@@ -1,0 +1,13 @@
+# HOPn / Invoice-style pretty OAuth paths (same AlPass client family).
+# Google Console / bridge callbacks use /auth/google/callback — not .php.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /auth/
+
+    # /auth/google → google.php
+    RewriteRule ^google/?$ google.php [L,QSA]
+
+    # /auth/google/callback → google-callback.php
+    RewriteRule ^google/callback/?$ google-callback.php [L,QSA]
+</IfModule>

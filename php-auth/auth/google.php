@@ -17,6 +17,16 @@ if ($callback !== '') {
 }
 
 try {
+    if ($config->shouldUseOauthBridge()) {
+        // Same concept as Invoice AI / HOPn apps: Google consent happens on
+        // aipass.space (redirect_uri already registered). AI-Pass returns
+        // bridge_token to our HOPn-style callback path.
+        $bridgeCallback = $config->appUrl . '/auth/google/callback';
+        $url = $config->aipassAuthUrl . '/auth/google'
+            . '?bridge=1&callback=' . rawurlencode($bridgeCallback);
+        SessionAuth::redirect($url);
+    }
+
     $google = new GoogleOAuth($config);
     $state = Csrf::issueOAuthState();
     $url = $google->authorizationUrl($state);

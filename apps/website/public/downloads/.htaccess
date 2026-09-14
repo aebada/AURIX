@@ -1,0 +1,11 @@
+# APK downloads — correct MIME type for Android sideload installs.
+<IfModule mod_mime.c>
+  AddType application/vnd.android.package-archive .apk
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.apk$">
+    Header set Content-Disposition "attachment; filename=aurix-mobile.apk"
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>

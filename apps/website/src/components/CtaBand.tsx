@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { AuthNavLink } from "./AuthNavLink";
+import { AUTH_REGISTER_HREF } from "@/lib/auth-urls";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { useAuth } from "@/lib/auth-context";
-import { APP_URL } from "@/lib/auth-api";
 
 export function CtaBand({
   title,
   description,
-  primaryHref,
+  primaryHref = AUTH_REGISTER_HREF,
   primaryLabel,
   secondaryHref = "/whitepaper",
   secondaryLabel,
@@ -21,25 +21,9 @@ export function CtaBand({
   secondaryLabel?: string;
 }) {
   const { t } = useLanguage();
-  const { token } = useAuth();
-  // Callers that pass their own primaryHref/primaryLabel (e.g. "Contact
-  // Us", "Reserve Transparency") already point somewhere sensible
-  // regardless of auth state — only the signed-out signup default needs
-  // swapping to "go to your dashboard" once the visitor already has an
-  // account.
-  const usingDefaultPrimary = primaryHref === undefined && primaryLabel === undefined;
-
-  if (token && usingDefaultPrimary) {
-    title ??= t.cta.loggedInTitle;
-    description ??= t.cta.loggedInDescription;
-    primaryHref = APP_URL;
-    primaryLabel = t.header.dashboard;
-  } else {
-    title ??= t.cta.title;
-    description ??= t.cta.description;
-    primaryHref ??= "/login?mode=register";
-    primaryLabel ??= t.cta.primary;
-  }
+  title ??= t.cta.title;
+  description ??= t.cta.description;
+  primaryLabel ??= t.cta.primary;
   secondaryLabel ??= t.cta.secondary;
 
   return (
@@ -53,12 +37,12 @@ export function CtaBand({
             <p className="mt-4 text-white/70">{description}</p>
           </div>
           <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row">
-            <Link
+            <AuthNavLink
               href={primaryHref}
               className="rounded-full bg-gradient-to-br from-[var(--color-gold-light)] to-[var(--color-gold-dark)] px-6 py-3 text-center text-sm font-bold text-navy transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-black/20 active:translate-y-0"
             >
               {primaryLabel}
-            </Link>
+            </AuthNavLink>
             <Link
               href={secondaryHref}
               className="rounded-full border border-white/25 px-6 py-3 text-center text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 active:translate-y-0"

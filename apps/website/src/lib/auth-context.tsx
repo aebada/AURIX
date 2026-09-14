@@ -2,6 +2,9 @@
 
 import { createContext, useCallback, useContext, useSyncExternalStore, type ReactNode } from "react";
 import { authApi, type AuthUser } from "./auth-api";
+import { USE_PHP_AUTH } from "./auth-urls";
+
+export { USE_PHP_AUTH } from "./auth-urls";
 
 export interface Session {
   token: string;
@@ -57,8 +60,6 @@ function writeSession(session: Session | null) {
 function getServerSnapshot(): Session | null {
   return null;
 }
-
-export const USE_PHP_AUTH = process.env.NEXT_PUBLIC_USE_PHP_AUTH === "1";
 
 // Called by PhpAuthBridge to mirror the PHP session (auth-lib/, see
 // docs/PHP-AUTH.md) into this same localStorage-backed store, so the rest

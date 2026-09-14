@@ -14,8 +14,8 @@ export function CurrencySelector({ className = "" }: { className?: string }) {
       className={`rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2 text-xs font-semibold text-heading focus:border-gold focus:outline-none ${className}`}
     >
       {CURRENCIES.map((c) => (
-        <option key={c.code} value={c.code}>
-          {c.code} — {c.name}
+        <option key={c.code} value={c.code} title={c.name}>
+          {c.code}
         </option>
       ))}
     </select>

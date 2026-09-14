@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { AuthNavLink } from "@/components/AuthNavLink";
+import { AUTH_REGISTER_HREF } from "@/lib/auth-urls";
 import { useLanguage } from "@/lib/i18n/language-context";
 
-// The mobile app hasn't shipped yet (see apps/mobile/README.md) — these
-// badges are honest "coming soon" placeholders that route to account
-// creation, not live store links.
 function AppleIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
@@ -38,7 +37,21 @@ export function AppStoreBadges({
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Link
-        href="/login?mode=register"
+        href="/app/"
+        className={`flex items-center gap-3 rounded-3xl border px-4 py-2.5 transition-colors ${base}`}
+      >
+        <span className="text-lg font-bold" aria-hidden>
+          ◫
+        </span>
+        <span className="text-left leading-tight">
+          <span className="block text-[10px] uppercase tracking-wider opacity-70">
+            Desktop · Multi-wallet
+          </span>
+          <span className="block text-sm font-semibold">{t.nav.webApp}</span>
+        </span>
+      </Link>
+      <AuthNavLink
+        href={AUTH_REGISTER_HREF}
         className={`flex items-center gap-3 rounded-3xl border px-4 py-2.5 transition-colors ${base}`}
       >
         <AppleIcon />
@@ -48,15 +61,15 @@ export function AppStoreBadges({
           </span>
           <span className="block text-sm font-semibold">{t.appStore.appStore}</span>
         </span>
-      </Link>
+      </AuthNavLink>
       <Link
-        href="/login?mode=register"
+        href="/download/"
         className={`flex items-center gap-3 rounded-3xl border px-4 py-2.5 transition-colors ${base}`}
       >
         <PlayIcon />
         <span className="text-left leading-tight">
           <span className="block text-[10px] uppercase tracking-wider opacity-70">
-            {t.appStore.comingSoonGoogle}
+            {t.appStore.downloadAndroid}
           </span>
           <span className="block text-sm font-semibold">{t.appStore.googlePlay}</span>
         </span>
