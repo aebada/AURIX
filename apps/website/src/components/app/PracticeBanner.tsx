@@ -26,7 +26,8 @@ export function PracticeBanner() {
             ·
           </span>
           <span className="font-normal text-white/70">
-            Mock balances only. No custody, no real money, RESERVE_LIVE=false.
+            Mock balances only. No custody, no real money. Live reserves are not
+            enabled yet.
           </span>
         </p>
         <div className="flex flex-wrap items-center gap-2">

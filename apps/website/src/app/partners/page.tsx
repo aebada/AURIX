@@ -59,8 +59,8 @@ export default function PartnersPage() {
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
             Names below are evaluation candidates — not commercial partners yet.
-            Live custody and money movement stay off until RESERVE_LIVE and
-            processor certification allow it.
+            Live custody and money movement stay off until certified vault and
+            processor partners go live.
           </p>
           <div className="mt-14 grid gap-8 lg:grid-cols-2">
             {VERTICALS.map((v) => (

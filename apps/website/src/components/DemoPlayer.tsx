@@ -559,10 +559,10 @@ function ScreenReserve({ progress }: { progress: number }) {
       <h3 className="font-extrabold tracking-tight text-xl">Coming soon</h3>
       <div className="rounded-2xl border border-dashed border-gold/40 bg-gold/10 p-4">
         <p className="text-xs font-bold uppercase tracking-wider text-gold-light">
-          RESERVE_LIVE=false
+          Live reserves not enabled yet
         </p>
         <p className="mt-2 text-xs leading-relaxed text-white/70">
-          Mint, redeem, and live proof-of-reserve stay gated until certified vault
+          Mint, redeem, and live proof-of-reserve stay offline until certified vault
           partners connect. Practice balances never imply vaulted gold.
         </p>
       </div>
@@ -577,7 +577,7 @@ function ScreenReserve({ progress }: { progress: number }) {
             <span className="font-semibold text-white/80">Soon</span>
           </div>
           <div className="flex justify-between rounded-xl bg-white/[0.06] px-3 py-2">
-            <span className="text-white/55">Live PoR feed</span>
+            <span className="text-white/55">Live proof of reserves</span>
             <span className="font-semibold text-white/80">Soon</span>
           </div>
         </div>
@@ -652,8 +652,8 @@ function ScreenChat({ progress }: { progress: number }) {
       </div>
       {showReply && (
         <div className="demo-fade-up rounded-2xl border border-gold/30 bg-gold/10 px-3 py-2.5 text-xs leading-relaxed text-gold-light">
-          Live reserves stay gated (RESERVE_LIVE=false). Practice mode uses mock
-          balances only — certified vault partners and PoR come later.
+          Live reserves are not enabled yet. Practice mode uses mock balances
+          only — certified vault partners and proof of reserves come later.
         </div>
       )}
       <button

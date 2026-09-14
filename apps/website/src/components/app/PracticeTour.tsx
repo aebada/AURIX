@@ -109,8 +109,8 @@ export function PracticeTour() {
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-muted">{current.body}</p>
         <p className="mt-3 rounded-lg border border-amber-500/30 bg-amber-50 px-3 py-2 text-xs text-amber-900 dark:bg-amber-950/40 dark:text-amber-100">
-          Practice — not real assets. RESERVE_LIVE stays off; no mint, redeem, or
-          vaulted gold claims.
+          Practice — not real assets. Live reserves are not enabled yet; mint,
+          redeem, and vaulted gold claims are coming soon.
         </p>
           <div className="mt-5 flex flex-wrap gap-2">
           <Link href={current.href} onClick={() => dismiss(true)}>

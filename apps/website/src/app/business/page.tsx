@@ -71,7 +71,7 @@ export default function BusinessPage() {
             <p className="mt-5 text-sm leading-relaxed text-muted">
               Switch between personal and business in seconds. Keep payroll,
               reserves, and day-to-day ops separated — with honest practice
-              balances while RESERVE_LIVE remains off.
+              balances while live reserves remain off.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -154,8 +154,8 @@ export default function BusinessPage() {
             <CheckItem>Desktop-first console inspired by serious ops tools</CheckItem>
             <CheckItem>Practice mode to train teams with zero real money</CheckItem>
             <CheckItem>
-              Reserve transparency roadmap — not live vault claims while
-              RESERVE_LIVE=false
+              Reserve transparency roadmap — not live vault claims while live
+              reserves are not enabled yet
             </CheckItem>
           </ul>
         </Container>

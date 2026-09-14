@@ -270,7 +270,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         items: [
           {
             title: "Hybrid Reserve System",
-            body: "Designed so digital units map to physical gold and silver held by licensed custodians — not AURIX. Live vault allocation is in certification (RESERVE_LIVE=false).",
+            body: "Designed so digital units map to physical gold and silver held by licensed custodians — not AURIX. Live vault allocation is in certification and not enabled yet.",
           },
           {
             title: "AI Governance Layer",

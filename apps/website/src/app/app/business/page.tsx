@@ -36,7 +36,7 @@ interface BulkRow {
 const VERTICAL_NOTES = [
   {
     title: "Banks",
-    body: "Institutional linking & settlement — partner APIs only when certified. Practice UI only.",
+    body: "Institutional linking & settlement — partner connections only when certified. Practice UI only.",
   },
   {
     title: "Payments",
@@ -44,7 +44,7 @@ const VERTICAL_NOTES = [
   },
   {
     title: "Investments",
-    body: "IR & product narrative for asset-linked money. RESERVE_LIVE=false.",
+    body: "IR & product narrative for asset-linked money. Live reserves are not enabled yet.",
   },
   {
     title: "Partners",
@@ -230,8 +230,8 @@ export default function BusinessPage() {
       {msg && <Notice tone="ok">{msg}</Notice>}
 
       <Notice tone="ok">
-        RESERVE_LIVE=false — balances and payouts are practice only. No live custody,
-        deposits, or redemptions.
+        Live reserves are not enabled yet — balances and payouts are practice
+        only. No live custody, deposits, or redemptions.
       </Notice>
 
       <div className="flex flex-wrap gap-2">
@@ -484,7 +484,7 @@ export default function BusinessPage() {
             <ul className="space-y-3 text-sm leading-relaxed text-muted">
               <li>NFC / QR UI is conceptual for merchant demos.</li>
               <li>No Stripe/Adyen charges are fired from this shell.</li>
-              <li>Wire live processors only behind feature flags after certification.</li>
+              <li>Live payment processors stay offline until certification.</li>
             </ul>
           </Panel>
         </div>

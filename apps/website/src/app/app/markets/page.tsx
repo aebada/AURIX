@@ -116,7 +116,7 @@ export default function MarketsPage() {
 
         <Panel
           title="Mint · Redeem · Reserves"
-          description="Live custody gated (RESERVE_LIVE=false)"
+          description="Live custody is not enabled yet"
         >
           <Notice tone="info">
             Coming soon — physical mint, redeem, and proof-of-reserve stay offline
@@ -124,7 +124,7 @@ export default function MarketsPage() {
             gold is held for your practice balance.
           </Notice>
           <div className="mt-4 grid gap-2">
-            {["Mint against vault deposit", "Redeem to physical delivery", "Live PoR coverage"].map(
+            {["Mint against vault deposit", "Redeem to physical delivery", "Live proof of reserves"].map(
               (label) => (
                 <div
                   key={label}

@@ -34,7 +34,7 @@ export default function InvestorsPage() {
           <p className="mt-10 max-w-3xl rounded-2xl border border-[var(--color-line)] bg-[var(--color-paper)] px-5 py-4 text-sm leading-relaxed text-muted">
             Status: reserve custody, live redemption, and real fiat rails are{" "}
             <span className="font-semibold text-heading">in certification / coming soon</span>
-            {" "}(RESERVE_LIVE=false). Investment conversations are about the platform thesis —
+            . Investment conversations are about the platform thesis —
             not live vaulted product claims.
           </p>
         </Container>

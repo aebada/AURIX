@@ -66,7 +66,7 @@ export default function ProfilePage() {
               </span>
               <span className="block text-xs text-muted">
                 {practiceEnabled
-                  ? "TESTING MODE · No real money"
+                  ? "Practice only · No real money"
                   : "Read-only demo — turn on to trade & pay"}
               </span>
             </span>
@@ -79,7 +79,7 @@ export default function ProfilePage() {
           </label>
 
           <p className="mt-4 text-sm text-muted">
-            Combined practice mark-to-market:{" "}
+            Combined practice value:{" "}
             <strong className="text-heading">
               {formatEur(
                 state.wallets.reduce((sum, w) => sum + walletTotal(w), 0),
@@ -122,11 +122,10 @@ export default function ProfilePage() {
           </div>
 
           <div className="mt-5 rounded-lg border border-[var(--color-line)] bg-[var(--color-paper)] p-4 text-xs leading-relaxed text-muted">
-            Practice — not real assets. Balances live in this browser
-            (localStorage key <code>aurix.app.practice.v2</code>). Reset restores
-            seeded Personal / Business / Kids / Vault wallets. Live trading needs
-            the Node backend when connected. RESERVE_LIVE stays false — no mint,
-            redeem, or vaulted-gold claims.
+            Practice — not real assets. Saved in this browser only. Reset restores
+            seeded Personal / Business / Kids / Vault wallets. Live trading and
+            reserves are not enabled yet — no mint, redeem, or vaulted-gold
+            claims.
           </div>
         </Panel>
       </div>

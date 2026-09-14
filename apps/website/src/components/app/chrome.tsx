@@ -129,7 +129,7 @@ export function AppSidebar({
   const nav = (
     <>
       <div className="border-b border-white/10 px-4 py-4">
-        <Link href="/app/" className="block" onClick={onClose}>
+        <Link href="/" className="block" onClick={onClose} aria-label="AURIX home">
           <BrandLogo variant="onDark" className="h-8 w-auto" />
         </Link>
         <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-gold-light">
@@ -269,6 +269,17 @@ export function AppTopbar({
       >
         ☰
       </button>
+      <Link
+        href="/"
+        className="shrink-0"
+        aria-label="AURIX home"
+      >
+        <BrandLogo
+          width={96}
+          height={28}
+          className="h-7 w-auto"
+        />
+      </Link>
       <div className="min-w-0 flex-1">
         <h1 className="truncate text-lg font-bold tracking-tight text-heading">
           {title}

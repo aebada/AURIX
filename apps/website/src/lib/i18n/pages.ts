@@ -292,7 +292,7 @@ export const pageDictionaries = {
       linkSecurity: "Security & trust →",
       irEyebrow: "Investor Relations",
       irH2: "We welcome conversations with strategic investors, family offices, and venture partners who share our vision for real-value digital finance.",
-      irBody: "Use the inquiry form on this page for pitch decks, diligence calls, or strategic discussions. Submissions are stored for our IR pipeline. Product and custody claims remain early-stage until RESERVE_LIVE is enabled.",
+      irBody: "Use the inquiry form on this page for pitch decks, diligence calls, or strategic discussions. Submissions are stored for our IR pipeline. Product and custody claims remain early-stage until live reserves are certified.",
       ctaTitle: "Interested in investing?",
       ctaDescription: "Submit an investor inquiry to request materials, schedule a call, or explore strategic partnership opportunities.",
       ctaPrimary: "Open inquiry form",
@@ -333,7 +333,7 @@ export const pageDictionaries = {
       titleLine1: "Try AURIX live.",
       titleLine2: "No real money.",
       sub: "Click through the full product with mock balances — wallets, trade, payments, vouchers, family controls, and business payroll. Practice mode is interactive and local to your browser.",
-      guardrail: "Practice — not real assets. No custody, no real money, and RESERVE_LIVE stays false. Mint, redeem, and vaulted-gold claims are coming soon.",
+      guardrail: "Practice — not real assets. No custody, no real money. Live reserves are not enabled yet. Mint, redeem, and vaulted-gold claims are coming soon.",
       ctaPractice: "Start practice mode",
       ctaBusiness: "Business practice",
       ctaAccount: "Create account",
@@ -510,7 +510,7 @@ export const pageDictionaries = {
     partners: {
       eyebrow: "Partners",
       title: "AURIX doesn't custody assets. Licensed partners do.",
-      description: "Partnership verticals: Banks, Payments, Investments, and Partners. Every category below is a class of regulated provider AURIX may orchestrate through APIs. Names listed are evaluation candidates — not signed commercial partners. Live custody stays gated (RESERVE_LIVE=false).",
+      description: "Partnership verticals: Banks, Payments, Investments, and Partners. Every category below is a class of regulated provider AURIX may orchestrate through APIs. Names listed are evaluation candidates — not signed commercial partners. Live custody is not enabled yet.",
       candidates: "Candidates",
       categories: [
         {
@@ -755,7 +755,7 @@ export const pageDictionaries = {
           id: "reserve",
           label: "Reserves",
           title: "Coming soon",
-          caption: "RESERVE_LIVE=false — mint, redeem, and live PoR stay gated until certification.",
+          caption: "Live reserves are not enabled yet — mint, redeem, and proof of reserves stay offline until certification.",
         },
         {
           id: "markets",
@@ -1109,7 +1109,7 @@ export const pageDictionaries = {
       titleLine1: "AURIX live ausprobieren.",
       titleLine2: "Kein echtes Geld.",
       sub: "Klicken Sie durch das gesamte Produkt mit Mock-Salden — Wallets, Handel, Zahlungen, Gutscheine, Familienkontrolle und Business-Payroll. Der Übungsmodus ist interaktiv und lokal in Ihrem Browser.",
-      guardrail: "Übung — keine echten Vermögenswerte. Keine Verwahrung, kein echtes Geld, RESERVE_LIVE bleibt aus. Mint, Redeem und Vault-Claims kommen später.",
+      guardrail: "Übung — keine echten Vermögenswerte. Keine Verwahrung, kein echtes Geld. Live-Reserven sind noch nicht freigeschaltet. Mint, Redeem und Vault-Claims kommen später.",
       ctaPractice: "Übungsmodus starten",
       ctaBusiness: "Business-Übung",
       ctaAccount: "Konto erstellen",
@@ -1531,7 +1531,7 @@ export const pageDictionaries = {
           id: "reserve",
           label: "Reserven",
           title: "Demnächst",
-          caption: "RESERVE_LIVE=false — Mint, Redeem und Live-PoR bleiben bis zur Zertifizierung gesperrt.",
+          caption: "Live-Reserven sind noch nicht freigeschaltet — Mint, Redeem und Reserve-Nachweis bleiben bis zur Zertifizierung gesperrt.",
         },
         {
           id: "markets",
@@ -1885,7 +1885,7 @@ export const pageDictionaries = {
       titleLine1: "جرّب AURIX مباشرة.",
       titleLine2: "بلا مال حقيقي.",
       sub: "انقر عبر المنتج بالكامل بأرصدة وهمية — المحافظ والتداول والمدفوعات والقسائم والضوابط العائلية ورواتب الأعمال. وضع التدريب تفاعلي ومحلي في متصفحك.",
-      guardrail: "تدريب — ليست أصولًا حقيقية. لا عهدة ولا مال حقيقي، وRESERVE_LIVE يبقى معطلًا. السك والاسترداد ومطالبات الذهب المخزّن قادمة قريبًا.",
+      guardrail: "تدريب — ليست أصولًا حقيقية. لا عهدة ولا مال حقيقي. الاحتياطيات الحية غير مفعّلة بعد. السك والاسترداد ومطالبات الذهب المخزّن قادمة قريبًا.",
       ctaPractice: "بدء وضع التدريب",
       ctaBusiness: "تدريب الأعمال",
       ctaAccount: "إنشاء حساب",
@@ -2307,7 +2307,7 @@ export const pageDictionaries = {
           id: "reserve",
           label: "الاحتياطيات",
           title: "قريبًا",
-          caption: "RESERVE_LIVE=false — السك والاسترداد وPoR الحي يبقى مغلقًا حتى الاعتماد.",
+          caption: "الاحتياطيات الحية غير مفعّلة بعد — السك والاسترداد وإثبات الاحتياطي يبقى مغلقًا حتى الاعتماد.",
         },
         {
           id: "markets",
