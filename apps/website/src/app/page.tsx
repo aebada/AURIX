@@ -7,10 +7,10 @@ import { Card, StatCard, CheckItem } from "@/components/Card";
 import { CtaBand } from "@/components/CtaBand";
 import { HeroShowcase } from "@/components/HeroShowcase";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
-import { AuthNavLink } from "@/components/AuthNavLink";
 import { Reveal } from "@/components/Reveal";
 import { PointcoinCoin } from "@/components/PointcoinCoin";
 import { LivePrices } from "@/components/LivePrices";
+import { AudiencePaths } from "@/components/AudiencePaths";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 export default function Home() {
@@ -72,7 +72,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/investors"
-                className="rounded-full px-5 py-3.5 text-sm font-bold text-gold-dark underline-offset-4 transition-colors hover:underline"
+                className="rounded-full border border-[var(--color-line)] bg-[var(--color-paper)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
               >
                 Investors
               </Link>
@@ -87,49 +87,28 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-line)] bg-[var(--color-paper)] py-16">
-        <Container>
+      <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[var(--color-paper)] py-16 sm:py-20">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 40% at 10% 20%, var(--glow-gold-soft), transparent 55%), radial-gradient(ellipse 40% 35% at 90% 80%, var(--glow-gold-soft), transparent 60%)",
+          }}
+          aria-hidden
+        />
+        <Container className="relative">
           <Reveal>
             <Eyebrow>{h.pathsEyebrow}</Eyebrow>
-            <h2 className="mt-3 max-w-2xl font-extrabold tracking-tight text-2xl text-heading sm:text-3xl">
+            <h2 className="mt-3 max-w-2xl font-extrabold tracking-tight text-2xl text-heading sm:text-3xl lg:text-4xl">
               {h.pathsH2}
             </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
+              {h.pathsSub}
+            </p>
           </Reveal>
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {h.paths.map((path, i) => {
-              const inner = (
-                <>
-                  <p className="text-xs font-bold uppercase tracking-wider text-gold-dark">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-3 font-extrabold tracking-tight text-lg text-heading">
-                    {path.title}
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                    {path.body}
-                  </p>
-                  <span className="mt-5 inline-flex text-sm font-bold text-navy dark:text-gold-light">
-                    {path.cta} →
-                  </span>
-                </>
-              );
-              const className =
-                "flex h-full flex-col rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)] p-6 transition-all hover:-translate-y-0.5 hover:border-navy/30 hover:shadow-lg";
-              return (
-                <Reveal key={path.title} delay={i * 80}>
-                  {path.href.startsWith("/auth/") ? (
-                    <AuthNavLink href={path.href} className={className}>
-                      {inner}
-                    </AuthNavLink>
-                  ) : (
-                    <Link href={path.href} className={className}>
-                      {inner}
-                    </Link>
-                  )}
-                </Reveal>
-              );
-            })}
-          </div>
+          <Reveal delay={80}>
+            <AudiencePaths />
+          </Reveal>
         </Container>
       </section>
 

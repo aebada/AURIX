@@ -23,7 +23,7 @@ import {
   type WalletKind,
 } from "./types";
 
-const STORAGE_KEY = "aurix.app.practice.v2";
+const STORAGE_KEY = "aurix.app.practice.v3";
 const CHANGE_EVENT = "aurix-practice-change";
 
 function fmtEur(v: number) {
@@ -85,12 +85,24 @@ function seedWallets(): Wallet[] {
             name: "You (Owner)",
             email: "you@aurixapp.de",
             role: "owner",
+            salaryEur: 4200,
+            salarySplit: { fiatPct: 70, goldPct: 25, silverPct: 5 },
           },
           {
             id: "m2",
             name: "Alex Finance",
             email: "alex@aurixapp.de",
             role: "finance",
+            salaryEur: 3100,
+            salarySplit: { fiatPct: 80, goldPct: 15, silverPct: 5 },
+          },
+          {
+            id: "m3",
+            name: "Sam Ops",
+            email: "sam@aurixapp.de",
+            role: "member",
+            salaryEur: 2600,
+            salarySplit: { fiatPct: 60, goldPct: 30, silverPct: 10 },
           },
         ],
         invites: [],
@@ -272,6 +284,19 @@ interface PracticeApi {
   giftVoucher: (voucherId: string, giftTo: string) => string | null;
   redeemVoucher: (code: string, intoWalletId: string) => string | null;
   inviteTeamMember: (email: string, role: BusinessRole) => string | null;
+  /** Update an employee's default salary + metal/fiat split. */
+  setEmployeeSalary: (
+    memberId: string,
+    salaryEur: number,
+    split: { fiatPct: number; goldPct: number; silverPct: number },
+  ) => string | null;
+  /**
+   * Pay one employee: debit Business fiat for gross salary, credit employee
+   * Personal wallet with fiat + gold + silver per the split percentages.
+   */
+  payMetalSalary: (memberId: string, salaryEur?: number) => string | null;
+  /** Run metal salary for every team member that has a salary configured. */
+  runMetalPayrollBatch: () => string | null;
   requestKidsSpend: (amountEur: number, label: string) => string | null;
   resolveKidsSpend: (
     approvalId: string,
@@ -658,6 +683,8 @@ export function PracticeProvider({ children }: { children: ReactNode }) {
         name: email.split("@")[0] ?? "Member",
         email: invite.email,
         role,
+        salaryEur: 2500,
+        salarySplit: { fiatPct: 70, goldPct: 20, silverPct: 10 },
       };
       let next = updateWallet(s, biz.id, (cur) => ({
         ...cur,
@@ -681,6 +708,165 @@ export function PracticeProvider({ children }: { children: ReactNode }) {
     },
     [],
   );
+
+  const setEmployeeSalary = useCallback(
+    (
+      memberId: string,
+      salaryEur: number,
+      split: { fiatPct: number; goldPct: number; silverPct: number },
+    ) => {
+      const s = readState();
+      if (!s.practiceEnabled) return "Enable Practice mode in Profile first";
+      if (salaryEur < 0) return "Salary cannot be negative";
+      const sum = split.fiatPct + split.goldPct + split.silverPct;
+      if (Math.abs(sum - 100) > 0.01) {
+        return "Fiat + gold + silver percentages must add up to 100%";
+      }
+      if (split.fiatPct < 0 || split.goldPct < 0 || split.silverPct < 0) {
+        return "Percentages cannot be negative";
+      }
+      const biz = s.wallets.find((w) => w.kind === "business");
+      if (!biz?.business) return "Business wallet missing";
+      if (!biz.business.members.some((m) => m.id === memberId)) {
+        return "Employee not found";
+      }
+      writeState(
+        updateWallet(s, biz.id, (cur) => ({
+          ...cur,
+          business: cur.business
+            ? {
+                ...cur.business,
+                members: cur.business.members.map((m) =>
+                  m.id === memberId
+                    ? {
+                        ...m,
+                        salaryEur,
+                        salarySplit: {
+                          fiatPct: split.fiatPct,
+                          goldPct: split.goldPct,
+                          silverPct: split.silverPct,
+                        },
+                      }
+                    : m,
+                ),
+              }
+            : cur.business,
+        })),
+      );
+      return null;
+    },
+    [],
+  );
+
+  function applyMetalSalary(
+    state: PracticeState,
+    member: TeamMember,
+    grossEur: number,
+  ): { next: PracticeState; error: string | null } {
+    const biz = state.wallets.find((w) => w.kind === "business");
+    const personal = state.wallets.find((w) => w.kind === "personal");
+    if (!biz?.business || !personal) {
+      return { next: state, error: "Business or Personal wallet missing" };
+    }
+    if (grossEur <= 0) {
+      return { next: state, error: `Set a salary for ${member.name} first` };
+    }
+    const split = member.salarySplit ?? {
+      fiatPct: 70,
+      goldPct: 20,
+      silverPct: 10,
+    };
+    const sum = split.fiatPct + split.goldPct + split.silverPct;
+    if (Math.abs(sum - 100) > 0.01) {
+      return {
+        next: state,
+        error: `Invalid split for ${member.name} — must total 100%`,
+      };
+    }
+    if (grossEur > biz.balances.fiatEur + 1e-9) {
+      return {
+        next: state,
+        error: `Insufficient Business fiat for ${member.name} (need ${fmtEur(grossEur)})`,
+      };
+    }
+
+    const fiatEur = (grossEur * split.fiatPct) / 100;
+    const goldEur = (grossEur * split.goldPct) / 100;
+    const silverEur = (grossEur * split.silverPct) / 100;
+    const goldGrams = goldEur / PRACTICE_PRICES.goldEurPerGram;
+    const silverGrams = silverEur / PRACTICE_PRICES.silverEurPerGram;
+
+    let next = updateWallet(state, biz.id, (cur) => ({
+      ...cur,
+      balances: {
+        ...cur.balances,
+        fiatEur: cur.balances.fiatEur - grossEur,
+      },
+    }));
+    next = updateWallet(next, personal.id, (cur) => ({
+      ...cur,
+      balances: {
+        ...cur.balances,
+        fiatEur: cur.balances.fiatEur + fiatEur,
+        goldGrams: cur.balances.goldGrams + goldGrams,
+        silverGrams: cur.balances.silverGrams + silverGrams,
+      },
+    }));
+    const metalParts = [
+      split.goldPct > 0 ? `${fmtGrams(goldGrams)} Au` : null,
+      split.silverPct > 0 ? `${fmtGrams(silverGrams)} Ag` : null,
+      split.fiatPct > 0 ? fmtEur(fiatEur) : null,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+    next = pushTxn(
+      next,
+      biz.id,
+      "payroll",
+      `Metal salary → ${member.name}`,
+      `-${fmtEur(grossEur)}`,
+    );
+    next = pushTxn(
+      next,
+      personal.id,
+      "payroll",
+      `Salary from ${biz.business.companyName} (${member.name})`,
+      `+${metalParts}`,
+    );
+    return { next, error: null };
+  }
+
+  const payMetalSalary = useCallback((memberId: string, salaryEur?: number) => {
+    const s = readState();
+    if (!s.practiceEnabled) return "Enable Practice mode in Profile first";
+    const biz = s.wallets.find((w) => w.kind === "business");
+    if (!biz?.business) return "Business wallet missing";
+    const member = biz.business.members.find((m) => m.id === memberId);
+    if (!member) return "Employee not found";
+    const gross = salaryEur ?? member.salaryEur ?? 0;
+    const { next, error } = applyMetalSalary(s, member, gross);
+    if (error) return error;
+    writeState(next);
+    return null;
+  }, []);
+
+  const runMetalPayrollBatch = useCallback(() => {
+    const s = readState();
+    if (!s.practiceEnabled) return "Enable Practice mode in Profile first";
+    const biz = s.wallets.find((w) => w.kind === "business");
+    if (!biz?.business) return "Business wallet missing";
+    const paid = biz.business.members.filter((m) => (m.salaryEur ?? 0) > 0);
+    if (paid.length === 0) return "No employees have a salary configured";
+
+    let next = s;
+    for (const member of paid) {
+      const result = applyMetalSalary(next, member, member.salaryEur ?? 0);
+      if (result.error) return result.error;
+      next = result.next;
+    }
+    writeState(next);
+    return null;
+  }, []);
 
   const requestKidsSpend = useCallback(
     (amountEur: number, label: string) => {
@@ -817,6 +1003,9 @@ export function PracticeProvider({ children }: { children: ReactNode }) {
     giftVoucher,
     redeemVoucher,
     inviteTeamMember,
+    setEmployeeSalary,
+    payMetalSalary,
+    runMetalPayrollBatch,
     requestKidsSpend,
     resolveKidsSpend,
     addKidsWallet,

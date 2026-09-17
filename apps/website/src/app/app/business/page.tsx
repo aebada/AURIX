@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppPage } from "@/components/app/AppShell";
 import {
   DataTable,
@@ -59,6 +59,9 @@ export default function BusinessPage() {
     inviteTeamMember,
     transferBetweenWallets,
     createVoucher,
+    setEmployeeSalary,
+    payMetalSalary,
+    runMetalPayrollBatch,
     practiceEnabled,
     walletTotal,
   } = usePractice();
@@ -66,12 +69,32 @@ export default function BusinessPage() {
   const biz = state.wallets.find((w) => w.kind === "business");
   const personal = state.wallets.find((w) => w.kind === "personal");
   const [tab, setTab] = useState<Tab>("overview");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const t = params.get("tab");
+    if (
+      t === "overview" ||
+      t === "payroll" ||
+      t === "payments" ||
+      t === "invoices" ||
+      t === "partners"
+    ) {
+      setTab(t);
+    }
+  }, []);
+
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<BusinessRole>("member");
   const [payroll, setPayroll] = useState("500");
   const [staffVoucher, setStaffVoucher] = useState("50");
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<string>("m2");
+  const [salaryDraft, setSalaryDraft] = useState("3100");
+  const [fiatPct, setFiatPct] = useState("80");
+  const [goldPct, setGoldPct] = useState("15");
+  const [silverPct, setSilverPct] = useState("5");
   const [bulkRows, setBulkRows] = useState<BulkRow[]>([
     { email: "ops@company.com", amount: "120" },
     { email: "finance@company.com", amount: "250" },
@@ -94,13 +117,64 @@ export default function BusinessPage() {
     () =>
       [
         { id: "overview" as const, label: "Overview" },
-        { id: "payroll" as const, label: "Payroll / bulk" },
+        { id: "payroll" as const, label: "Payroll / metal salary" },
         { id: "payments" as const, label: "Merchant pay" },
         { id: "invoices" as const, label: "Invoices" },
         { id: "partners" as const, label: "Verticals" },
       ] as const,
     [],
   );
+
+  function loadEmployee(id: string) {
+    setSelectedEmployee(id);
+    const m = biz?.business?.members.find((x) => x.id === id);
+    if (!m) return;
+    setSalaryDraft(String(m.salaryEur ?? 2500));
+    setFiatPct(String(m.salarySplit?.fiatPct ?? 70));
+    setGoldPct(String(m.salarySplit?.goldPct ?? 20));
+    setSilverPct(String(m.salarySplit?.silverPct ?? 10));
+  }
+
+  function saveSalarySplit() {
+    setMsg(null);
+    setErr(null);
+    const error = setEmployeeSalary(selectedEmployee, Number(salaryDraft) || 0, {
+      fiatPct: Number(fiatPct) || 0,
+      goldPct: Number(goldPct) || 0,
+      silverPct: Number(silverPct) || 0,
+    });
+    if (error) setErr(error);
+    else setMsg("Saved employee metal salary split (practice)");
+  }
+
+  function payOneMetalSalary() {
+    setMsg(null);
+    setErr(null);
+    if (!biz) return;
+    setActiveWallet(biz.id);
+    const member = biz.business?.members.find((m) => m.id === selectedEmployee);
+    const error = payMetalSalary(selectedEmployee, Number(salaryDraft) || undefined);
+    if (error) setErr(error);
+    else {
+      const split = `${fiatPct}% fiat · ${goldPct}% gold · ${silverPct}% silver`;
+      setMsg(
+        `Paid metal salary to ${member?.name ?? "employee"} (${formatEur(Number(salaryDraft) || 0)} → ${split}). Credits land in Personal wallet (practice).`,
+      );
+    }
+  }
+
+  function payAllMetalSalaries() {
+    setMsg(null);
+    setErr(null);
+    if (!biz) return;
+    setActiveWallet(biz.id);
+    const error = runMetalPayrollBatch();
+    if (error) setErr(error);
+    else
+      setMsg(
+        "Ran metal payroll for all employees with a salary — fiat + gold + silver credited to Personal (practice).",
+      );
+  }
 
   if (!biz?.business) {
     return (
@@ -286,7 +360,7 @@ export default function BusinessPage() {
             className="lg:col-span-2"
           >
             <DataTable
-              columns={["Name", "Email", "Role"]}
+              columns={["Name", "Email", "Role", "Salary split"]}
               empty="No members"
               rows={biz.business.members.map((m) => [
                 <span key="n" className="font-semibold text-heading">
@@ -295,6 +369,11 @@ export default function BusinessPage() {
                 m.email,
                 <span key="r" className="capitalize">
                   {m.role}
+                </span>,
+                <span key="s" className="text-xs text-muted">
+                  {m.salaryEur
+                    ? `${formatEur(m.salaryEur)} · ${m.salarySplit?.fiatPct ?? 70}% fiat / ${m.salarySplit?.goldPct ?? 20}% Au / ${m.salarySplit?.silverPct ?? 10}% Ag`
+                    : "Not set"}
                 </span>,
               ])}
             />
@@ -350,7 +429,137 @@ export default function BusinessPage() {
       {tab === "payroll" && (
         <div className="grid gap-6 lg:grid-cols-2">
           <Panel
-            title="Single payroll transfer"
+            title="Metal salary (employees)"
+            description="Employers pay part of salary as gold, silver, and fiat — practice conversion at demo prices"
+            className="lg:col-span-2"
+          >
+            <Notice tone="ok">
+              Practice only: Business fiat is debited for the full gross salary.
+              The employee Personal wallet receives fiat + gold grams + silver
+              grams per the split. Live payroll rails stay gated until
+              certification.
+            </Notice>
+            <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_1fr]">
+              <div className="space-y-3">
+                <Field label="Employee">
+                  <select
+                    className={inputClass}
+                    value={selectedEmployee}
+                    onChange={(e) => loadEmployee(e.target.value)}
+                  >
+                    {biz.business.members.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name} · {m.email}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Gross salary (EUR)">
+                  <input
+                    className={inputClass}
+                    type="number"
+                    min={0}
+                    value={salaryDraft}
+                    onChange={(e) => setSalaryDraft(e.target.value)}
+                  />
+                </Field>
+                <div className="grid grid-cols-3 gap-2">
+                  <Field label="Fiat %">
+                    <input
+                      className={inputClass}
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={fiatPct}
+                      onChange={(e) => setFiatPct(e.target.value)}
+                    />
+                  </Field>
+                  <Field label="Gold %">
+                    <input
+                      className={inputClass}
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={goldPct}
+                      onChange={(e) => setGoldPct(e.target.value)}
+                    />
+                  </Field>
+                  <Field label="Silver %">
+                    <input
+                      className={inputClass}
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={silverPct}
+                      onChange={(e) => setSilverPct(e.target.value)}
+                    />
+                  </Field>
+                </div>
+                <p className="text-xs text-muted">
+                  Split total:{" "}
+                  {(Number(fiatPct) || 0) +
+                    (Number(goldPct) || 0) +
+                    (Number(silverPct) || 0)}
+                  % (must be 100)
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-4">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-muted">
+                  Preview this pay run
+                </p>
+                {(() => {
+                  const gross = Number(salaryDraft) || 0;
+                  const f = (Number(fiatPct) || 0) / 100;
+                  const g = (Number(goldPct) || 0) / 100;
+                  const s = (Number(silverPct) || 0) / 100;
+                  const goldG = (gross * g) / 80;
+                  const silverG = (gross * s) / 0.95;
+                  return (
+                    <ul className="mt-3 space-y-2 text-sm">
+                      <li className="flex justify-between">
+                        <span className="text-muted">Fiat to employee</span>
+                        <span className="font-bold text-heading">
+                          {formatEur(gross * f)}
+                        </span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span className="text-muted">Gold (practice)</span>
+                        <span className="font-bold text-heading">
+                          {formatGrams(goldG)}
+                        </span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span className="text-muted">Silver (practice)</span>
+                        <span className="font-bold text-heading">
+                          {formatGrams(silverG)}
+                        </span>
+                      </li>
+                      <li className="flex justify-between border-t border-[var(--color-line)] pt-2">
+                        <span className="text-muted">Debit Business</span>
+                        <span className="font-extrabold text-heading">
+                          {formatEur(gross)}
+                        </span>
+                      </li>
+                    </ul>
+                  );
+                })()}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <SecondaryButton onClick={saveSalarySplit} disabled={!practiceEnabled}>
+                    Save split
+                  </SecondaryButton>
+                  <PrimaryButton onClick={payOneMetalSalary} disabled={!practiceEnabled}>
+                    Pay this employee
+                  </PrimaryButton>
+                  <PrimaryButton onClick={payAllMetalSalaries} disabled={!practiceEnabled}>
+                    Run full metal payroll
+                  </PrimaryButton>
+                </div>
+              </div>
+            </div>
+          </Panel>
+
+          <Panel
+            title="Single fiat payroll transfer"
             description="Move fiat Business → Personal (practice)"
           >
             <Field label="Amount (EUR)">

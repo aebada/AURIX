@@ -7,6 +7,7 @@ import { Container } from "@/components/Container";
 import { PageHero } from "@/components/PageHero";
 import { StoreLocator } from "@/components/gold-service/StoreLocator";
 import { estimateFees, useGoldService } from "@/lib/gold-service/store";
+import { useLanguage } from "@/lib/i18n/language-context";
 import type {
   CountryCode,
   Fulfillment,
@@ -18,6 +19,8 @@ const ORIGINS: CountryCode[] = ["SA", "AE", "KW", "QA", "EG"];
 const DESTS: CountryCode[] = ["EG", "SA", "AE", "KW", "QA"];
 
 function SendWizard() {
+  const { t } = useLanguage();
+  const p = t.pages.send;
   const router = useRouter();
   const params = useSearchParams();
   const gs = useGoldService();
@@ -61,26 +64,21 @@ function SendWizard() {
       recipientIdType: idType,
       relationship,
     });
-    // Simulate notify step shortly after
     setTimeout(() => gs.advanceTransfer(xfer.id, "notified"), 400);
     router.push(`/track/?id=${encodeURIComponent(xfer.id)}`);
   }
 
   return (
     <>
-      <PageHero
-        eyebrow="Gold as a Service"
-        title="Send gold. Delivered or picked up."
-        description="Package-style transfers for family and friends across our partner network. Practice mode only — live settlement per corridor stays off until licensed."
-      />
+      <PageHero eyebrow={p.eyebrow} title={p.title} description={p.description} />
       <section className="border-b border-[var(--color-line)] py-10">
         <Container className="max-w-3xl">
           <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100">
-            Practice corridor · not real settlement
+            {p.banner}
             {!corridorLive
-              ? ` · ${corridor} certification pending`
-              : " · corridor flagged live (still demo until licensed rails)"}
-            . Recipient must show government photo ID matching the name you enter.
+              ? ` · ${corridor} ${p.bannerPending}`
+              : ` · ${p.bannerLive}`}
+            . {p.bannerId}
           </div>
 
           <div className="mb-8 flex gap-2 text-xs font-bold uppercase tracking-wider text-muted">
@@ -100,7 +98,7 @@ function SendWizard() {
 
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-extrabold text-heading">Amount & metal</h2>
+              <h2 className="text-xl font-extrabold text-heading">{p.amountTitle}</h2>
               <div className="flex gap-2">
                 {(["gold", "silver"] as MetalType[]).map((m) => (
                   <button
@@ -142,26 +140,26 @@ function SendWizard() {
                 />
               </div>
               <p className="text-sm text-muted">
-                Practice price total ≈ €{fees.total.toFixed(2)} (incl. fees)
+                {p.practicePrice.replace("{total}", fees.total.toFixed(2))}
               </p>
               <button
                 type="button"
                 onClick={() => setStep(2)}
                 className="rounded-full bg-[var(--color-navy)] px-6 py-3 text-sm font-bold text-white"
               >
-                Continue
+                {p.continue}
               </button>
             </div>
           )}
 
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-extrabold text-heading">Fulfillment</h2>
+              <h2 className="text-xl font-extrabold text-heading">{p.fulfillmentTitle}</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {(
                   [
-                    ["pickup", "Pickup at a partner location"],
-                    ["delivery", "Home delivery"],
+                    ["pickup", p.pickup],
+                    ["delivery", p.delivery],
                   ] as const
                 ).map(([id, label]) => {
                   const deliverySupported = Boolean(
@@ -182,9 +180,7 @@ function SendWizard() {
                     >
                       <div className="font-extrabold text-heading">{label}</div>
                       {disabled ? (
-                        <div className="mt-2 text-xs text-muted">
-                          Not offered at selected location
-                        </div>
+                        <div className="mt-2 text-xs text-muted">{p.deliveryUnavailable}</div>
                       ) : null}
                     </button>
                   );
@@ -192,14 +188,14 @@ function SendWizard() {
               </div>
               <div className="flex gap-2">
                 <button type="button" onClick={() => setStep(1)} className="rounded-full border px-5 py-2 text-sm">
-                  Back
+                  {p.back}
                 </button>
                 <button
                   type="button"
                   onClick={() => setStep(3)}
                   className="rounded-full bg-[var(--color-navy)] px-6 py-2 text-sm font-bold text-white"
                 >
-                  Continue
+                  {p.continue}
                 </button>
               </div>
             </div>
@@ -207,10 +203,10 @@ function SendWizard() {
 
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-extrabold text-heading">Destination & partner</h2>
+              <h2 className="text-xl font-extrabold text-heading">{p.destTitle}</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 <label className="text-sm">
-                  From
+                  {p.from}
                   <select
                     value={origin}
                     onChange={(e) => setOrigin(e.target.value as CountryCode)}
@@ -224,7 +220,7 @@ function SendWizard() {
                   </select>
                 </label>
                 <label className="text-sm">
-                  To
+                  {p.to}
                   <select
                     value={dest}
                     onChange={(e) => {
@@ -243,13 +239,13 @@ function SendWizard() {
               </div>
               {location ? (
                 <div className="rounded-2xl border border-gold-dark/40 bg-gold-dark/5 p-4 text-sm">
-                  Selected: <strong>{location.name}</strong> · {location.city}
+                  {p.selected}: <strong>{location.name}</strong> · {location.city}
                   <button
                     type="button"
                     className="ml-3 underline"
                     onClick={() => setLocation(null)}
                   >
-                    Change
+                    {p.change}
                   </button>
                 </div>
               ) : (
@@ -261,7 +257,7 @@ function SendWizard() {
               )}
               <div className="flex gap-2">
                 <button type="button" onClick={() => setStep(2)} className="rounded-full border px-5 py-2 text-sm">
-                  Back
+                  {p.back}
                 </button>
                 <button
                   type="button"
@@ -269,7 +265,7 @@ function SendWizard() {
                   onClick={() => setStep(4)}
                   className="rounded-full bg-[var(--color-navy)] px-6 py-2 text-sm font-bold text-white disabled:opacity-40"
                 >
-                  Continue
+                  {p.continue}
                 </button>
               </div>
             </div>
@@ -277,44 +273,43 @@ function SendWizard() {
 
           {step === 4 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-extrabold text-heading">Recipient details</h2>
+              <h2 className="text-xl font-extrabold text-heading">{p.recipientTitle}</h2>
               <p className="rounded-xl bg-[var(--color-surface)] p-3 text-sm text-muted">
-                Your recipient will need to show a government-issued photo ID matching this
-                name to collect.
+                {p.recipientHint}
               </p>
               <input
                 className="w-full rounded-xl border px-3 py-2 text-sm"
-                placeholder="Full name (must match ID)"
+                placeholder={p.fullName}
                 value={recipientName}
                 onChange={(e) => setRecipientName(e.target.value)}
               />
               <input
                 className="w-full rounded-xl border px-3 py-2 text-sm"
-                placeholder="Phone (SMS notifications)"
+                placeholder={p.phone}
                 value={recipientPhone}
                 onChange={(e) => setRecipientPhone(e.target.value)}
               />
               <input
                 className="w-full rounded-xl border px-3 py-2 text-sm"
-                placeholder="Email (optional)"
+                placeholder={p.email}
                 value={recipientEmail}
                 onChange={(e) => setRecipientEmail(e.target.value)}
               />
               <input
                 className="w-full rounded-xl border px-3 py-2 text-sm"
-                placeholder="Expected ID type"
+                placeholder={p.idType}
                 value={idType}
                 onChange={(e) => setIdType(e.target.value)}
               />
               <input
                 className="w-full rounded-xl border px-3 py-2 text-sm"
-                placeholder="Relationship (optional)"
+                placeholder={p.relationship}
                 value={relationship}
                 onChange={(e) => setRelationship(e.target.value)}
               />
               <div className="flex gap-2">
                 <button type="button" onClick={() => setStep(3)} className="rounded-full border px-5 py-2 text-sm">
-                  Back
+                  {p.back}
                 </button>
                 <button
                   type="button"
@@ -322,7 +317,7 @@ function SendWizard() {
                   onClick={() => setStep(5)}
                   className="rounded-full bg-[var(--color-navy)] px-6 py-2 text-sm font-bold text-white disabled:opacity-40"
                 >
-                  Continue
+                  {p.continue}
                 </button>
               </div>
             </div>
@@ -330,26 +325,30 @@ function SendWizard() {
 
           {step === 5 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-extrabold text-heading">Review & pay</h2>
+              <h2 className="text-xl font-extrabold text-heading">{p.reviewTitle}</h2>
               <ul className="space-y-2 rounded-2xl border border-[var(--color-line)] p-4 text-sm">
                 <li className="flex justify-between">
-                  <span>Metal ({grams}g {metal})</span>
+                  <span>
+                    {p.metalLine
+                      .replace("{grams}", String(grams))
+                      .replace("{metal}", metal)}
+                  </span>
                   <span>€{fees.metalCost.toFixed(2)}</span>
                 </li>
                 <li className="flex justify-between">
-                  <span>AURIX service fee</span>
+                  <span>{p.serviceFee}</span>
                   <span>€{fees.serviceFee.toFixed(2)}</span>
                 </li>
                 <li className="flex justify-between">
-                  <span>Partner fulfillment</span>
+                  <span>{p.partnerFee}</span>
                   <span>€{fees.partnerFee.toFixed(2)}</span>
                 </li>
                 <li className="flex justify-between">
-                  <span>FX spread</span>
+                  <span>{p.fxSpread}</span>
                   <span>€{fees.fxSpread.toFixed(2)}</span>
                 </li>
                 <li className="flex justify-between border-t border-[var(--color-line)] pt-2 font-extrabold">
-                  <span>Total</span>
+                  <span>{p.total}</span>
                   <span>€{fees.total.toFixed(2)}</span>
                 </li>
               </ul>
@@ -358,14 +357,14 @@ function SendWizard() {
               </p>
               <div className="flex gap-2">
                 <button type="button" onClick={() => setStep(4)} className="rounded-full border px-5 py-2 text-sm">
-                  Back
+                  {p.back}
                 </button>
                 <button
                   type="button"
                   onClick={confirm}
                   className="rounded-full bg-[var(--color-navy)] px-6 py-2 text-sm font-bold text-white"
                 >
-                  Confirm practice payment
+                  {p.confirm}
                 </button>
               </div>
             </div>
@@ -373,11 +372,11 @@ function SendWizard() {
 
           <p className="mt-10 text-center text-xs text-muted">
             <Link href="/partners/" className="underline">
-              Browse locations
+              {p.browse}
             </Link>{" "}
             ·{" "}
             <Link href="/partner-with-us/" className="underline">
-              Become a partner
+              {p.becomePartner}
             </Link>
           </p>
         </Container>
@@ -387,8 +386,9 @@ function SendWizard() {
 }
 
 export default function SendPage() {
+  const { t } = useLanguage();
   return (
-    <Suspense fallback={<div className="p-10 text-sm text-muted">Loading…</div>}>
+    <Suspense fallback={<div className="p-10 text-sm text-muted">{t.pages.send.loading}</div>}>
       <SendWizard />
     </Suspense>
   );

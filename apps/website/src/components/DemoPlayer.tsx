@@ -11,6 +11,7 @@ export type DemoStepId =
   | "wallet"
   | "trade"
   | "pay"
+  | "payroll"
   | "reserve"
   | "markets"
   | "chat";
@@ -24,11 +25,12 @@ type DemoStep = {
 };
 
 const STEP_DURATIONS: Record<DemoStepId, number> = {
-  onboard: 4500,
-  wallet: 5000,
-  trade: 5500,
-  pay: 5000,
-  reserve: 4500,
+  onboard: 4200,
+  wallet: 4800,
+  trade: 5200,
+  pay: 4800,
+  payroll: 5500,
+  reserve: 4200,
   markets: 4000,
   chat: 4000,
 };
@@ -74,6 +76,8 @@ export function DemoPlayer() {
   const startedAt = useRef(0);
   const pausedAt = useRef(0);
   const raf = useRef<number | null>(null);
+  const progressRef = useRef(0);
+  progressRef.current = progress;
 
   const step = STEPS[Math.min(stepIndex, STEPS.length - 1)]!;
 
@@ -101,11 +105,11 @@ export function DemoPlayer() {
     if (!playing || reducedMotion) return;
 
     const origin = performance.now();
-    const base = pausedAt.current;
+    const baseProgress = pausedAt.current; // 0..1 within current step
     startedAt.current = origin;
 
     const tick = (now: number) => {
-      const elapsed = base * step.durationMs + (now - origin);
+      const elapsed = baseProgress * step.durationMs + (now - origin);
       const p = Math.min(1, elapsed / step.durationMs);
       setProgress(p);
       if (p >= 1) {
@@ -123,7 +127,23 @@ export function DemoPlayer() {
     return () => {
       if (raf.current != null) cancelAnimationFrame(raf.current);
     };
-  }, [playing, stepIndex, step.durationMs, reducedMotion, loop]);
+  }, [playing, stepIndex, step.durationMs, reducedMotion, loop, STEPS.length]);
+
+  // Keep auto-play running when the tab is visible; pause when hidden.
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden) {
+        setPlaying((was) => {
+          if (was) pausedAt.current = progressRef.current;
+          return false;
+        });
+      } else if (!reducedMotion) {
+        setPlaying(true);
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, [reducedMotion]);
 
   const togglePlay = () => {
     if (playing) {
@@ -143,7 +163,7 @@ export function DemoPlayer() {
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
       <div>
         <p className="text-xs font-semibold uppercase tracking-wider text-gold-dark">
-          Short product demo · ~{Math.round(TOTAL_MS / 1000)}s loop
+          Self-running demo · ~{Math.round(TOTAL_MS / 1000)}s loop · tap to take over
         </p>
         <h2 className="mt-3 font-extrabold tracking-tight text-3xl text-heading sm:text-4xl">
           {step.title}
@@ -233,7 +253,13 @@ export function DemoPlayer() {
             href="/app/?tour=1"
             className="rounded-full bg-gradient-to-br from-[var(--color-gold-light)] to-[var(--color-gold-dark)] px-6 py-3 text-sm font-bold text-navy transition-all hover:-translate-y-0.5 hover:opacity-90"
           >
-            Start practice mode
+            Full test environment
+          </Link>
+          <Link
+            href="/app/business/?tab=payroll"
+            className="rounded-full border border-[var(--color-line)] px-6 py-3 text-sm font-bold text-heading transition-all hover:-translate-y-0.5 hover:border-navy"
+          >
+            Metal salary payroll
           </Link>
           <AuthNavLink
             href={AUTH_REGISTER_HREF}
@@ -317,6 +343,7 @@ function DemoPhone({
           {stepId === "wallet" && <ScreenWallet progress={progress} />}
           {stepId === "trade" && <ScreenTrade progress={progress} />}
           {stepId === "pay" && <ScreenPay progress={progress} />}
+          {stepId === "payroll" && <ScreenPayroll progress={progress} />}
           {stepId === "reserve" && <ScreenReserve progress={progress} />}
           {stepId === "markets" && <ScreenMarkets progress={progress} />}
           {stepId === "chat" && <ScreenChat progress={progress} />}
@@ -544,6 +571,63 @@ function ScreenPay({ progress }: { progress: number }) {
             Request sent ✓
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+function ScreenPayroll({ progress }: { progress: number }) {
+  const confirming = progress > 0.35;
+  const done = progress > 0.72;
+  const goldG = 0.58 + progress * 0.12;
+  const silverG = 16 + progress * 2.4;
+  return (
+    <div className="space-y-4">
+      <p className="text-[10px] uppercase tracking-wider text-white/45">
+        B2B · Metal salary
+      </p>
+      <h3 className="font-extrabold tracking-tight text-xl">Alex Finance</h3>
+      <p className="text-xs text-white/55">Gross €3,100 · employer split</p>
+      <div className="space-y-2">
+        {[
+          { label: "Fiat 80%", value: "€2,480", hot: progress > 0.15 },
+          {
+            label: "Gold 15%",
+            value: `${goldG.toFixed(2)} g Au`,
+            hot: progress > 0.35,
+          },
+          {
+            label: "Silver 5%",
+            value: `${silverG.toFixed(1)} g Ag`,
+            hot: progress > 0.55,
+          },
+        ].map((row) => (
+          <div
+            key={row.label}
+            className={`flex items-center justify-between rounded-2xl px-3.5 py-3 transition-all duration-500 ${
+              row.hot ? "bg-gold/15 ring-1 ring-gold/40" : "bg-white/[0.06]"
+            }`}
+          >
+            <span className="text-sm font-semibold">{row.label}</span>
+            <span className="text-sm font-bold tabular-nums">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      <div
+        className={`rounded-xl py-3 text-center text-sm font-bold transition-all duration-400 ${
+          done
+            ? "bg-emerald-500/90 text-white"
+            : confirming
+              ? "bg-gradient-to-br from-[var(--color-gold-light)] to-[var(--color-gold-dark)] text-navy scale-[1.02] demo-pulse"
+              : "bg-white/10 text-white/70"
+        }`}
+      >
+        {done ? "Salary paid ✓" : confirming ? "Paying metals…" : "Run payroll"}
+      </div>
+      {done && (
+        <p className="demo-fade-up text-center text-xs text-white/60">
+          Credited to employee wallet — practice only
+        </p>
       )}
     </div>
   );

@@ -29,6 +29,7 @@ export interface Dictionary {
     careers: string;
     investors: string;
     download: string;
+    waitlist: string;
     webApp: string;
     business: string;
   };
@@ -76,7 +77,17 @@ export interface Dictionary {
     ctaBusiness: string;
     pathsEyebrow: string;
     pathsH2: string;
-    paths: { title: string; body: string; href: string; cta: string }[];
+    pathsSub: string;
+    paths: {
+      id: string;
+      model: string;
+      title: string;
+      body: string;
+      highlights: string[];
+      href: string;
+      cta: string;
+      visualLabel: string;
+    }[];
     problem: {
       eyebrow: string;
       h2: string;
@@ -176,6 +187,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       careers: "Careers",
       investors: "Investors",
       download: "Download",
+      waitlist: "Waitlist",
       webApp: "Open web app",
       business: "Business",
     },
@@ -224,26 +236,66 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ctaSecondary: "Watch walkthrough",
       ctaDemo: "Watch product demo",
       ctaBusiness: "For businesses",
-      pathsEyebrow: "Three audiences",
-      pathsH2: "Customers · Investors · Businesses",
+      pathsEyebrow: "Who it’s for",
+      pathsH2: "B2C · B2B · B2B2C · Capital",
+      pathsSub:
+        "Tap a model to see the product surface — personal wallets, business treasury, partner gold delivery, or investor thesis.",
       paths: [
         {
+          id: "b2c",
+          model: "B2C",
           title: "Customers",
-          body: "Personal multi-wallets, practice pay & trade, and a modern neobank-style app — try the demo or download.",
+          body: "A Revolut-style multi-wallet for people: gold, silver, and cash pockets with practice pay, send, and trade.",
+          highlights: [
+            "Personal · Business · Kids wallets in one account",
+            "Practice payments and swaps today",
+            "Live custody stays gated until certification",
+          ],
           href: "/app/?tour=1",
-          cta: "Try practice mode",
+          cta: "Open practice wallet",
+          visualLabel: "Personal app",
         },
         {
+          id: "b2b",
+          model: "B2B",
+          title: "Businesses",
+          body: "Treasury, payroll pockets, merchant float, and team seats — built for operators who need gold-linked value on the books.",
+          highlights: [
+            "Metal salary: pay staff partly in gold & silver",
+            "Ops treasury with pocket-level controls",
+            "Banks, payments, and investment partners",
+          ],
+          href: "/business",
+          cta: "Explore B2B",
+          visualLabel: "Business treasury",
+        },
+        {
+          id: "b2b2c",
+          model: "B2B2C",
+          title: "Partners",
+          body: "Jewelry and bullion stores fulfill gold for your customers. You own the sender relationship; partners earn on pickup and delivery.",
+          highlights: [
+            "Send gold across SA · EG · KW · AE · QA",
+            "Partner locator + redeem panel",
+            "Zero setup fee to start the conversation",
+          ],
+          href: "/partner-with-us/",
+          cta: "Become a partner",
+          visualLabel: "Partner network",
+        },
+        {
+          id: "investors",
+          model: "Capital",
           title: "Investors",
-          body: "Platform thesis, milestones, and a direct IR inquiry form — honest early-stage status, no fake live vault claims.",
+          body: "Platform thesis, milestones, and a direct IR form — honest early-stage status, no fake live vault claims.",
+          highlights: [
+            "Practice product and partner corridors first",
+            "Licensed rails before live settlement",
+            "Direct inquiry to investor relations",
+          ],
           href: "/investors",
           cta: "Investor relations",
-        },
-        {
-          title: "Businesses",
-          body: "Treasury, payroll, merchant payments, and partner verticals for banks, payments, and investments.",
-          href: "/business",
-          cta: "Business & partners",
+          visualLabel: "IR roadmap",
         },
       ],
       problem: {
@@ -454,6 +506,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       careers: "Karriere",
       investors: "Investoren",
       download: "Download",
+      waitlist: "Warteliste",
       webApp: "Web-App öffnen",
       business: "Business",
     },
@@ -502,26 +555,66 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ctaSecondary: "Rundgang ansehen",
       ctaDemo: "Produktdemo ansehen",
       ctaBusiness: "Für Unternehmen",
-      pathsEyebrow: "Drei Zielgruppen",
-      pathsH2: "Kunden · Investoren · Unternehmen",
+      pathsEyebrow: "Für wen",
+      pathsH2: "B2C · B2B · B2B2C · Kapital",
+      pathsSub:
+        "Modell wählen und die Produktfläche sehen — Wallets, Treasury, Partner-Goldlieferung oder Investor-These.",
       paths: [
         {
+          id: "b2c",
+          model: "B2C",
           title: "Kunden",
-          body: "Persönliche Multi-Wallets, Übungszahlungen & Handel — Demo testen oder Download.",
+          body: "Multi-Wallet im Neobank-Stil: Gold-, Silber- und Cash-Taschen mit Übungszahlungen, Senden und Handel.",
+          highlights: [
+            "Persönlich · Business · Kids in einem Konto",
+            "Übungszahlungen und Swaps heute",
+            "Live-Verwahrung erst nach Zertifizierung",
+          ],
           href: "/app/?tour=1",
-          cta: "Übungsmodus starten",
+          cta: "Übungs-Wallet öffnen",
+          visualLabel: "Persönliche App",
         },
         {
+          id: "b2b",
+          model: "B2B",
+          title: "Unternehmen",
+          body: "Treasury, Payroll-Taschen, Händler-Float und Team-Sitze — für Betreiber mit goldverknüpftem Wert in den Büchern.",
+          highlights: [
+            "Ops-Treasury mit Taschen-Kontrolle",
+            "Payroll- und Händler-Auszahlungen",
+            "Banken-, Payment- und Investment-Partner",
+          ],
+          href: "/business",
+          cta: "B2B entdecken",
+          visualLabel: "Business-Treasury",
+        },
+        {
+          id: "b2b2c",
+          model: "B2B2C",
+          title: "Partner",
+          body: "Juwelier- und Bullion-Stores erfüllen Gold für Ihre Kunden. Sie besitzen die Absenderbeziehung; Partner verdienen an Abholung und Lieferung.",
+          highlights: [
+            "Gold senden über SA · EG · KW · AE · QA",
+            "Standortsuche + Partner-Einlösung",
+            "Keine Setup-Gebühr für den Einstieg",
+          ],
+          href: "/partner-with-us/",
+          cta: "Partner werden",
+          visualLabel: "Partnernetzwerk",
+        },
+        {
+          id: "investors",
+          model: "Kapital",
           title: "Investoren",
-          body: "These, Meilensteine und direktes IR-Formular — ehrlicher Early-Stage-Status, keine Fake-Vault-Claims.",
+          body: "Plattform-These, Meilensteine und direktes IR-Formular — ehrlicher Early-Stage-Status, keine Fake-Vault-Claims.",
+          highlights: [
+            "Übungprodukt und Partner-Korridore zuerst",
+            "Lizensierte Rails vor Live-Settlement",
+            "Direkte Anfrage an Investor Relations",
+          ],
           href: "/investors",
           cta: "Investor Relations",
-        },
-        {
-          title: "Unternehmen",
-          body: "Treasury, Payroll, Händlerzahlungen und Partner-Vertikalen für Banken, Payments und Investments.",
-          href: "/business",
-          cta: "Business & Partner",
+          visualLabel: "IR-Roadmap",
         },
       ],
       problem: {
@@ -732,6 +825,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       careers: "الوظائف",
       investors: "المستثمرون",
       download: "تحميل",
+      waitlist: "قائمة الانتظار",
       webApp: "فتح تطبيق الويب",
       business: "الأعمال",
     },
@@ -779,26 +873,66 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ctaSecondary: "شاهد الجولة",
       ctaDemo: "شاهد عرض المنتج",
       ctaBusiness: "حسابات الأعمال",
-      pathsEyebrow: "ابدأ من هنا",
-      pathsH2: "ماذا تريد أن تفعل؟",
+      pathsEyebrow: "لمن صُممت",
+      pathsH2: "B2C · B2B · B2B2C · رأس المال",
+      pathsSub:
+        "اختر النموذج لترى سطح المنتج — محافظ شخصية، خزينة أعمال، توصيل ذهب عبر الشركاء، أو أطروحة المستثمر.",
       paths: [
         {
-          title: "افتح حسابًا شخصيًا",
-          body: "جيوب متعددة للعملات للذهب والفضة والنقد — ادفع وادّخر وبدّل كما في بنك رقمي حديث.",
+          id: "b2c",
+          model: "B2C",
+          title: "العملاء",
+          body: "محفظة متعددة بأسلوب البنوك الرقمية: جيوب ذهب وفضة ونقد مع دفع وإرسال وتداول تجريبي.",
+          highlights: [
+            "شخصية · أعمال · أطفال في حساب واحد",
+            "مدفوعات ومبادلات تجريبية اليوم",
+            "الحفظ الحي يبقى مغلقًا حتى الاعتماد",
+          ],
           href: "/app/?tour=1",
-          cta: "بدء وضع التدريب",
+          cta: "افتح المحفظة التجريبية",
+          visualLabel: "تطبيق شخصي",
         },
         {
-          title: "إدارة خزينة الأعمال",
-          body: "محافظ شركات ومقاعد فريق وجيوب رواتب وقسائم — مبنية للمشغّلين لا للمستهلكين فقط.",
-          href: "/app/business/",
-          cta: "فتح محفظة الأعمال",
+          id: "b2b",
+          model: "B2B",
+          title: "الشركات",
+          body: "خزينة وجيوب رواتب وعوّامة تجّار ومقاعد فريق — للمشغّلين الذين يحتاجون قيمة مرتبطة بالذهب في الدفاتر.",
+          highlights: [
+            "خزينة تشغيل بتحكم على مستوى الجيب",
+            "تدفقات الرواتب ومدفوعات التجّار",
+            "شركاء البنوك والمدفوعات والاستثمار",
+          ],
+          href: "/business",
+          cta: "استكشف B2B",
+          visualLabel: "خزينة الأعمال",
         },
         {
-          title: "شاهده يعمل",
-          body: "عرض تلقائي قصير للمحافظ والتداول والمدفوعات والاحتياطيات — دون تسجيل.",
-          href: "/demo",
-          cta: "تشغيل العرض",
+          id: "b2b2c",
+          model: "B2B2C",
+          title: "الشركاء",
+          body: "متاجر المجوهرات والسبائك تُنفّذ الذهب لعملائك. أنت تملك علاقة المُرسل؛ الشركاء يربحون من الاستلام والتوصيل.",
+          highlights: [
+            "أرسل الذهب عبر SA · EG · KW · AE · QA",
+            "محدد مواقع + لوحة استرداد للشركاء",
+            "بدون رسوم إعداد لبدء المحادثة",
+          ],
+          href: "/partner-with-us/",
+          cta: "كن شريكًا",
+          visualLabel: "شبكة الشركاء",
+        },
+        {
+          id: "investors",
+          model: "رأس المال",
+          title: "المستثمرون",
+          body: "أطروحة المنصة والمعالم ونموذج IR مباشر — وضع مبكر صادق بلا ادعاءات حفظ حية وهمية.",
+          highlights: [
+            "منتج تجريبي وممرات شركاء أولًا",
+            "سكك مرخّصة قبل التسوية الحية",
+            "استفسار مباشر لعلاقات المستثمرين",
+          ],
+          href: "/investors",
+          cta: "علاقات المستثمرين",
+          visualLabel: "خارطة IR",
         },
       ],
       problem: {

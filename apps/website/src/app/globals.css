@@ -290,4 +290,126 @@ body {
     transition: none;
     transform: none;
   }
+
+  .hero-float-card,
+  .hero-float-card-delayed,
+  .hero-pocket,
+  .hero-spark,
+  .audience-panel-in,
+  .audience-float,
+  .audience-bar,
+  .audience-pin {
+    animation: none !important;
+  }
+}
+
+/* Revolut-style hero stage */
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hero-pocket-in {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes spark-draw {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hero-float-card {
+  animation: hero-float 5s ease-in-out infinite;
+}
+
+.hero-float-card-delayed {
+  animation: hero-float 5.8s ease-in-out 0.6s infinite;
+}
+
+.hero-pocket {
+  animation: hero-pocket-in 0.45s ease-out both;
+}
+
+.hero-spark {
+  animation: spark-draw 0.6s ease-out both;
+}
+
+/* Audience model switcher */
+@keyframes audience-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes audience-float {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes audience-bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes audience-pin-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.audience-panel-in {
+  animation: audience-panel-in 0.45s ease-out both;
+}
+
+.audience-float {
+  animation: audience-float 0.4s ease-out both;
+}
+
+.audience-bar {
+  transform-origin: left center;
+  animation: audience-bar-grow 0.7s ease-out both;
+}
+
+.audience-pin {
+  animation: audience-pin-pop 0.55s ease-out both;
 }

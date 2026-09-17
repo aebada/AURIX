@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useGoldService } from "@/lib/gold-service/store";
 import type { CountryCode, PartnerLocation } from "@/lib/gold-service/types";
+import { PartnerMap } from "./PartnerMap";
 
 const COUNTRIES: { code: CountryCode | ""; label: string }[] = [
   { code: "", label: "All countries" },
@@ -102,34 +103,28 @@ export function StoreLocator({
       <div className={`grid gap-4 ${embed ? "" : "lg:grid-cols-[1.1fr_1fr]"}`}>
         {!embed && (
           <div className="relative min-h-[320px] overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[var(--color-surface)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(184,148,74,0.18),transparent_55%),radial-gradient(circle_at_70%_70%,rgba(27,42,74,0.12),transparent_50%)]" />
-            <p className="relative z-10 p-4 text-xs font-bold uppercase tracking-wider text-muted">
-              Map preview · {mapped.length} pinned locations
+            <p className="absolute left-3 top-3 z-[500] rounded-full bg-[var(--color-paper)]/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-muted shadow-sm">
+              Map · {mapped.length} pinned
             </p>
-            <div className="relative z-10 grid grid-cols-2 gap-2 p-4 pt-0 sm:grid-cols-3">
-              {mapped.slice(0, 12).map((l) => (
-                <button
-                  key={l.id}
-                  type="button"
-                  onClick={() => setSelected(l)}
-                  className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-paper)]/90 p-3 text-left text-xs shadow-sm hover:border-gold-dark"
-                >
-                  <div className="font-bold text-heading">{l.city}</div>
-                  <div className="mt-1 line-clamp-2 text-muted">{l.name}</div>
-                </button>
-              ))}
-            </div>
+            <PartnerMap
+              locations={results}
+              selectedId={selected?.id}
+              onSelect={setSelected}
+              className="absolute inset-0 min-h-[320px]"
+            />
             {results.length === 0 && (
-              <div className="relative z-10 p-8 text-sm text-muted">
-                Not available in this filter yet.{" "}
-                <Link href="/partner-with-us" className="text-gold-dark underline">
-                  Partner with us
-                </Link>{" "}
-                or{" "}
-                <Link href="/contact?role=partner" className="text-gold-dark underline">
-                  join the waitlist
-                </Link>
-                .
+              <div className="absolute inset-0 z-[400] flex items-center justify-center bg-[var(--color-surface)]/90 p-8 text-sm text-muted">
+                <p>
+                  Not available in this filter yet.{" "}
+                  <Link href="/partner-with-us" className="text-gold-dark underline">
+                    Partner with us
+                  </Link>{" "}
+                  or{" "}
+                  <Link href="/waitlist/" className="text-gold-dark underline">
+                    join the waitlist
+                  </Link>
+                  .
+                </p>
               </div>
             )}
           </div>
