@@ -12,6 +12,8 @@ export interface Dictionary {
   pages: PageDictionaries;
   nav: {
     personal: string;
+    send: string;
+    partnerWithUs: string;
     howItWorks: string;
     features: string;
     demo: string;
@@ -157,6 +159,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     pages: pageDictionaries.en,
     nav: {
       personal: "Personal",
+      send: "Send gold",
+      partnerWithUs: "Partner with us",
       howItWorks: "How It Works",
       features: "Features",
       demo: "Demo",
@@ -433,6 +437,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     pages: pageDictionaries.de,
     nav: {
       personal: "Privat",
+      send: "Gold senden",
+      partnerWithUs: "Partner werden",
       howItWorks: "So funktioniert's",
       features: "Funktionen",
       demo: "Demo",
@@ -709,6 +715,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     pages: pageDictionaries.ar,
     nav: {
       personal: "الأفراد",
+      send: "إرسال الذهب",
+      partnerWithUs: "كن شريكًا",
       howItWorks: "كيف يعمل",
       features: "المزايا",
       demo: "عرض توضيحي",

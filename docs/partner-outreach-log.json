@@ -1,0 +1,218 @@
+[
+  {
+    "at": "2026-09-17T09:34:08.805554+00:00",
+    "name": "Gold Standard Riyadh Branch",
+    "email": "saudi@goldstandarddmcc.com",
+    "country": "SA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805588+00:00",
+    "name": "Gold Era Riyadh",
+    "email": "info@gold-era.sa",
+    "country": "SA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805605+00:00",
+    "name": "Joyalukkas Riyadh Lulu",
+    "email": "riyadh@joyalukkas.com",
+    "country": "SA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805617+00:00",
+    "name": "Joyalukkas Jeddah Madeena Street",
+    "email": "jeddah@joyalukkas.com",
+    "country": "SA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805626+00:00",
+    "name": "Joyalukkas Dammam Al Wafa Mall",
+    "email": "dammamalwafa@joyalukkas.com",
+    "country": "SA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805636+00:00",
+    "name": "Malabar Gold & Diamonds Khurais Road",
+    "email": "customercare.intl@malabargroup.com",
+    "country": "SA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805645+00:00",
+    "name": "Gold Standard Kuwait Bullion Branch",
+    "email": "Kuwait@goldstandarddmcc.com",
+    "country": "KW",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805653+00:00",
+    "name": "FK Jewellers Souq Al Watiya",
+    "email": "sales@fkjewellers.com",
+    "country": "KW",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805661+00:00",
+    "name": "Noor Alburhan Jewellery",
+    "email": "info@nbjew.com",
+    "country": "KW",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805669+00:00",
+    "name": "Gold Standard Dubai Bullion Branch",
+    "email": "dubai@goldstandarddmcc.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805677+00:00",
+    "name": "Emirates Gold FZCO",
+    "email": "info@emiratesgold.ae",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805685+00:00",
+    "name": "GVS Trading LLC Dubai",
+    "email": "office@gvs-dubai.ae",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805695+00:00",
+    "name": "Leen Gold & Diamonds",
+    "email": "info@leengold.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805703+00:00",
+    "name": "Best Bullion Madinat Zayed",
+    "email": "info@bestbullion.ae",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805711+00:00",
+    "name": "Rukn Al Khyber Gold TR LLC",
+    "email": "info@goldworlduae.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805719+00:00",
+    "name": "Pure Gold Jewellers Gold Centre Deira",
+    "email": "customercare@pugold.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805727+00:00",
+    "name": "Joyalukkas Deira Gold Centre Main",
+    "email": "dxbmain@joyalukkas.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805734+00:00",
+    "name": "Joyalukkas Madinat Zayed Abu Dhabi",
+    "email": "admadinatzayed@joyalukkas.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805742+00:00",
+    "name": "Liali Jewellery The Dubai Mall",
+    "email": "dubaimall@lialijewellery.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805750+00:00",
+    "name": "Liali Jewellery Forsan Central Mall",
+    "email": "forsan@lialijewellery.com",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805759+00:00",
+    "name": "Al Ansari Exchange Head Office",
+    "email": "info@alansari.ae",
+    "country": "AE",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805767+00:00",
+    "name": "Alfardan Exchange Alfardan Center",
+    "email": "cservice@alfardanexchange.com.qa",
+    "country": "QA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805775+00:00",
+    "name": "Pure Gold Jewellers Souk Waqif Gold Souk",
+    "email": "pugold@pugold.com",
+    "country": "QA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  },
+  {
+    "at": "2026-09-17T09:34:08.805783+00:00",
+    "name": "Velat Gold",
+    "email": "velatgoldqtr@gmail.com",
+    "country": "QA",
+    "mail": false,
+    "crm": false,
+    "dry_run": false
+  }
+]

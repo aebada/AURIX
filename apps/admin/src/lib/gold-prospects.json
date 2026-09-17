@@ -1,0 +1,1900 @@
+[
+  {
+    "id": "loc_csv_sa_gold_standard_riyadh_branch_0",
+    "partnerId": "p_gold_standard_riyadh_branch",
+    "name": "Gold Standard Riyadh Branch",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "bullion",
+    "address": "First Floor, Al Hella Gold Market, Al Rass Street, Al Marqab District, Riyadh 12645",
+    "lat": null,
+    "lng": null,
+    "website": "https://goldstandarddmcc.com/",
+    "email": "saudi@goldstandarddmcc.com",
+    "phone": "+966 11 286 2024",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_gold_standard_jeddah_bullion_branch_1",
+    "partnerId": "p_gold_standard_jeddah_bullion",
+    "name": "Gold Standard Jeddah Bullion Branch",
+    "country": "SA",
+    "city": "Jeddah",
+    "type": "bullion",
+    "address": "First floor, Ajab Al Daheb Center, 60th Street, Al Kandara District, Jeddah 21464",
+    "lat": null,
+    "lng": null,
+    "website": "https://goldstandarddmcc.com/",
+    "email": "saudi@goldstandarddmcc.com",
+    "phone": "+966 12 642 5200",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_gold_standard_dammam_bullion_branch_2",
+    "partnerId": "p_gold_standard_dammam_bullion",
+    "name": "Gold Standard Dammam Bullion Branch",
+    "country": "SA",
+    "city": "Dammam",
+    "type": "bullion",
+    "address": "2nd Floor, Abdul Ghafour Amin Building, King Abdul Aziz Road, Dammam 31471",
+    "lat": null,
+    "lng": null,
+    "website": "https://goldstandarddmcc.com/",
+    "email": "saudi@goldstandarddmcc.com",
+    "phone": "+966 13 834 0654",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_gold_era_riyadh_3",
+    "partnerId": "p_gold_era_riyadh",
+    "name": "Gold Era Riyadh",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "bullion",
+    "address": "Store 106, First Floor, Al-Qadah Tower 2, Olaya, King Fahd Road, Riyadh",
+    "lat": null,
+    "lng": null,
+    "website": "https://gold-era.sa/",
+    "email": "info@gold-era.sa",
+    "phone": "+966 11 461 3163",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://gold-era.sa/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_gold_era_jeddah_4",
+    "partnerId": "p_gold_era_jeddah",
+    "name": "Gold Era Jeddah",
+    "country": "SA",
+    "city": "Jeddah",
+    "type": "bullion",
+    "address": "Store A1, Gate 4, Mahmoud Saeed Gold Center, Jeddah",
+    "lat": null,
+    "lng": null,
+    "website": "https://gold-era.sa/",
+    "email": "info@gold-era.sa",
+    "phone": "+966 54 971 2498",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://gold-era.sa/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_joyalukkas_riyadh_lulu_5",
+    "partnerId": "p_joyalukkas_riyadh_lulu",
+    "name": "Joyalukkas Riyadh Lulu",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "chain",
+    "address": "Lulu Hypermarket, Avenue Mall, Murabba, Riyadh",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.joyalukkas.com/sa/",
+    "email": "riyadh@joyalukkas.com",
+    "phone": "+966 11 402 4916",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/sa/city/riyadh/saudi-riyadh-lulu",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_joyalukkas_jeddah_madeena_street_6",
+    "partnerId": "p_joyalukkas_jeddah_madeena_st",
+    "name": "Joyalukkas Jeddah Madeena Street",
+    "country": "SA",
+    "city": "Jeddah",
+    "type": "chain",
+    "address": "Lulu Hypermarket, Madina Al Munawarah Road, Ash Sharafiya-1, Jeddah 23218",
+    "lat": 21.516616,
+    "lng": 39.181493,
+    "website": "https://www.joyalukkas.com/sa/",
+    "email": "jeddah@joyalukkas.com",
+    "phone": "+966 55 220 1612",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/sa/city/jeddah/saudi-jeddah-madeena-st",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_joyalukkas_dammam_al_wafa_mall_7",
+    "partnerId": "p_joyalukkas_dammam_al_wafa_ma",
+    "name": "Joyalukkas Dammam Al Wafa Mall",
+    "country": "SA",
+    "city": "Dammam",
+    "type": "chain",
+    "address": "Ground Floor, King Khaled St, Ar Rabi, Inside Al Wafa Mall, Dammam 32241",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.joyalukkas.com/sa/",
+    "email": "dammamalwafa@joyalukkas.com",
+    "phone": "+966 13 830 3318",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/sa/city/dammam/dammam-al-wafa-mall",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_malabar_gold_diamonds_khurais_road_8",
+    "partnerId": "p_malabar_gold_diamonds_khurai",
+    "name": "Malabar Gold & Diamonds Khurais Road",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "chain",
+    "address": "Lulu Hypermarket LLC, Exit 30, Khurais Road, Riyadh 13222",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.malabargoldanddiamonds.com/",
+    "email": "customercare.intl@malabargroup.com",
+    "phone": "+966 11 491 9909",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.malabargoldanddiamonds.com/us/stores/saudi-arabia/ar-riyad/riyadh/khurais-road-store",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_malabar_gold_diamonds_jeddah_lulu_mall_9",
+    "partnerId": "p_malabar_gold_diamonds_jeddah",
+    "name": "Malabar Gold & Diamonds Jeddah Lulu Mall",
+    "country": "SA",
+    "city": "Jeddah",
+    "type": "chain",
+    "address": "First Floor, Lulu Hypermarket, Madeena Road, Jeddah",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.malabargoldanddiamonds.com/",
+    "email": "customercare.intl@malabargroup.com",
+    "phone": "+966 54 231 9349",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.malabargoldanddiamonds.com/us/stores/saudi-arabia/makkah/jeddah/lulu-mall-store",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_al_romaizan_thumairi_gold_market_10",
+    "partnerId": "p_al_romaizan_thumairi_gold_ma",
+    "name": "Al Romaizan Thumairi Gold Market",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "chain",
+    "address": "Thumairi Gold Market, Al Dirah, Riyadh",
+    "lat": null,
+    "lng": null,
+    "website": "https://alromaizan.com/",
+    "email": "",
+    "phone": "920012954",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://alromaizan.com/stores/saudi-arabia/riyadh/thumairi-gold-market-al-dirah-4",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_al_romaizan_al_taamer_commercial_center_11",
+    "partnerId": "p_al_romaizan_al_taamer_commer",
+    "name": "Al Romaizan Al Taamer Commercial Center",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "chain",
+    "address": "Al-Tameer Commercial Center, Al Dirah, Riyadh",
+    "lat": null,
+    "lng": null,
+    "website": "https://alromaizan.com/",
+    "email": "",
+    "phone": "920012954",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://alromaizan.com/stores/saudi-arabia/riyadh/al-taamer-commercial-center-al-dirah-1",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_l_azurde_westfield_dammam_12",
+    "partnerId": "p_l_azurde_westfield_dammam",
+    "name": "L'azurde Westfield Dammam",
+    "country": "SA",
+    "city": "Dammam",
+    "type": "chain",
+    "address": "Ground Floor, Westfield Dammam, 3543 King Fahd Road, Al Manar, Dammam 32274",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lazurde.com/",
+    "email": "",
+    "phone": "013823306",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.westfield.com/en/saudi-arabia/dammam/shops/lazurde/83833",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_sa_thumairi_al_dirah_gold_market_13",
+    "partnerId": "p_thumairi_al_dirah_gold_marke",
+    "name": "Thumairi / Al Dirah Gold Market",
+    "country": "SA",
+    "city": "Riyadh",
+    "type": "souk",
+    "address": "Al Thumairi Street / Al Dirah District gold market area, Riyadh",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://alromaizan.com/stores/saudi-arabia/riyadh/thumairi-gold-market-al-dirah-4",
+    "notes": "prospect — not AURIX partner; historic Riyadh gold souk district"
+  },
+  {
+    "id": "loc_csv_sa_ajab_al_daheb_center_14",
+    "partnerId": "p_ajab_al_daheb_center",
+    "name": "Ajab Al Daheb Center",
+    "country": "SA",
+    "city": "Jeddah",
+    "type": "souk",
+    "address": "Ajab Al Daheb Center, 60th Street, Al Kandara District, Jeddah",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner; Jeddah gold trading center"
+  },
+  {
+    "id": "loc_csv_eg_l_azurde_citystars_nasr_city_15",
+    "partnerId": "p_l_azurde_citystars_nasr_city",
+    "name": "L'azurde Citystars Nasr City",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "chain",
+    "address": "Omar Ibn El Khattab St., Nasr City, Inside Citystars Phase 1, 2nd Floor, Shop 233A, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lazurde.com/en-eg/",
+    "email": "",
+    "phone": "+20 2 2677 5495",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://yellowpages.com.eg/en/profile/%D9%84%D8%A7%D8%B2%D9%88%D8%B1%D8%AF%D9%89/612739",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_l_azurde_maadi_16",
+    "partnerId": "p_l_azurde_maadi",
+    "name": "L'azurde Maadi",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "chain",
+    "address": "17 Road 216, Maadi, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lazurde.com/en-eg/",
+    "email": "",
+    "phone": "+20 2 2517 4847",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://yellowpages.com.eg/en/profile/%D9%84%D8%A7%D8%B2%D9%88%D8%B1%D8%AF%D9%89/612739",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_l_azurde_heliopolis_17",
+    "partnerId": "p_l_azurde_heliopolis",
+    "name": "L'azurde Heliopolis",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "chain",
+    "address": "3 Haroun El Rashid St., near El Esaaf Pharmacy, Heliopolis, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lazurde.com/en-eg/",
+    "email": "",
+    "phone": "+20 2 2622 2639",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://yellowpages.com.eg/en/profile/%D9%84%D8%A7%D8%B2%D9%88%D8%B1%D8%AF%D9%89/612739",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_l_azurde_city_centre_alexandria_18",
+    "partnerId": "p_l_azurde_city_centre_alexand",
+    "name": "L'azurde City Centre Alexandria",
+    "country": "EG",
+    "city": "Alexandria",
+    "type": "chain",
+    "address": "Km 6 Alex-Cairo Desert Rd, Inside City Centre Alexandria, Gate 12, Ground Floor, Alexandria",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lazurde.com/en-eg/",
+    "email": "",
+    "phone": "+20 3 4253 095",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://yellowpages.com.eg/en/profile/%D9%84%D8%A7%D8%B2%D9%88%D8%B1%D8%AF%D9%89/612739",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_l_azurde_semouha_alexandria_19",
+    "partnerId": "p_l_azurde_semouha_alexandria",
+    "name": "L'azurde Semouha Alexandria",
+    "country": "EG",
+    "city": "Alexandria",
+    "type": "jewelry",
+    "address": "El Saraya Towers, Albert El Awal St., Semouha Sq., near Aly Ibn Abi Taleb Mosque, Alexandria",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lazurde.com/en-eg/",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://yellowpages.com.eg/en/profile/%D9%84%D8%A7%D8%B2%D9%88%D8%B1%D8%AF%D9%89/612739",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_damas_roshdy_alexandria_20",
+    "partnerId": "p_damas_roshdy_alexandria",
+    "name": "Damas Roshdy Alexandria",
+    "country": "EG",
+    "city": "Alexandria",
+    "type": "chain",
+    "address": "168 Ahmed Shawky St., Roshdy, Alexandria",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "+20 3 5223550",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.140online.com/Company.aspx?CompanyId=N2461&Lang=En&a=265&c=3",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_damas_city_centre_alexandria_21",
+    "partnerId": "p_damas_city_centre_alexandria",
+    "name": "Damas City Centre Alexandria",
+    "country": "EG",
+    "city": "Alexandria",
+    "type": "chain",
+    "address": "Km 6 Alex-Cairo Desert Rd, Inside City Centre Alexandria, Shop G73, Alexandria",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "+20 3 3680230",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.140online.com/Company.aspx?CompanyId=N2461&Lang=En&a=123&c=3",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_damas_maadi_city_centre_22",
+    "partnerId": "p_damas_maadi_city_centre",
+    "name": "Damas Maadi City Centre",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "chain",
+    "address": "Ring Road, El Mearag City, Inside Maadi City Centre Gate 3, Shop 32, Zahraa El Maadi, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://dalil140.com/branches/ar/227493-damas",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_atlas_jewelry_khan_el_khalili_23",
+    "partnerId": "p_atlas_jewelry_khan_el_khalil",
+    "name": "Atlas Jewelry Khan El Khalili",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "jewelry",
+    "address": "10 Khan El Khalily St., Azhar / Khan El Khalili, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "+20 2 2591 8833",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://egy.soopage.com/company/ATLAS-JEWELRY_9Bg.html",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_azza_fahmy_zamalek_boutique_24",
+    "partnerId": "p_azza_fahmy_zamalek_boutique",
+    "name": "Azza Fahmy Zamalek Boutique",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "jewelry",
+    "address": "13 Mohammed Maraashly St., Zamalek, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.azzafahmy.com/",
+    "email": "",
+    "phone": "+20 10 6664 2365",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://wanderlog.com/place/details/4763154/azza-fahmy",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_eg_khan_el_khalili_gold_market_25",
+    "partnerId": "p_khan_el_khalili_gold_market",
+    "name": "Khan El Khalili Gold Market",
+    "country": "EG",
+    "city": "Cairo",
+    "type": "souk",
+    "address": "Khan El Khalili / Al Azhar gold jewelry district, Cairo",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://egy.soopage.com/company/ATLAS-JEWELRY_9Bg.html",
+    "notes": "prospect — not AURIX partner; historic Cairo gold souk"
+  },
+  {
+    "id": "loc_csv_eg_alex_exchange_raml_station_26",
+    "partnerId": "p_alex_exchange_raml_station",
+    "name": "Alex Exchange Raml Station",
+    "country": "EG",
+    "city": "Alexandria",
+    "type": "exchange",
+    "address": "23 Saad Zaghloul Square, Raml Station, beside Khalil Pharmacy, Alexandria",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "Branch hours",
+    "services": [
+      "pickup"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://dalil140.com/company/en/287203-alex-exchange",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_kw_gold_standard_kuwait_bullion_branch_27",
+    "partnerId": "p_gold_standard_kuwait_bullion",
+    "name": "Gold Standard Kuwait Bullion Branch",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "bullion",
+    "address": "Shop No. 116, Central Gold Market, Al-Mubarakiya Market, Al-Qibla, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "https://goldstandarddmcc.com/",
+    "email": "Kuwait@goldstandarddmcc.com",
+    "phone": "+965 2247 3320",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_kw_fk_jewellers_souq_al_watiya_28",
+    "partnerId": "p_fk_jewellers_souq_al_watiya",
+    "name": "FK Jewellers Souq Al Watiya",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "jewelry",
+    "address": "Shop No. 121, Ground Floor, Souq Al Watiya, Maliya, next to Sheraton Hotel, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "https://fkjewellers.com/",
+    "email": "sales@fkjewellers.com",
+    "phone": "+965 2228 7181",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://fkjewellers.com/pages/fkj-kuwait-store",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_kw_fk_jewellers_central_gold_market_mubarak_29",
+    "partnerId": "p_fk_jewellers_central_gold_ma",
+    "name": "FK Jewellers Central Gold Market Mubarakiya",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "jewelry",
+    "address": "Shop 136, 1st Floor, Central Gold Market, Al-Mubarakiya, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "https://fkjewellers.com/",
+    "email": "sales@fkjewellers.com",
+    "phone": "+965 2228 7181",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://fkjewellers.com/pages/fkj-kuwait-store",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_kw_noor_alburhan_jewellery_30",
+    "partnerId": "p_noor_alburhan_jewellery",
+    "name": "Noor Alburhan Jewellery",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "bullion",
+    "address": "Shop 20, Basement, Central Gold Market, Al-Mubarakiya, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "https://nbjew.com/",
+    "email": "info@nbjew.com",
+    "phone": "+965 9002 5115",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://nbjew.com/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_kw_alfa_united_gold_jewellery_co_31",
+    "partnerId": "p_alfa_united_gold_jewellery_c",
+    "name": "Alfa United Gold Jewellery Co.",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "bullion",
+    "address": "Central Gold Market / Mubarakiya, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.alfagoldkwt.com/",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.alfagoldkwt.com/index.php/c_client_main/aboutus",
+    "notes": "prospect — not AURIX partner; bullion and wholesale 21K/22K jewelry"
+  },
+  {
+    "id": "loc_csv_kw_central_gold_market_al_mubarakiya_32",
+    "partnerId": "p_central_gold_market_al",
+    "name": "Central Gold Market Al-Mubarakiya",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "souk",
+    "address": "Central Gold Market, Al-Mubarakiya, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner; Kuwait City primary gold souk"
+  },
+  {
+    "id": "loc_csv_kw_souq_al_watiya_33",
+    "partnerId": "p_souq_al_watiya",
+    "name": "Souq Al Watiya",
+    "country": "KW",
+    "city": "Kuwait City",
+    "type": "souk",
+    "address": "Souq Al Watiya, Maliya, Kuwait City",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://fkjewellers.com/pages/fkj-kuwait-store",
+    "notes": "prospect — not AURIX partner; jewelry souk near Sheraton"
+  },
+  {
+    "id": "loc_csv_ae_gold_standard_dubai_bullion_branch_34",
+    "partnerId": "p_gold_standard_dubai_bullion_",
+    "name": "Gold Standard Dubai Bullion Branch",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "bullion",
+    "address": "Shop No. M39, Mezzanine Floor, Gold Centre Building, Deira, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://goldstandarddmcc.com/",
+    "email": "dubai@goldstandarddmcc.com",
+    "phone": "+971 4 229 1949",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldstandarddmcc.com/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_emirates_gold_fzco_35",
+    "partnerId": "p_emirates_gold_fzco",
+    "name": "Emirates Gold FZCO",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "bullion",
+    "address": "Al Sarayat Street, Jumeirah Lakes Towers FZCO, Sheikh Zayed Road, Dubai PO Box 24305",
+    "lat": null,
+    "lng": null,
+    "website": "https://emiratesgold.ae/",
+    "email": "info@emiratesgold.ae",
+    "phone": "+971 4 367 9030",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://emiratesgold.ae/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_gvs_trading_llc_dubai_36",
+    "partnerId": "p_gvs_trading_llc_dubai",
+    "name": "GVS Trading LLC Dubai",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "bullion",
+    "address": "Gold & Diamond Park, Building 7, 1st Floor, Office 108, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.gvs-trading.ae/",
+    "email": "office@gvs-dubai.ae",
+    "phone": "+971 4 878 2904",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.gvs-trading.ae/contact.html",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_leen_gold_diamonds_37",
+    "partnerId": "p_leen_gold_diamonds",
+    "name": "Leen Gold & Diamonds",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "bullion",
+    "address": "Office 222, Gold Landing Building, Gold Souk Deira, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://leengold.com/",
+    "email": "info@leengold.com",
+    "phone": "+971 4 335 1666",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://leengold.com/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_best_bullion_madinat_zayed_38",
+    "partnerId": "p_best_bullion_madinat_zayed",
+    "name": "Best Bullion Madinat Zayed",
+    "country": "AE",
+    "city": "Abu Dhabi",
+    "type": "bullion",
+    "address": "Shop GC-30, Madinat Zayed Gold Center, Abu Dhabi",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.bestbullion.ae/",
+    "email": "info@bestbullion.ae",
+    "phone": "+971 2 555 6034",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.bestbullion.ae/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_rukn_al_khyber_gold_tr_llc_39",
+    "partnerId": "p_rukn_al_khyber_gold_tr_llc",
+    "name": "Rukn Al Khyber Gold TR LLC",
+    "country": "AE",
+    "city": "Sharjah",
+    "type": "bullion",
+    "address": "Sharjah Gold Souq, Block 4, 1st Floor, Shop No. 57, Sharjah",
+    "lat": null,
+    "lng": null,
+    "website": "https://goldworlduae.com/",
+    "email": "info@goldworlduae.com",
+    "phone": "+971 56 395 0005",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldworlduae.com/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_pure_gold_jewellers_gold_centre_deira_40",
+    "partnerId": "p_pure_gold_jewellers_gold_cen",
+    "name": "Pure Gold Jewellers Gold Centre Deira",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "chain",
+    "address": "Shop G17 & 18, Gold Centre Building, Gold Souk, Deira, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://pugold.com/",
+    "email": "customercare@pugold.com",
+    "phone": "+971 52 795 2884",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://pugold.com/dubai-stores",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_pure_gold_jewellers_souk_dubai_mall_41",
+    "partnerId": "p_pure_gold_jewellers_souk_dub",
+    "name": "Pure Gold Jewellers Souk Dubai Mall",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "chain",
+    "address": "Unit GS-053, Ground Floor, The Dubai Mall Gold Souk, Downtown Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://pugold.com/",
+    "email": "customercare@pugold.com",
+    "phone": "+971 50 761 0886",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://pugold.com/dubai-stores",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_pure_gold_jewellers_marina_mall_42",
+    "partnerId": "p_pure_gold_jewellers_marina_m",
+    "name": "Pure Gold Jewellers Marina Mall",
+    "country": "AE",
+    "city": "Abu Dhabi",
+    "type": "chain",
+    "address": "GA1, Ground Floor, Marina Mall, Ring Rd, Al Kasir, Al Marina, Abu Dhabi",
+    "lat": null,
+    "lng": null,
+    "website": "https://pugold.com/",
+    "email": "customercare@pugold.com",
+    "phone": "+971 2 681 4018",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://pugold.com/abu-dhabi-stores",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_pure_gold_jewellers_world_trade_center_m_43",
+    "partnerId": "p_pure_gold_jewellers_world_tr",
+    "name": "Pure Gold Jewellers World Trade Center Mall",
+    "country": "AE",
+    "city": "Abu Dhabi",
+    "type": "chain",
+    "address": "Unit G32, Ground Floor, World Trade Center Mall, Hamdan Bin Mohammed St, Abu Dhabi",
+    "lat": null,
+    "lng": null,
+    "website": "https://pugold.com/",
+    "email": "customercare@pugold.com",
+    "phone": "+971 52 795 2904",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://pugold.com/abu-dhabi-stores",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_joyalukkas_deira_gold_centre_main_44",
+    "partnerId": "p_joyalukkas_deira_gold_centre",
+    "name": "Joyalukkas Deira Gold Centre Main",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "chain",
+    "address": "Gold Souq Main Shop, Gold Centre, Deira, Dubai",
+    "lat": 25.271314,
+    "lng": 55.297469,
+    "website": "https://www.joyalukkas.com/",
+    "email": "dxbmain@joyalukkas.com",
+    "phone": "+971 4 225 3646",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/ae/city/Dubai/gold-centre-main",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_joyalukkas_madinat_zayed_abu_dhabi_45",
+    "partnerId": "p_joyalukkas_madinat_zayed_abu",
+    "name": "Joyalukkas Madinat Zayed Abu Dhabi",
+    "country": "AE",
+    "city": "Abu Dhabi",
+    "type": "chain",
+    "address": "Madinat Zayed Shopping Centre, Ground Floor, Opp. Lulu Hypermarket, Abu Dhabi",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.joyalukkas.com/",
+    "email": "admadinatzayed@joyalukkas.com",
+    "phone": "+971 2 633 1377",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/ae/city/abu-dhabi/abudhabi-madinat-zayed",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_joyalukkas_gold_souk_sharjah_46",
+    "partnerId": "p_joyalukkas_gold_souk_sharjah",
+    "name": "Joyalukkas Gold Souk Sharjah",
+    "country": "AE",
+    "city": "Sharjah",
+    "type": "chain",
+    "address": "Gold Souk, Sharjah",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.joyalukkas.com/",
+    "email": "",
+    "phone": "+971 6 574 5594",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/ae/city/Dubai/souk-street-1",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_liali_jewellery_the_dubai_mall_47",
+    "partnerId": "p_liali_jewellery_the_dubai_ma",
+    "name": "Liali Jewellery The Dubai Mall",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "jewelry",
+    "address": "The District, The Dubai Mall, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lialijewellery.com/",
+    "email": "dubaimall@lialijewellery.com",
+    "phone": "+971 50 286 4544",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.lialijewellery.com/pages/store-location",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_liali_jewellery_forsan_central_mall_48",
+    "partnerId": "p_liali_jewellery_forsan_centr",
+    "name": "Liali Jewellery Forsan Central Mall",
+    "country": "AE",
+    "city": "Abu Dhabi",
+    "type": "jewelry",
+    "address": "Central Forsan Mall, Ground Floor, Khalifa City Sector 33, Abu Dhabi",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.lialijewellery.com/",
+    "email": "forsan@lialijewellery.com",
+    "phone": "+971 56 544 3714",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.lialijewellery.com/pages/store-location",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_al_romaizan_dubai_gold_souk_49",
+    "partnerId": "p_al_romaizan_dubai_gold_souk",
+    "name": "Al Romaizan Dubai Gold Souk",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "chain",
+    "address": "Dubai Gold Souk, Al Daghaya, Shop No. 2, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "https://alromaizan.com/",
+    "email": "",
+    "phone": "+971 4 225 2600",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://alromaizan.com/stores/united-arab-emirates/dubai/dubai-gold-souq",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_damas_main_entrance_gold_centre_50",
+    "partnerId": "p_damas_main_entrance_gold_cen",
+    "name": "Damas Main Entrance Gold Centre",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "chain",
+    "address": "Unit G001 & 001A, Ground Floor, Gold Centre Building, Deira (near main entrance), Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "+971 4 225 2707",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.damasjewellery.com/storelocator/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_damas_sharjah_old_gold_souk_51",
+    "partnerId": "p_damas_sharjah_old_gold_souk",
+    "name": "Damas Sharjah Old Gold Souk",
+    "country": "AE",
+    "city": "Sharjah",
+    "type": "chain",
+    "address": "Central Souq / Old Gold Souk, Sharjah",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "+971 6 574 6356",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.damasjewellery.com/storelocator/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_ae_dubai_gold_souk_deira_52",
+    "partnerId": "p_dubai_gold_souk_deira",
+    "name": "Dubai Gold Souk Deira",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "souk",
+    "address": "Gold Centre / Al Ras gold market district, Deira, Dubai",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://stores.joyalukkas.com/ae/city/Dubai/gold-centre-main",
+    "notes": "prospect — not AURIX partner; landmark Deira gold souk"
+  },
+  {
+    "id": "loc_csv_ae_sharjah_gold_souq_53",
+    "partnerId": "p_sharjah_gold_souq",
+    "name": "Sharjah Gold Souq",
+    "country": "AE",
+    "city": "Sharjah",
+    "type": "souk",
+    "address": "Sharjah Gold Souq / Central Souq gold district, Sharjah",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://goldworlduae.com/",
+    "notes": "prospect — not AURIX partner; Sharjah gold trading hub"
+  },
+  {
+    "id": "loc_csv_ae_madinat_zayed_gold_center_54",
+    "partnerId": "p_madinat_zayed_gold_center",
+    "name": "Madinat Zayed Gold Center",
+    "country": "AE",
+    "city": "Abu Dhabi",
+    "type": "souk",
+    "address": "Madinat Zayed Gold Center / Shopping Centre, Abu Dhabi",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.bestbullion.ae/",
+    "notes": "prospect — not AURIX partner; Abu Dhabi gold market cluster"
+  },
+  {
+    "id": "loc_csv_ae_al_ansari_exchange_head_office_55",
+    "partnerId": "p_al_ansari_exchange_head_offi",
+    "name": "Al Ansari Exchange Head Office",
+    "country": "AE",
+    "city": "Dubai",
+    "type": "exchange",
+    "address": "Level 7, Al Ansari Business Center, Al Barsha 1, Beside Mall of the Emirates, Dubai PO Box 6176",
+    "lat": null,
+    "lng": null,
+    "website": "https://alansariexchange.com/",
+    "email": "info@alansari.ae",
+    "phone": "600 54 6000",
+    "hours": "Branch hours",
+    "services": [
+      "pickup"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://alansariexchange.com/contact-us/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_qa_alfardan_exchange_alfardan_center_56",
+    "partnerId": "p_alfardan_exchange_alfardan_c",
+    "name": "Alfardan Exchange Alfardan Center",
+    "country": "QA",
+    "city": "Doha",
+    "type": "exchange",
+    "address": "Alfardan Center, Grand Hamad Street, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "https://www.alfardanexchange.com.qa/",
+    "email": "cservice@alfardanexchange.com.qa",
+    "phone": "+974 4453 7777",
+    "hours": "Branch hours",
+    "services": [
+      "pickup"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.alfardanexchange.com.qa/branch-locator/",
+    "notes": "prospect — not AURIX partner; also sells PAMP and Royal Mint gold bars/coins"
+  },
+  {
+    "id": "loc_csv_qa_pure_gold_jewellers_doha_city_centre_57",
+    "partnerId": "p_pure_gold_jewellers_doha_cit",
+    "name": "Pure Gold Jewellers Doha City Centre",
+    "country": "QA",
+    "city": "Doha",
+    "type": "chain",
+    "address": "Doha City Centre, Building 80, Street 615, Alebb Area, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "https://pugold.com/",
+    "email": "customercare@pugold.com",
+    "phone": "+974 3111 7848",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://pugold.com/storelocator/index/view/id/38/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_qa_pure_gold_jewellers_souk_waqif_gold_souk_58",
+    "partnerId": "p_pure_gold_jewellers_souk_waq",
+    "name": "Pure Gold Jewellers Souk Waqif Gold Souk",
+    "country": "QA",
+    "city": "Doha",
+    "type": "jewelry",
+    "address": "Shop No. 17, Souk Waqif Gold Souk, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "https://pugold.com/",
+    "email": "pugold@pugold.com",
+    "phone": "+974 4477 5890",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://www.connect.com.qa/pure-gold-jewellers/3107",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_qa_velat_gold_59",
+    "partnerId": "p_velat_gold",
+    "name": "Velat Gold",
+    "country": "QA",
+    "city": "Doha",
+    "type": "bullion",
+    "address": "Building No. 13, Street 810, Zone 6, Doha Gold Market, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "https://velatgold.com/",
+    "email": "velatgoldqtr@gmail.com",
+    "phone": "+974 5510 9547",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://velatgold.com/",
+    "notes": "prospect — not AURIX partner"
+  },
+  {
+    "id": "loc_csv_qa_al_sulaiman_jewellers_60",
+    "partnerId": "p_al_sulaiman_jewellers",
+    "name": "Al Sulaiman Jewellers",
+    "country": "QA",
+    "city": "Doha",
+    "type": "bullion",
+    "address": "Doha Gold Souq / Souq Waqif Gold Souq area, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "https://alsulaimanjeweller.com/",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver",
+      "buyback"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://alsulaimanjeweller.com/",
+    "notes": "prospect — not AURIX partner; gold bars and coins"
+  },
+  {
+    "id": "loc_csv_qa_gold_souq_souq_waqif_61",
+    "partnerId": "p_gold_souq_souq_waqif",
+    "name": "Gold Souq Souq Waqif",
+    "country": "QA",
+    "city": "Doha",
+    "type": "souk",
+    "address": "Gold Souq, Souq Waqif, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "https://souqwaqif.qa/",
+    "email": "",
+    "phone": "",
+    "hours": "10:00–22:00",
+    "services": [
+      "pickup",
+      "gold",
+      "silver"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://souqwaqif.qa/shopping/gold/",
+    "notes": "prospect — not AURIX partner; Doha landmark gold souk"
+  },
+  {
+    "id": "loc_csv_qa_doha_exchange_souq_waqif_branch_62",
+    "partnerId": "p_doha_exchange_souq_waqif_bra",
+    "name": "Doha Exchange Souq Waqif Branch",
+    "country": "QA",
+    "city": "Doha",
+    "type": "exchange",
+    "address": "Ground Floor, Shop No. 439, Building 20, Souq Waqif, Street 119, Doha",
+    "lat": null,
+    "lng": null,
+    "website": "",
+    "email": "",
+    "phone": "+974 7001 7784",
+    "hours": "Branch hours",
+    "services": [
+      "pickup"
+    ],
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "status": "prospect",
+    "verified": false,
+    "rating": 4.2,
+    "yearsActive": 10,
+    "sourceUrl": "https://buzdy.com/viewMerchant/doha-exchange-souq-waqif-branch-qatar",
+    "notes": "prospect — not AURIX partner"
+  }
+]

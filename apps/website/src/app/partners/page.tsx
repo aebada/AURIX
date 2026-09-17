@@ -36,8 +36,10 @@ export default function PartnersLocatorPage() {
       <CtaBand
         title="Own a store? Partner with AURIX."
         description="Apply to offer pickup and redemption for cross-border gold transfers. Zero assumption of a live commercial agreement until you are approved."
-        primary={{ href: "/partner-with-us", label: "Apply to partner" }}
-        secondary={{ href: "/business", label: "Business overview" }}
+        primaryHref="/partner-with-us"
+        primaryLabel="Apply to partner"
+        secondaryHref="/business"
+        secondaryLabel="Business overview"
       />
     </>
   );

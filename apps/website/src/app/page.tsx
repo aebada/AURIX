@@ -41,8 +41,14 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/app/?tour=1"
+                href="/send/"
                 className="rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-navy/20 active:translate-y-0"
+              >
+                Send gold
+              </Link>
+              <Link
+                href="/app/?tour=1"
+                className="rounded-full border border-[var(--color-line)] bg-[var(--color-paper)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5"
               >
                 {h.ctaPrimary}
               </Link>
@@ -51,6 +57,12 @@ export default function Home() {
                 className="rounded-full border border-[var(--color-line)] bg-[var(--color-paper)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
               >
                 {h.ctaSecondary}
+              </Link>
+              <Link
+                href="/partners/"
+                className="rounded-full border border-[var(--color-line)] bg-[var(--color-paper)] px-7 py-3.5 text-sm font-bold text-heading transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-lg active:translate-y-0"
+              >
+                Find partners
               </Link>
               <Link
                 href="/business"

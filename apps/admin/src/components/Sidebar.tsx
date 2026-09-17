@@ -11,8 +11,11 @@ const navItems = [
   { href: "/", label: "Overview" },
   { href: "/users", label: "Users" },
   { href: "/kyc", label: "KYC Queue" },
+  { href: "/transfers", label: "Transfers" },
+  { href: "/partners", label: "Partners" },
+  { href: "/aml", label: "AML" },
   { href: "/monitoring", label: "Transaction Monitoring" },
-  { href: "/partners", label: "Partner Health" },
+  { href: "/settings", label: "Settings" },
   { href: "/governance", label: "AI Governance" },
 ];
 

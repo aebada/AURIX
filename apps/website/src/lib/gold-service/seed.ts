@@ -1,7 +1,8 @@
 import type { CommissionRule, PartnerLocation } from "./types";
+import csvProspects from "./prospects-from-csv.json";
 
-/** Public prospect locations — not claimed AURIX partners. Emails only when commonly published. */
-export const SEED_LOCATIONS: PartnerLocation[] = [
+/** Hand-curated starters — merged with researched CSV prospects below. */
+const HAND_SEED: PartnerLocation[] = [
   // ——— Saudi Arabia ———
   {
     id: "loc_sa_damas_riyadh",
@@ -606,6 +607,24 @@ export const SEED_LOCATIONS: PartnerLocation[] = [
     notes: "District of shops — recruit individual dealers",
   },
 ];
+
+function mergeLocations(
+  primary: PartnerLocation[],
+  extra: PartnerLocation[],
+): PartnerLocation[] {
+  const byKey = new Map<string, PartnerLocation>();
+  for (const loc of [...primary, ...extra]) {
+    const key = `${loc.country}|${loc.city}|${loc.name}`.toLowerCase();
+    if (!byKey.has(key)) byKey.set(key, loc);
+  }
+  return Array.from(byKey.values());
+}
+
+/** Public prospect locations — not claimed AURIX partners. */
+export const SEED_LOCATIONS: PartnerLocation[] = mergeLocations(
+  HAND_SEED,
+  csvProspects as PartnerLocation[],
+);
 
 export const DEFAULT_COMMISSION_RULES: CommissionRule[] = [
   {
