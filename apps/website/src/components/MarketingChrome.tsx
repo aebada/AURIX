@@ -20,8 +20,10 @@ export function MarketingChrome({
     pathname === "/app" ||
     pathname.startsWith("/app/") ||
     pathname.startsWith("/app");
+  const isPartnerPanel =
+    pathname === "/partner" || pathname.startsWith("/partner/");
 
-  if (isApp) {
+  if (isApp || isPartnerPanel) {
     return <>{children}</>;
   }
 
