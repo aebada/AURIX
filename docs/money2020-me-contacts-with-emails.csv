@@ -1,68 +1,66 @@
-Organization,Role(s),Website,Email
-Abwab.AI,Exhibitor,https://www.abwab.ai/,press@abwab.ai
-AlRajhi Capital,Exhibitor,https://www.alrajhi-capital.com/,pr@alrajhi-capital.com
-ALRAJHI TAKAFUL INSURANCE COMPANY,Exhibitor,https://www.alrajhitakaful.com/,customerservice@alrajhitakaful.com
-Alteia Capital Company,Exhibitor,https://alteiacapital.com/,contact@alteiafund.com
-AML Watcher,Exhibitor,https://amlwatcher.com/,sales@amlwatcher.com
-Amwal Tech,Exhibitor,https://amwal.tech/,info@amwal.tech
-AssanPay,Exhibitor,https://assanpay.com/,support@assanpay.com
-AVELIN AI L.L.C-FZ,Exhibitor,https://avelin.ai/,hello@avelin.ai
-banknbox,Exhibitor,https://www.banknbox.com/,sales@banknbox.com
-Bitmanager.ai,Exhibitor,https://bitmanager.ai/,hello@bitmanager.ai
-BureauID,Exhibitor,https://bureau.id/,sales@bureau.id
-CashcomPay,Exhibitor,https://cashcompay.com/,info@cashcompay.com
-Claimoniz Company,Exhibitor,https://claimoniz.com/,info@claimoniz.com
-D360 Bank,Exhibitor / Sponsor,https://www.d360.com/,customer.care@d360.com
-Fintech Saudi,Exhibitor / Sponsor,https://fintechsaudi.com/,officehours@fintechsaudi.com
-Foodics,Exhibitor / Sponsor,https://www.foodics.com/,info@foodics.com
-Jisr,Exhibitor / Sponsor,https://jisr.net/,support@jisr.net
-SiFi,Exhibitor / Sponsor,https://sifi.sa/,support@sifi.sa
-Tameed,Exhibitor / Sponsor,https://tameed.sa/,info@tameed.sa
-500 Global,Investor,https://500.co/,press@500.co
-Al Rajhi Capital,Investor,https://www.alrajhi-capital.com/,pr@alrajhi-capital.com
-Alpaca,Investor,https://alpaca.markets/,support@alpaca.markets
-Apollo Global Management,Investor,https://www.apollo.com/,ir@apollo.com
-BIM Ventures,Investor,https://bimventures.com/,hello@bimventures.com
-Boyu Capital,Investor,https://www.boyucapital.com/,inquiries@boyucapital.com
-Brookfield,Investor,https://www.brookfield.com/,bbuc.enquiries@brookfield.com
-Dawn Capital,Investor,https://dawncapital.com/,hello@dawncapital.com
-Development Partners International (DPI),Investor,https://www.dpi-llp.com/,info@dpi-llp.com
-Diwan Capital,Investor,https://diwan.capital/,hello@diwan.capital
-Finance in Motion,Investor,https://www.finance-in-motion.com/,info@finance-in-motion.com
-First Abu Dhabi Bank (FAB),Investor,https://www.bankfab.com/,ir@bankfab.com
-General Atlantic,Investor,https://www.generalatlantic.com/,inquiries@generalatlantic.com
-General Catalyst,Investor,https://www.generalcatalyst.com/,info@generalcatalyst.com
-Golden Gate Ventures,Investor,https://goldengate.vc/,hello@goldengate.vc
-Gulf Capital,Investor,https://www.gulfcapital.com/,info@gulfcapital.com
-Helios Investment Partners,Investor,https://www.heliosinvestment.com/,info@heliosllp.com
-Impact46,Investor,https://impact46.sa/,info@impact46.sa
-Joa Capital,Investor,https://joa.capital/,info@joacapital.com
-Launch Africa Ventures,Investor,https://www.launchafrica.vc/,info@launchafrica.vc
-Mashreq NeoVentures,Investor,https://www.mashreq.com/,media@mashreq.com
-Merak Capital,Investor,https://merak.capital/,contact@merak.capital
-Mubadala,Investor,https://www.mubadala.com/,compliance@mubadala.ae
-Norrsken22,Investor,https://www.norrsken22.com/,info@norrsken22.com
-Quona Capital,Investor,https://quona.com/,info@quona.com
-RockawayX,Investor,https://rockawayx.com/,ir@rockawayx.com
-Al Bayan,Sponsor,https://www.albayan.ae/,marketing@albayan.ae
-Al Rajhi Takaful,Sponsor,https://www.alrajhitakaful.com/,customerservice@alrajhitakaful.com
-AlHuda CIBE,Sponsor,https://alhudacibe.com/,info@alhudacibe.com
-Capitalbay News,Sponsor,https://www.capitalbay.news/,contact@capitalbay.news
-Checkout.com,Sponsor,https://www.checkout.com/,pr@checkout.com
-ClearGrid,Sponsor,https://www.cleargrid.co/,support@cleargrid.co
-Cryptopolitan,Sponsor,https://www.cryptopolitan.com/,contact@cryptopolitan.com
-Economy Middle East,Sponsor,https://economymiddleeast.com/,editorial@jcmediagroup.com
-Emkan,Sponsor,https://www.emkanfinance.com.sa/,customercare@emkanfinance.com.sa
-entArabi,Sponsor,https://entarabi.com/,info@entarabi.com
-Fintech Magazine,Sponsor,https://fintechmagazine.com/,editor@fintechmagazine.com
-Insurance Authority (IA),Sponsor,https://www.ia.gov.sa/,info@ia.gov.sa
-MEA Finance,Sponsor,https://www.mea-finance.com/,editorial@mea-finance.com
-Sarj.ai,Sponsor,https://sarj.ai/,support@sarj.ai
-Sky News Arabia,Sponsor,https://www.skynewsarabia.com/,sales@skynewsarabia.com
-STC Bank,Sponsor,https://www.stcbank.com.sa/,info@stcbank.com.sa
-Tabby,Sponsor,https://tabby.ai/,press@tabby.ai
-TahawulTech,Sponsor,https://www.tahawultech.com/,info@tahawultech.com
-Tamara,Sponsor,https://tamara.co/,pr@tamara.com
-The Wall Street Journal,Sponsor,https://www.wsj.com/,support@wsj.com
-Visa,Sponsor,https://www.visa.com/,press@visa.com
-Zoho,Sponsor,https://www.zoho.com/,press@zohocorp.com
+Organization,Role(s),Website,Email,Track,Tone
+Abwab.AI,Exhibitor,https://www.abwab.ai/,press@abwab.ai,fintech,press
+AlRajhi Capital,Exhibitor,https://www.alrajhi-capital.com/,pr@alrajhi-capital.com,banking,press
+ALRAJHI TAKAFUL INSURANCE COMPANY,Exhibitor,https://www.alrajhitakaful.com/,customerservice@alrajhitakaful.com,banking,support_redirect
+Alteia Capital Company,Exhibitor,https://alteiacapital.com/,contact@alteiafund.com,fintech,general
+AML Watcher,Exhibitor,https://amlwatcher.com/,sales@amlwatcher.com,compliance,sales
+Amwal Tech,Exhibitor,https://amwal.tech/,info@amwal.tech,fintech,general
+AssanPay,Exhibitor,https://assanpay.com/,support@assanpay.com,payments,support_redirect
+AVELIN AI L.L.C-FZ,Exhibitor,https://avelin.ai/,hello@avelin.ai,fintech,general
+banknbox,Exhibitor,https://www.banknbox.com/,sales@banknbox.com,banking,sales
+Bitmanager.ai,Exhibitor,https://bitmanager.ai/,hello@bitmanager.ai,fintech,general
+BureauID,Exhibitor,https://bureau.id/,sales@bureau.id,compliance,sales
+CashcomPay,Exhibitor,https://cashcompay.com/,info@cashcompay.com,payments,general
+Claimoniz Company,Exhibitor,https://claimoniz.com/,info@claimoniz.com,fintech,general
+D360 Bank,Exhibitor / Sponsor,https://www.d360.com/,customer.care@d360.com,banking,support_redirect
+Fintech Saudi,Exhibitor / Sponsor,https://fintechsaudi.com/,officehours@fintechsaudi.com,fintech,general
+Foodics,Exhibitor / Sponsor,https://www.foodics.com/,info@foodics.com,fintech,general
+Jisr,Exhibitor / Sponsor,https://jisr.net/,support@jisr.net,fintech,support_redirect
+SiFi,Exhibitor / Sponsor,https://sifi.sa/,support@sifi.sa,fintech,support_redirect
+Tameed,Exhibitor / Sponsor,https://tameed.sa/,info@tameed.sa,fintech,general
+500 Global,Investor,https://500.co/,press@500.co,capital,press
+Alpaca,Investor,https://alpaca.markets/,support@alpaca.markets,capital,support_redirect
+Apollo Global Management,Investor,https://www.apollo.com/,ir@apollo.com,capital,ir
+BIM Ventures,Investor,https://bimventures.com/,hello@bimventures.com,capital,general
+Boyu Capital,Investor,https://www.boyucapital.com/,inquiries@boyucapital.com,capital,general
+Brookfield,Investor,https://www.brookfield.com/,bbuc.enquiries@brookfield.com,capital,general
+Dawn Capital,Investor,https://dawncapital.com/,hello@dawncapital.com,capital,general
+Development Partners International (DPI),Investor,https://www.dpi-llp.com/,info@dpi-llp.com,capital,general
+Diwan Capital,Investor,https://diwan.capital/,hello@diwan.capital,capital,general
+Finance in Motion,Investor,https://www.finance-in-motion.com/,info@finance-in-motion.com,capital,general
+First Abu Dhabi Bank (FAB),Investor,https://www.bankfab.com/,ir@bankfab.com,capital,ir
+General Atlantic,Investor,https://www.generalatlantic.com/,inquiries@generalatlantic.com,capital,general
+General Catalyst,Investor,https://www.generalcatalyst.com/,info@generalcatalyst.com,capital,general
+Golden Gate Ventures,Investor,https://goldengate.vc/,hello@goldengate.vc,capital,general
+Gulf Capital,Investor,https://www.gulfcapital.com/,info@gulfcapital.com,capital,general
+Helios Investment Partners,Investor,https://www.heliosinvestment.com/,info@heliosllp.com,capital,general
+Impact46,Investor,https://impact46.sa/,info@impact46.sa,capital,general
+Joa Capital,Investor,https://joa.capital/,info@joacapital.com,capital,general
+Launch Africa Ventures,Investor,https://www.launchafrica.vc/,info@launchafrica.vc,capital,general
+Mashreq NeoVentures,Investor,https://www.mashreq.com/,media@mashreq.com,capital,press
+Merak Capital,Investor,https://merak.capital/,contact@merak.capital,capital,general
+Mubadala,Investor,https://www.mubadala.com/,compliance@mubadala.ae,capital,compliance
+Norrsken22,Investor,https://www.norrsken22.com/,info@norrsken22.com,capital,general
+Quona Capital,Investor,https://quona.com/,info@quona.com,capital,general
+RockawayX,Investor,https://rockawayx.com/,ir@rockawayx.com,capital,ir
+Al Bayan,Sponsor,https://www.albayan.ae/,marketing@albayan.ae,media,press
+AlHuda CIBE,Sponsor,https://alhudacibe.com/,info@alhudacibe.com,sponsor,general
+Capitalbay News,Sponsor,https://www.capitalbay.news/,contact@capitalbay.news,media,general
+Checkout.com,Sponsor,https://www.checkout.com/,pr@checkout.com,payments,press
+ClearGrid,Sponsor,https://www.cleargrid.co/,support@cleargrid.co,payments,support_redirect
+Cryptopolitan,Sponsor,https://www.cryptopolitan.com/,contact@cryptopolitan.com,media,general
+Economy Middle East,Sponsor,https://economymiddleeast.com/,editorial@jcmediagroup.com,media,press
+Emkan,Sponsor,https://www.emkanfinance.com.sa/,customercare@emkanfinance.com.sa,banking,support_redirect
+entArabi,Sponsor,https://entarabi.com/,info@entarabi.com,media,general
+Fintech Magazine,Sponsor,https://fintechmagazine.com/,editor@fintechmagazine.com,media,press
+Insurance Authority (IA),Sponsor,https://www.ia.gov.sa/,info@ia.gov.sa,banking,general
+MEA Finance,Sponsor,https://www.mea-finance.com/,editorial@mea-finance.com,sponsor,press
+Sarj.ai,Sponsor,https://sarj.ai/,support@sarj.ai,sponsor,support_redirect
+Sky News Arabia,Sponsor,https://www.skynewsarabia.com/,sales@skynewsarabia.com,media,sales
+STC Bank,Sponsor,https://www.stcbank.com.sa/,info@stcbank.com.sa,banking,general
+Tabby,Sponsor,https://tabby.ai/,press@tabby.ai,payments,press
+TahawulTech,Sponsor,https://www.tahawultech.com/,info@tahawultech.com,media,general
+Tamara,Sponsor,https://tamara.co/,pr@tamara.com,payments,press
+The Wall Street Journal,Sponsor,https://www.wsj.com/,support@wsj.com,media,support_redirect
+Visa,Sponsor,https://www.visa.com/,press@visa.com,payments,press
+Zoho,Sponsor,https://www.zoho.com/,press@zohocorp.com,sponsor,press
