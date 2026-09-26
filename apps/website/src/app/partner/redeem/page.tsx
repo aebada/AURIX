@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PartnerShell } from "@/components/gold-service/PartnerShell";
 import { useGoldService } from "@/lib/gold-service/store";
 
 export default function PartnerRedeemPage() {
@@ -16,65 +15,71 @@ export default function PartnerRedeemPage() {
 
   function onRedeem(e: React.FormEvent) {
     e.preventDefault();
-    if (!gs.state.partnerSession) {
-      setResult({ ok: false, message: "Turn on partner mode first." });
-      return;
-    }
-    const res = gs.redeemTransfer(code, name);
+    const r = gs.redeemTransfer(code, name);
     setResult({
-      ok: res.ok,
-      message: res.message,
-      commission: res.commission,
+      ok: r.ok,
+      message: r.message,
+      commission: r.commission,
     });
   }
 
   return (
-    <PartnerShell title="Redeem">
-      <p className="mb-6 max-w-xl text-sm text-muted">
-        Enter the practice code from the customer tracker and match the government ID name to the
-        recipient on the transfer. Name mismatch blocks redemption.
-      </p>
-      <form onSubmit={onRedeem} className="max-w-md space-y-4">
-        <label className="block text-sm">
-          <span className="font-semibold">Practice code</span>
+    <div className="mx-auto max-w-lg space-y-6">
+      <div>
+        <h1 className="text-2xl font-extrabold text-heading">Redeem</h1>
+        <p className="mt-2 text-sm text-muted">
+          Counter flow: enter code, check ID name match, complete, see commission immediately.
+        </p>
+      </div>
+
+      <form
+        onSubmit={onRedeem}
+        className="space-y-4 rounded-3xl border border-[var(--color-line)] bg-[var(--color-paper)] p-6"
+      >
+        <label className="block text-xs font-bold uppercase tracking-wider text-muted">
+          Redemption code
           <input
             value={code}
             onChange={(e) => setCode(e.target.value)}
+            className="mt-2 w-full rounded-xl border border-[var(--color-line)] px-4 py-3 text-lg font-bold tracking-widest"
             placeholder="AX-XXXXXX"
-            className="mt-1 w-full rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2 font-mono"
+            required
           />
         </label>
-        <label className="block text-sm">
-          <span className="font-semibold">Name on government ID</span>
+        <label className="block text-xs font-bold uppercase tracking-wider text-muted">
+          Name on government ID
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2"
+            className="mt-2 w-full rounded-xl border border-[var(--color-line)] px-4 py-3 text-sm"
+            placeholder="Must match recipient name"
+            required
           />
         </label>
         <button
           type="submit"
-          className="rounded-full bg-[var(--color-navy)] px-5 py-2.5 text-sm font-bold text-white"
+          className="w-full rounded-full bg-[var(--color-navy)] py-4 text-sm font-extrabold text-white"
         >
-          Redeem (practice)
+          Complete redemption
         </button>
       </form>
-      {result ? (
+
+      {result && (
         <div
-          className={`mt-6 max-w-md rounded-2xl border px-4 py-3 text-sm ${
+          className={`rounded-2xl border p-5 text-sm ${
             result.ok
-              ? "border-emerald-500/30 bg-emerald-500/10"
-              : "border-red-500/30 bg-red-500/10"
+              ? "border-emerald-500/40 bg-emerald-500/10"
+              : "border-red-500/40 bg-red-500/10"
           }`}
         >
-          <p className="font-semibold">{result.message}</p>
-          {result.ok && result.commission != null ? (
-            <p className="mt-1 text-muted">
-              Estimated partner commission: €{result.commission.toFixed(2)} (practice)
-            </p>
-          ) : null}
+          <div className="font-bold">{result.message}</div>
+          {result.ok && result.commission != null && (
+            <div className="mt-2">
+              Partner commission (practice): <strong>€{result.commission.toFixed(2)}</strong>
+            </div>
+          )}
         </div>
-      ) : null}
-    </PartnerShell>
+      )}
+    </div>
   );
 }

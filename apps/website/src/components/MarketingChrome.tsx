@@ -21,8 +21,7 @@ export function MarketingChrome({
     pathname.startsWith("/app/") ||
     pathname.startsWith("/app");
   const isPartnerPanel =
-    pathname === "/partner" ||
-    pathname.startsWith("/partner/");
+    pathname === "/partner" || pathname.startsWith("/partner/");
 
   if (isApp || isPartnerPanel) {
     return <>{children}</>;

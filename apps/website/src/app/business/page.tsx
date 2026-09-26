@@ -43,8 +43,12 @@ const capabilities = [
     body: "Invite finance, ops, and approvers. Control who can pay, transfer, or issue vouchers in the practice shell.",
   },
   {
+    title: "Metal salary for employees",
+    body: "Employers can pay part of each salary as gold, silver, and fiat — set the split per employee and run practice payroll.",
+  },
+  {
     title: "Payroll & bulk payouts",
-    body: "Run practice payroll transfers and staff vouchers with zero real money movement.",
+    body: "Run practice fiat transfers and staff vouchers with zero real money movement.",
   },
   {
     title: "Merchant payments",

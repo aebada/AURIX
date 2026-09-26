@@ -13,13 +13,21 @@ export type TxnKind =
   | "deposit"
   | "voucher"
   | "approve"
-  | "invite";
+  | "invite"
+  | "payroll";
 
 export interface PocketBalances {
   /** Fiat pocket (practice EUR). */
   fiatEur: number;
   goldGrams: number;
   silverGrams: number;
+}
+
+/** How an employer splits a salary into fiat + metals (percentages, sum = 100). */
+export interface SalaryMetalSplit {
+  fiatPct: number;
+  goldPct: number;
+  silverPct: number;
 }
 
 export interface Wallet {
@@ -51,6 +59,10 @@ export interface TeamMember {
   name: string;
   email: string;
   role: BusinessRole;
+  /** Optional recurring gross salary in practice EUR. */
+  salaryEur?: number;
+  /** Default metal / fiat split for payroll (employer-configured). */
+  salarySplit?: SalaryMetalSplit;
 }
 
 export interface TeamInvite {

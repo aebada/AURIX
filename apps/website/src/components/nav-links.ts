@@ -4,7 +4,7 @@
 export const navLinks = [
   { href: "/", key: "personal" as const },
   { href: "/send/", key: "send" as const },
-  { href: "/partners/", key: "partners" as const },
+  { href: "/partners", key: "partners" as const },
   { href: "/business", key: "business" as const },
   { href: "/investors", key: "investors" as const },
   { href: "/demo", key: "demo" as const },
@@ -13,10 +13,10 @@ export const navLinks = [
 /** Extra links shown only in the mobile drawer (desktop keeps the primary row lean). */
 export const mobileNavExtras = [
   { href: "/partner-with-us/", key: "partnerWithUs" as const },
-  { href: "/markets", key: "markets" as const },
   { href: "/how-it-works", key: "howItWorks" as const },
   { href: "/features", key: "features" as const },
   { href: "/download", key: "download" as const },
+  { href: "/waitlist/", key: "waitlist" as const },
   { href: "/contact", key: "contact" as const },
 ];
 
@@ -24,8 +24,9 @@ export const footerLinks = {
   Product: [
     { href: "/app", key: "webApp" as const },
     { href: "/send/", key: "send" as const },
-    { href: "/partners/", key: "partners" as const },
+    { href: "/partners", key: "partners" as const },
     { href: "/partner-with-us/", key: "partnerWithUs" as const },
+    { href: "/waitlist/", key: "waitlist" as const },
     { href: "/business", key: "business" as const },
     { href: "/download", key: "download" as const },
     { href: "/demo", key: "demo" as const },
@@ -43,8 +44,9 @@ export const footerLinks = {
   Company: [
     { href: "/about", key: "about" as const },
     { href: "/investors", key: "investors" as const },
-    { href: "/partner-with-us/", key: "partnerWithUs" as const },
+    { href: "/partners", key: "partners" as const },
     { href: "/careers", key: "careers" as const },
+    { href: "/waitlist/", key: "waitlist" as const },
     { href: "/contact", key: "contact" as const },
   ],
 };
