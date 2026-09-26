@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/lib/i18n/language-context";
 import { PhpAuthBridge } from "@/components/PhpAuthBridge";
 import { ChatWidget } from "@/components/ChatWidget";
 import { MarketingChrome } from "@/components/MarketingChrome";
+import { GoldServiceProvider } from "@/lib/gold-service/store";
 
 export const metadata: Metadata = {
   title: {
@@ -55,13 +56,15 @@ export default function RootLayout({
           <AuthProvider>
             <PhpAuthBridge />
             <CurrencyProvider>
-              <MarketingChrome
-                header={<Header />}
-                footer={<Footer />}
-                chat={<ChatWidget />}
-              >
-                {children}
-              </MarketingChrome>
+              <GoldServiceProvider>
+                <MarketingChrome
+                  header={<Header />}
+                  footer={<Footer />}
+                  chat={<ChatWidget />}
+                >
+                  {children}
+                </MarketingChrome>
+              </GoldServiceProvider>
             </CurrencyProvider>
           </AuthProvider>
         </LanguageProvider>
