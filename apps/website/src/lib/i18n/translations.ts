@@ -32,6 +32,7 @@ export interface Dictionary {
     waitlist: string;
     webApp: string;
     business: string;
+    payroll: string;
   };
   header: {
     login: string;
@@ -190,6 +191,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       waitlist: "Waitlist",
       webApp: "Open web app",
       business: "Business",
+      payroll: "Payroll benefit",
     },
     header: {
       login: "Log in",
@@ -509,6 +511,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       waitlist: "Warteliste",
       webApp: "Web-App öffnen",
       business: "Business",
+      payroll: "Lohn-Benefit",
     },
     header: {
       login: "Anmelden",
@@ -828,6 +831,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       waitlist: "قائمة الانتظار",
       webApp: "فتح تطبيق الويب",
       business: "الأعمال",
+      payroll: "ميزة الرواتب",
     },
     header: {
       login: "تسجيل الدخول",

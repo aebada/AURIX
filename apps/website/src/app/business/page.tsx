@@ -97,6 +97,12 @@ export default function BusinessPage() {
                 Create account
               </AuthNavLink>
               <Link
+                href="/for-business/payroll/"
+                className="rounded-full border border-[var(--color-line)] px-7 py-3.5 text-sm font-bold text-heading hover:border-navy"
+              >
+                AURIX for Payroll
+              </Link>
+              <Link
                 href="/contact?role=business"
                 className="rounded-full px-5 py-3.5 text-sm font-bold text-gold-dark hover:underline"
               >

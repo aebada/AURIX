@@ -1,0 +1,224 @@
+// AURIX platform data model scaffolding (Sections 6, 7.9, 8.4).
+// Local/dev: SQLite via DATABASE_URL="file:./dev.db"
+// Production: switch provider to postgresql and point DATABASE_URL at Postgres.
+//
+// Runtime today still uses services/backend/src/data/mock-db.ts when Prisma
+// is not migrated. This schema + seed are the target shape for Milestone 1–2.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  support
+  admin
+  super_admin
+  partner
+  employer
+  compliance_officer
+}
+
+enum KycStatus {
+  unverified
+  pending
+  verified
+  rejected
+}
+
+enum InvestorStatus {
+  new
+  contacted
+  in_diligence
+  closed
+}
+
+enum PartnerStatus {
+  applied
+  under_review
+  approved
+  suspended
+  rejected
+}
+
+enum TransferStatus {
+  draft
+  paid
+  notified
+  ready
+  redeemed
+  cancelled
+  disputed
+}
+
+enum KybStatus {
+  pending
+  approved
+  rejected
+}
+
+enum EmployerStatus {
+  pending
+  active
+  suspended
+}
+
+enum PlanType {
+  monthly
+  annual
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  role          Role      @default(user)
+  kycStatus     KycStatus @default(unverified)
+  emailVerified DateTime?
+  passwordHash  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  auditLogs AdminAuditLog[] @relation("AuditActor")
+  assignedInquiries InvestorInquiry[] @relation("InquiryAssignee")
+}
+
+model WaitlistEntry {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  country    String
+  phone      String?
+  interests  String // JSON array string for SQLite portability
+  referral   String?
+  locale     String?
+  createdAt  DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model InvestorInquiry {
+  id           String         @id @default(cuid())
+  name         String
+  firm         String?
+  email        String
+  roleTitle    String?
+  investorType String?
+  checkSize    String?
+  interests    String? // JSON array
+  message      String
+  hearAbout    String?
+  status       InvestorStatus @default(new)
+  assignedToId String?
+  assignedTo   User?          @relation("InquiryAssignee", fields: [assignedToId], references: [id])
+  notes        String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model FeatureFlag {
+  key       String   @id
+  value     String // JSON-encoded boolean | map
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+}
+
+model AdminAuditLog {
+  id            String   @id @default(cuid())
+  actorId       String?
+  actor         User?    @relation("AuditActor", fields: [actorId], references: [id])
+  action        String
+  targetType    String?
+  targetId      String?
+  previousValue String?
+  newValue      String?
+  createdAt     DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Partner {
+  id           String        @id @default(cuid())
+  name         String
+  country      String
+  partnerType  String
+  status       PartnerStatus @default(applied)
+  contactEmail String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  locations    PartnerLocation[]
+  transfers    CrossBorderTransfer[]
+}
+
+model PartnerLocation {
+  id        String  @id @default(cuid())
+  partnerId String
+  partner   Partner @relation(fields: [partnerId], references: [id])
+  name      String
+  city      String
+  country   String
+  lat       Float?
+  lng       Float?
+  active    Boolean @default(true)
+}
+
+model CrossBorderTransfer {
+  id                  String         @id @default(cuid())
+  corridor            String
+  originCountry       String
+  destinationCountry  String
+  metalType           String
+  grams               Float
+  status              TransferStatus @default(draft)
+  partnerId           String?
+  partner             Partner?       @relation(fields: [partnerId], references: [id])
+  recipientName       String?
+  recipientPhone      String?
+  liveSettlement      Boolean        @default(false) // always false until CROSS_BORDER_LIVE
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@index([corridor])
+  @@index([status])
+}
+
+model EmployerAccount {
+  id                      String         @id @default(cuid())
+  companyName             String
+  country                 String // DE | AT
+  registrationNumber      String?
+  contactName             String
+  contactEmail            String
+  contactPhone            String?
+  estimatedEmployees      Int?
+  kybStatus               KybStatus      @default(pending)
+  additionalityAttestedAt DateTime?
+  additionalityAttestedBy String?
+  additionalityAttestedIp String?
+  billingMethod           String?
+  status                  EmployerStatus @default(pending)
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+}
+
+model PayrollThreshold {
+  id           String   @id @default(cuid())
+  country      String
+  taxYear      Int
+  planType     PlanType
+  limitValue   Float
+  effectiveFrom DateTime
+  updatedBy    String?
+  updatedAt    DateTime @updatedAt
+
+  @@unique([country, taxYear, planType])
+}

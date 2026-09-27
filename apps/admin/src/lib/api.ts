@@ -99,4 +99,66 @@ export const adminApi = {
       { method: "POST", body: JSON.stringify({ role }) },
       token,
     ),
+  waitlist: (token: string) =>
+    request<{ entries: WaitlistEntry[] }>("/admin/waitlist", {}, token),
+  investors: (token: string) =>
+    request<{ inquiries: InvestorInquiry[] }>("/admin/investors", {}, token),
+  updateInvestorStatus: (
+    token: string,
+    id: string,
+    status: InvestorPipelineStatus,
+    notes?: string,
+  ) =>
+    request<{ inquiry: InvestorInquiry }>(
+      `/admin/investors/${id}`,
+      { method: "PATCH", body: JSON.stringify({ status, notes }) },
+      token,
+    ),
+  featureFlags: (token: string) =>
+    request<{ flags: FeatureFlagsState }>("/admin/feature-flags", {}, token),
+  updateFeatureFlags: (token: string, flags: Partial<FeatureFlagsState>) =>
+    request<{ flags: FeatureFlagsState }>(
+      "/admin/feature-flags",
+      { method: "PUT", body: JSON.stringify(flags) },
+      token,
+    ),
 };
+
+export type InvestorPipelineStatus = "new" | "contacted" | "in_diligence" | "closed";
+
+export interface WaitlistEntry {
+  id: string;
+  name: string;
+  email: string;
+  country: string;
+  phone?: string;
+  interests: string[];
+  referral?: string;
+  locale?: string;
+  createdAt: string;
+}
+
+export interface InvestorInquiry {
+  id: string;
+  name: string;
+  firm?: string;
+  email: string;
+  roleTitle?: string;
+  investorType?: string;
+  checkSize?: string;
+  interests: string[];
+  message: string;
+  hearAbout?: string;
+  status: InvestorPipelineStatus;
+  assignedTo?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface FeatureFlagsState {
+  RESERVE_LIVE: boolean;
+  MAINTENANCE_MODE: boolean;
+  CROSS_BORDER_LIVE: Record<string, boolean>;
+  PAYROLL_BENEFIT_LIVE: { DE: boolean; AT: boolean };
+}

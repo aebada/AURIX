@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/PageHero";
+import { CertificationBanner } from "@/components/CertificationBanner";
 import { StoreLocator } from "@/components/gold-service/StoreLocator";
 import { estimateFees, useGoldService } from "@/lib/gold-service/store";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -73,12 +74,17 @@ function SendWizard() {
       <PageHero eyebrow={p.eyebrow} title={p.title} description={p.description} />
       <section className="border-b border-[var(--color-line)] py-10">
         <Container className="max-w-3xl">
-          <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100">
-            {p.banner}
-            {!corridorLive
-              ? ` · ${corridor} ${p.bannerPending}`
-              : ` · ${p.bannerLive}`}
-            . {p.bannerId}
+          <div className="mb-6 space-y-3">
+            {!corridorLive ? (
+              <CertificationBanner
+                kind="cross_border"
+                detail={`${corridor} · ${p.bannerId}`}
+              />
+            ) : (
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm">
+                {p.banner} · {corridor} {p.bannerLive}. {p.bannerId}
+              </div>
+            )}
           </div>
 
           <div className="mb-8 flex gap-2 text-xs font-bold uppercase tracking-wider text-muted">

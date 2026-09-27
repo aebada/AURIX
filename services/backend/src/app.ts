@@ -10,6 +10,7 @@ import { notificationsRouter } from "./modules/notifications/notifications.route
 import { adminRouter } from "./modules/admin/admin.routes.js";
 import { chatRouter } from "./modules/chat/chat.routes.js";
 import { etfsRouter } from "./modules/etfs/etfs.routes.js";
+import { publicRouter } from "./modules/public/public.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 export function createApp() {
@@ -22,6 +23,7 @@ export function createApp() {
     res.json({ status: "ok", service: "aurix-backend" });
   });
 
+  app.use("/public", publicRouter);
   app.use("/auth", authRouter);
   app.use("/users", usersRouter);
   app.use("/kyc", kycRouter);

@@ -77,6 +77,56 @@ export interface EtfOrder {
   createdAt: string;
 }
 
+export type InvestorPipelineStatus = "new" | "contacted" | "in_diligence" | "closed";
+
+export interface WaitlistEntry {
+  id: string;
+  name: string;
+  email: string;
+  country: string;
+  phone?: string;
+  interests: string[];
+  referral?: string;
+  locale?: string;
+  createdAt: string;
+}
+
+export interface InvestorInquiry {
+  id: string;
+  name: string;
+  firm?: string;
+  email: string;
+  roleTitle?: string;
+  investorType?: string;
+  checkSize?: string;
+  interests: string[];
+  message: string;
+  hearAbout?: string;
+  status: InvestorPipelineStatus;
+  assignedTo?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminAuditLog {
+  id: string;
+  actorId?: string;
+  action: string;
+  targetType?: string;
+  targetId?: string;
+  previousValue?: string;
+  newValue?: string;
+  createdAt: string;
+}
+
+export interface FeatureFlagsState {
+  RESERVE_LIVE: boolean;
+  MAINTENANCE_MODE: boolean;
+  CROSS_BORDER_LIVE: Record<string, boolean>;
+  PAYROLL_BENEFIT_LIVE: { DE: boolean; AT: boolean };
+}
+
 export interface Db {
   users: Map<string, User>;
   usersByEmail: Map<string, string>;
@@ -85,6 +135,10 @@ export interface Db {
   etfHoldings: Map<string, EtfHolding>; // key: `${userId}:${ticker}`
   etfOrders: EtfOrder[];
   etfWatchlists: Map<string, Set<string>>; // key: userId -> tickers
+  waitlist: WaitlistEntry[];
+  investorInquiries: InvestorInquiry[];
+  adminAuditLogs: AdminAuditLog[];
+  featureFlags: FeatureFlagsState;
 }
 
 export const db: Db = {
@@ -95,6 +149,22 @@ export const db: Db = {
   etfHoldings: new Map(),
   etfOrders: [],
   etfWatchlists: new Map(),
+  waitlist: [],
+  investorInquiries: [],
+  adminAuditLogs: [],
+  featureFlags: {
+    RESERVE_LIVE: false,
+    MAINTENANCE_MODE: false,
+    CROSS_BORDER_LIVE: {
+      "SA-EG": false,
+      "AE-EG": false,
+      "KW-EG": false,
+      "QA-EG": false,
+      "AE-SA": false,
+      "SA-AE": false,
+    },
+    PAYROLL_BENEFIT_LIVE: { DE: false, AT: false },
+  },
 };
 
 // Bootstrap account so apps/admin is reachable at all on a fresh instance —
@@ -113,6 +183,36 @@ db.users.set("usr_bootstrap_admin", {
   role: "super_admin",
 });
 db.usersByEmail.set("admin@aurix.com", "usr_bootstrap_admin");
+
+// Spec seed (Section 4): application-level super_admin for the founder email.
+// Same demo password pattern as bootstrap — local mock only; not a production secret.
+db.users.set("usr_seed_super_admin", {
+  id: "usr_seed_super_admin",
+  email: "engahmed2055@gmail.com",
+  passwordHash: hashPassword("AurixAdmin!2026"),
+  fullName: "Ahmed",
+  createdAt: new Date(0).toISOString(),
+  kycStatus: "verified",
+  role: "super_admin",
+});
+db.usersByEmail.set("engahmed2055@gmail.com", "usr_seed_super_admin");
+
+export function appendAuditLog(
+  entry: Omit<AdminAuditLog, "id" | "createdAt"> & { id?: string; createdAt?: string },
+) {
+  const row: AdminAuditLog = {
+    id: entry.id ?? nextId("audit"),
+    actorId: entry.actorId,
+    action: entry.action,
+    targetType: entry.targetType,
+    targetId: entry.targetId,
+    previousValue: entry.previousValue,
+    newValue: entry.newValue,
+    createdAt: entry.createdAt ?? new Date().toISOString(),
+  };
+  db.adminAuditLogs.unshift(row);
+  return row;
+}
 
 export function etfHoldingKey(userId: string, ticker: string): string {
   return `${userId}:${ticker}`;

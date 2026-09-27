@@ -5,6 +5,8 @@ import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/Container";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { submitInquiry } from "@/lib/inquiry-api";
+import { isMaintenanceMode } from "@/lib/feature-flags";
+import { CertificationBanner } from "@/components/CertificationBanner";
 
 const RATE_KEY = "aurix_waitlist_last_submit";
 const RATE_MS = 60_000;
@@ -27,6 +29,11 @@ export default function WaitlistPage() {
     e.preventDefault();
     setError(null);
 
+    if (isMaintenanceMode()) {
+      setError(p.maintenance ?? "Maintenance mode — try again later.");
+      return;
+    }
+
     try {
       const last = Number(window.localStorage.getItem(RATE_KEY) || "0");
       if (Date.now() - last < RATE_MS) {
@@ -39,25 +46,42 @@ export default function WaitlistPage() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    // Honeypot
+    if (String(data.get("website") ?? "").trim()) {
+      setSubmitted(true);
+      return;
+    }
+
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const country = String(data.get("country") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const referral = String(data.get("referral") ?? "").trim();
     const consent = data.get("consent") === "on";
     if (!name || !email || !country || !consent || interests.length === 0) return;
 
     setBusy(true);
     await submitInquiry({
-      kind: "contact",
+      kind: "waitlist",
       name,
       email,
+      country,
+      phone: phone || undefined,
+      referral: referral || undefined,
+      interests,
       role: "Waitlist",
       message: [
         "Waitlist signup",
         `Country: ${country}`,
+        phone ? `Phone: ${phone}` : null,
         `Interests: ${interests.join(", ")}`,
+        referral ? `Referral: ${referral}` : null,
         `Consent: yes`,
-      ].join("\n"),
+      ]
+        .filter(Boolean)
+        .join("\n"),
       locale,
+      website: "",
     });
     try {
       window.localStorage.setItem(RATE_KEY, String(Date.now()));
@@ -73,18 +97,32 @@ export default function WaitlistPage() {
       <PageHero eyebrow={p.eyebrow} title={p.title} description={p.description} />
       <section className="border-b border-[var(--color-line)] bg-[var(--color-surface)] py-16">
         <Container className="max-w-xl">
+          {isMaintenanceMode() ? (
+            <CertificationBanner kind="maintenance" className="mb-6" />
+          ) : null}
           {submitted ? (
             <div className="rounded-3xl border border-gold/30 bg-[var(--color-paper)] p-8 text-center">
               <p className="text-xl font-extrabold tracking-tight text-heading">
                 {p.thanksTitle}
               </p>
               <p className="mt-2 text-sm text-muted">{p.thanksBody}</p>
+              <p className="mt-6 text-xs text-muted">{p.shareHint}</p>
             </div>
           ) : (
             <form
               onSubmit={handleSubmit}
               className="rounded-3xl border border-[var(--color-line)] bg-[var(--color-paper)] p-8"
             >
+              {/* Honeypot — hidden from users */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+              />
+
               <div className="grid gap-6 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-heading sm:col-span-2">
                   {p.name}
@@ -106,7 +144,7 @@ export default function WaitlistPage() {
                     className="mt-2 w-full rounded-lg border border-[var(--color-line)] px-4 py-2.5 text-sm focus:border-gold focus:outline-none"
                   />
                 </label>
-                <label className="block text-sm font-medium text-heading sm:col-span-2">
+                <label className="block text-sm font-medium text-heading">
                   {p.country}
                   <select
                     required
@@ -123,6 +161,23 @@ export default function WaitlistPage() {
                       </option>
                     ))}
                   </select>
+                </label>
+                <label className="block text-sm font-medium text-heading">
+                  {p.phone}
+                  <input
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    className="mt-2 w-full rounded-lg border border-[var(--color-line)] px-4 py-2.5 text-sm focus:border-gold focus:outline-none"
+                  />
+                </label>
+                <label className="block text-sm font-medium text-heading sm:col-span-2">
+                  {p.referral}
+                  <input
+                    name="referral"
+                    type="text"
+                    className="mt-2 w-full rounded-lg border border-[var(--color-line)] px-4 py-2.5 text-sm focus:border-gold focus:outline-none"
+                  />
                 </label>
               </div>
 
@@ -150,12 +205,7 @@ export default function WaitlistPage() {
               </fieldset>
 
               <label className="mt-6 flex items-start gap-3 text-sm text-muted">
-                <input
-                  required
-                  type="checkbox"
-                  name="consent"
-                  className="mt-1"
-                />
+                <input required type="checkbox" name="consent" className="mt-1" />
                 <span>{p.consent}</span>
               </label>
 

@@ -14,6 +14,10 @@ import {
   DEFAULT_CROSS_BORDER_LIVE,
   SEED_LOCATIONS,
 } from "./seed";
+import {
+  defaultCrossBorderLiveMap,
+  isReserveLive,
+} from "@/lib/feature-flags";
 import type {
   CommissionRule,
   CountryCode,
@@ -43,8 +47,10 @@ function defaultState(): GoldServiceState {
     transfers: [],
     applications: [],
     commissionRules: DEFAULT_COMMISSION_RULES,
-    crossBorderLive: { ...DEFAULT_CROSS_BORDER_LIVE },
-    reserveLive: false,
+    // Env/config is the source of truth for live corridors; practice store
+    // may only flip a corridor on for local demos after env already allows it.
+    crossBorderLive: defaultCrossBorderLiveMap(),
+    reserveLive: isReserveLive(),
     partnerSession: false,
   };
 }
@@ -71,9 +77,15 @@ function readState(): GoldServiceState {
       locations: merged,
       crossBorderLive: {
         ...DEFAULT_CROSS_BORDER_LIVE,
+        ...defaultCrossBorderLiveMap(),
         ...(parsed.crossBorderLive || {}),
+        // Env live corridors always win when true; never invent live from storage alone.
+        ...Object.fromEntries(
+          Object.entries(defaultCrossBorderLiveMap()).filter(([, v]) => v),
+        ),
       },
-      reserveLive: false, // never auto-enable
+      // Never auto-enable reserves from localStorage — env flag only.
+      reserveLive: isReserveLive(),
     };
   } catch {
     return defaultState();
@@ -364,9 +376,13 @@ export function GoldServiceProvider({ children }: { children: ReactNode }) {
         commit({ ...state, locations });
       },
       setCorridorLive: (key, live) => {
+        // Practice UI may only turn a corridor on if env already marks it live,
+        // or turn it off for demos. Never invent a live corridor from the client alone.
+        const envAllows = Boolean(defaultCrossBorderLiveMap()[key]);
+        const next = live ? envAllows : false;
         commit({
           ...state,
-          crossBorderLive: { ...state.crossBorderLive, [key]: live },
+          crossBorderLive: { ...state.crossBorderLive, [key]: next },
         });
       },
       resetDemo: () => commit(defaultState()),
