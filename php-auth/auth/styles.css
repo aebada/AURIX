@@ -18,12 +18,22 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .brand-logo {
   display: block;
   height: 2rem;
   width: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  /* Crisp downscale of the transparent wordmark PNG */
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .nav-link {
