@@ -20,7 +20,7 @@ function auth_render_page(array $page): void
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><?= $title ?></title>
-  <link rel="stylesheet" href="/auth/styles.css" />
+  <link rel="stylesheet" href="/auth/styles.css?v=20261001b" />
 </head>
 <body>
   <div class="page">

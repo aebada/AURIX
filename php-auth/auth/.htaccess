@@ -11,3 +11,10 @@
     # /auth/google/callback → google-callback.php
     RewriteRule ^google/callback/?$ google-callback.php [L,QSA]
 </IfModule>
+
+# Keep auth CSS/HTML fresh after deploys (Hostinger CDN otherwise caches a week).
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|php)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
