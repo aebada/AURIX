@@ -53,8 +53,12 @@ final class Config
             $bridgeSecret = self::env('GOOGLE_CLIENT_SECRET', '');
         }
 
-        $useBridge = filter_var(self::env('AIPASS_OAUTH_BRIDGE', 'true'), FILTER_VALIDATE_BOOLEAN);
-        // Local PHP server uses direct Google OAuth (register localhost redirect URI).
+        // Direct Google OAuth is the production default. The AI-Pass bridge
+        // (AIPASS_OAUTH_BRIDGE=true) once avoided registering each app's
+        // redirect URI, but aipass.space /auth/google currently serves the
+        // marketing SPA instead of Laravel — users get stuck on AI-Pass.
+        $useBridge = filter_var(self::env('AIPASS_OAUTH_BRIDGE', 'false'), FILTER_VALIDATE_BOOLEAN);
+        // Local PHP server always uses direct Google OAuth.
         if (self::env('APP_ENV', 'production') === 'local') {
             $useBridge = false;
         }
@@ -109,9 +113,9 @@ final class Config
     }
 
     /**
-     * Production default: route Google consent through AI-Pass so the shared
-     * AlPass OAuth client’s already-registered redirect URI is used
-     * (https://aipass.space/auth/google/callback), same pattern as Invoice AI.
+     * Optional AI-Pass OAuth bridge. Default off — direct Google OAuth keeps
+     * users on aurixapp.de. Enable only when aipass.space /auth/google still
+     * proxies to Laravel (not the marketing SPA catch-all).
      */
     public function shouldUseOauthBridge(): bool
     {

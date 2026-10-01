@@ -18,9 +18,9 @@ if ($callback !== '') {
 
 try {
     if ($config->shouldUseOauthBridge()) {
-        // Same concept as Invoice AI / HOPn apps: Google consent happens on
-        // aipass.space (redirect_uri already registered). AI-Pass returns
-        // bridge_token to our HOPn-style callback path.
+        // Optional legacy path: only when AIPASS_OAUTH_BRIDGE=true and
+        // aipass.space /auth/google still proxies to Laravel. Prefer direct
+        // Google OAuth so AURIX users never land on the AI-Pass marketing site.
         $bridgeCallback = $config->appUrl . '/auth/google/callback';
         $url = $config->aipassAuthUrl . '/auth/google'
             . '?bridge=1&callback=' . rawurlencode($bridgeCallback);

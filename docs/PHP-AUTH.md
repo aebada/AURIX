@@ -99,47 +99,43 @@ or the docroot root, and never commit it to this repo.
 | `DB_PASS` | Yes | *(from your host's DB panel)* | Database password |
 | `GOOGLE_CLIENT_ID` | Yes | `….apps.googleusercontent.com` | Shared AlPass / AI-Pass OAuth client ID |
 | `GOOGLE_CLIENT_SECRET` | Yes | *(from Google Console)* | OAuth client secret — also used as the bridge HMAC secret when `AIPASS_OAUTH_BRIDGE_SECRET` is unset |
-| `GOOGLE_REDIRECT_URI` | Direct only | `https://aurixapp.de/auth/google/callback` | Used when bridge is off; must match Google Console (HOPn path) |
-| `AIPASS_AUTH_URL` | Bridge | `https://aipass.space` | AI-Pass host that owns the registered Google redirect URI |
-| `AIPASS_OAUTH_BRIDGE` | Bridge | `true` | Production default — same pattern as Invoice AI |
-| `AIPASS_OAUTH_BRIDGE_SECRET` | Bridge | *(defaults to `GOOGLE_CLIENT_SECRET`)* | Must match AI-Pass `AIPASS_OAUTH_BRIDGE_SECRET` / Google secret |
+| `GOOGLE_REDIRECT_URI` | Yes (direct) | `https://aurixapp.de/auth/google/callback` | Must match Google Console (HOPn path) |
+| `AIPASS_AUTH_URL` | Bridge only | `https://aipass.space` | Used only when `AIPASS_OAUTH_BRIDGE=true` |
+| `AIPASS_OAUTH_BRIDGE` | No | `false` | **Off by default.** Bridge left users on the AI-Pass marketing SPA when `/auth/google` stopped proxying to Laravel |
+| `AIPASS_OAUTH_BRIDGE_SECRET` | Bridge only | *(defaults to `GOOGLE_CLIENT_SECRET`)* | Must match AI-Pass when bridge is enabled |
 | `SESSION_SECRET` | Recommended | `openssl rand -hex 32` | Session ID entropy hint |
 | `LOGIN_SUCCESS_URL` | No | `/` | Default redirect after login |
 
-### Google OAuth — AI-Pass bridge (production)
+### Google OAuth — direct (production default)
 
-AURIX reuses the **same AlPass Web client** as AI-Pass / Invoice AI. Google Console
-already has:
-
-```text
-https://aipass.space/auth/google/callback
-```
-
-Production flow (no new Console redirect URI required for `aurixapp.de`):
+AURIX uses the shared AlPass Web client with **direct** Google consent. Flow:
 
 1. Browser → `https://aurixapp.de/auth/google.php` (or `/auth/google`)
-2. Redirect → `https://aipass.space/auth/google?bridge=1&callback=https://aurixapp.de/auth/google/callback`
-3. Google consent uses `redirect_uri=https://aipass.space/auth/google/callback`
-4. AI-Pass returns `?bridge_token=…` to AURIX; php-auth verifies HMAC and sets session
+2. Redirect → `accounts.google.com` with `redirect_uri=https://aurixapp.de/auth/google/callback`
+3. Google returns to AURIX; php-auth exchanges the code and sets the session
 
-**Note:** Local Carbon (`carbon.ehopn.com`) has no Google login. AURIX follows
-the Invoice AI bridge + HOPn callback path (`/auth/google/callback`) used by
-sibling apps on the same Hostinger account (Sportify, Oktoberhub, Invoice).
-
-**AI-Pass requirement:** add `aurixapp.de` to `AIPASS_TRUSTED_CALLBACK_HOSTS` on the
-AI-Pass Laravel `.env` (and redeploy/clear config cache if applicable).
-
-### Google Cloud Console (direct / local only)
-
-Set `AIPASS_OAUTH_BRIDGE=false` (or `APP_ENV=local`) and register:
+Google Console must include:
 
 ```text
 https://aurixapp.de/auth/google/callback
 ```
 
-(plus `http://localhost:8080/auth/google/callback` for local PHP). The
-client-side GIS button only needs Authorized JavaScript origins
-(`https://aurixapp.de`); the bridge path does not need AURIX as a redirect URI.
+(plus `http://localhost:8080/auth/google/callback` for local PHP). Authorized
+JavaScript origin `https://aurixapp.de` is also needed for any GIS button.
+
+### Google OAuth — AI-Pass bridge (optional / legacy)
+
+Only if `AIPASS_OAUTH_BRIDGE=true` **and** `aipass.space/auth/google` still
+proxies to Laravel (not the Next.js marketing homepage):
+
+1. Browser → AURIX `/auth/google.php`
+2. Redirect → `https://aipass.space/auth/google?bridge=1&callback=https://aurixapp.de/auth/google/callback`
+3. Google consent uses `redirect_uri=https://aipass.space/auth/google/callback`
+4. AI-Pass returns `?bridge_token=…` to AURIX
+
+Require `aurixapp.de` in AI-Pass `AIPASS_TRUSTED_CALLBACK_HOSTS`. Do **not**
+enable the bridge while `/auth/google` on aipass.space serves the marketing SPA
+— users will appear “stuck” on AI-Pass.
 
 ### Database migration
 
@@ -153,12 +149,11 @@ in CI and uploads `php-auth/auth/` and `php-auth/auth-lib/` (excluding
 `.env`) alongside the static export — see
 `.github/workflows/deploy-website.yml`. After the first deploy:
 
-1. Create `auth-lib/.env` on the server from `auth-lib/.env.example` (bridge on).
+1. Create `auth-lib/.env` on the server from `auth-lib/.env.example` (`AIPASS_OAUTH_BRIDGE=false`).
 2. Run the SQL migration in phpMyAdmin.
-3. Ensure AI-Pass `AIPASS_TRUSTED_CALLBACK_HOSTS` includes `aurixapp.de`.
-4. Verify:
+3. Verify:
    - `https://aurixapp.de/auth/login.php` — login form loads
-   - `https://aurixapp.de/auth/google.php` — redirects to `aipass.space/auth/google?bridge=1…`
+   - `https://aurixapp.de/auth/google.php` — redirects to `accounts.google.com` (not aipass.space)
    - After sign-in → the configured `LOGIN_SUCCESS_URL`, signed in
    - `https://aurixapp.de/auth/me.php` — JSON `{"authenticated":true,...}`
 
@@ -204,7 +199,7 @@ Put `SMTP_PASS` only in server `auth-lib/.env`. IMAP is for reading the mailbox 
 
 | Symptom | Fix |
 |---------|-----|
-| `redirect_uri_mismatch` | Prefer bridge mode (`AIPASS_OAUTH_BRIDGE=true`) so Google only sees `aipass.space`’s registered URI; for direct mode, add exact `GOOGLE_REDIRECT_URI` in Google Console |
+| `redirect_uri_mismatch` | Confirm `GOOGLE_REDIRECT_URI` exactly matches Google Console (`https://aurixapp.de/auth/google/callback`). Do not re-enable the AI-Pass bridge unless Laravel `/auth/google` on aipass.space is healthy |
 | Bridge returns to login / invalid token | Confirm `GOOGLE_CLIENT_SECRET` matches AI-Pass; confirm `aurixapp.de` is in AI-Pass `AIPASS_TRUSTED_CALLBACK_HOSTS` |
 | Blank page / 500 on auth | Check the PHP error log; verify `vendor/` was uploaded |
 | `Auth library is incomplete` / `Auth is not configured` | Deploy `auth-lib/bootstrap.php` + `vendor/`, and create `auth-lib/.env` from `.env.example` |
