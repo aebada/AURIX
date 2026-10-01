@@ -33,8 +33,8 @@
   height: 1.65rem;
   background-color: #e3ac4c;
   /* Mask keeps only the gold A — no PNG canvas matte/box on dark UI */
-  -webkit-mask-image: url('/brand/aurix-mark.png');
-  mask-image: url('/brand/aurix-mark.png');
+  -webkit-mask-image: url('/brand/aurix-mark-mask.png');
+  mask-image: url('/brand/aurix-mark-mask.png');
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
