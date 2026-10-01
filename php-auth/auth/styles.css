@@ -17,23 +17,31 @@
 .brand {
   display: inline-flex;
   align-items: center;
+  gap: 0.55rem;
   text-decoration: none;
   background: transparent;
   border: 0;
   padding: 0;
   box-shadow: none;
+  color: #eef0f6;
 }
 
-.brand-logo {
+.brand-mark {
   display: block;
-  height: 2rem;
+  height: 1.65rem;
   width: auto;
   background: transparent;
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  /* Crisp downscale of the transparent wordmark PNG */
-  image-rendering: -webkit-optimize-contrast;
+}
+
+.brand-word {
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: #eef0f6;
 }
 
 .nav-link {
