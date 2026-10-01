@@ -28,12 +28,19 @@
 
 .brand-mark {
   display: block;
+  flex: 0 0 auto;
+  width: 1.65rem;
   height: 1.65rem;
-  width: auto;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
+  background-color: #e3ac4c;
+  /* Mask keeps only the gold A — no PNG canvas matte/box on dark UI */
+  -webkit-mask-image: url('/brand/aurix-mark.png');
+  mask-image: url('/brand/aurix-mark.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .brand-word {

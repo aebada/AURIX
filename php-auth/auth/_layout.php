@@ -25,8 +25,8 @@ function auth_render_page(array $page): void
 <body>
   <div class="page">
     <header class="nav">
-      <a class="brand" href="/">
-        <img class="brand-mark" src="/brand/aurix-mark.png" alt="" width="28" height="26" />
+      <a class="brand" href="/" aria-label="AURIX home">
+        <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-word">AURIX</span>
       </a>
       <a class="nav-link" href="/">Home</a>
