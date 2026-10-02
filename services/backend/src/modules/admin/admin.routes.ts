@@ -94,6 +94,43 @@ adminRouter.get("/waitlist", requireAuth, requireRole("support"), (_req, res) =>
   res.json({ entries: db.waitlist });
 });
 
+adminRouter.get("/payroll-employers", requireAuth, requireRole("support"), (_req, res) => {
+  res.json({ employers: db.payrollEmployers });
+});
+
+const payrollKybSchema = z.object({
+  kybStatus: z.enum(["pending", "approved", "rejected"]),
+  notes: z.string().max(5000).optional(),
+});
+
+adminRouter.patch(
+  "/payroll-employers/:id",
+  requireAuth,
+  requireRole("admin"),
+  (req, res, next) => {
+    try {
+      const body = payrollKybSchema.parse(req.body);
+      const employer = db.payrollEmployers.find((e) => e.id === req.params.id);
+      if (!employer) throw new ApiError(404, "Employer application not found");
+      const previous = employer.kybStatus;
+      employer.kybStatus = body.kybStatus;
+      if (body.notes !== undefined) employer.notes = body.notes;
+      employer.updatedAt = new Date().toISOString();
+      appendAuditLog({
+        actorId: req.auth?.sub,
+        action: "payroll_employer.kyb",
+        targetType: "PayrollEmployerApplication",
+        targetId: employer.id,
+        previousValue: previous,
+        newValue: body.kybStatus,
+      });
+      res.json({ employer });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
 adminRouter.get("/investors", requireAuth, requireRole("support"), (_req, res) => {
   res.json({ inquiries: db.investorInquiries });
 });

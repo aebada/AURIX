@@ -1,6 +1,12 @@
 import { Router } from "express";
 import { z } from "zod";
-import { db, nextId, type InvestorInquiry, type WaitlistEntry } from "../../data/mock-db.js";
+import {
+  db,
+  nextId,
+  type InvestorInquiry,
+  type PayrollEmployerApplication,
+  type WaitlistEntry,
+} from "../../data/mock-db.js";
 import { ApiError } from "../../middleware/error-handler.js";
 
 export const publicRouter = Router();
@@ -128,6 +134,74 @@ publicRouter.post("/investors", (req, res, next) => {
       firm: inquiry.firm,
     });
     res.status(201).json({ ok: true, id: inquiry.id });
+  } catch (err) {
+    next(err);
+  }
+});
+
+const payrollEmployerSchema = z.object({
+  companyLegalName: z.string().min(1).max(300),
+  registrationNumber: z.string().min(1).max(120),
+  country: z.enum(["DE", "AT"]),
+  address: z.string().min(1).max(500),
+  contactName: z.string().min(1).max(200),
+  contactEmail: z.string().email().max(320),
+  contactPhone: z.string().min(1).max(40),
+  employeeCount: z.string().min(1).max(40),
+  industry: z.string().max(120).optional(),
+  additionalityAttested: z.literal(true),
+  privacyConsent: z.literal(true),
+  locale: z.string().max(16).optional(),
+  website: z.string().optional(),
+});
+
+publicRouter.post("/payroll-employers", (req, res, next) => {
+  try {
+    const body = payrollEmployerSchema.parse(req.body);
+    if (body.website && body.website.trim().length > 0) {
+      return res.status(201).json({ ok: true });
+    }
+    if (db.featureFlags.MAINTENANCE_MODE) {
+      throw new ApiError(503, "Maintenance mode — try again later.");
+    }
+    rateLimitOrThrow(req);
+
+    const now = new Date().toISOString();
+    const fwd = req.headers["x-forwarded-for"];
+    const ip =
+      typeof fwd === "string" && fwd.length
+        ? fwd.split(",")[0]!.trim()
+        : req.ip || undefined;
+
+    const entry: PayrollEmployerApplication = {
+      id: nextId("pe"),
+      companyLegalName: body.companyLegalName.trim(),
+      registrationNumber: body.registrationNumber.trim(),
+      country: body.country,
+      address: body.address.trim(),
+      contactName: body.contactName.trim(),
+      contactEmail: body.contactEmail.trim().toLowerCase(),
+      contactPhone: body.contactPhone.trim(),
+      employeeCount: body.employeeCount.trim(),
+      industry: body.industry?.trim() || undefined,
+      locale: body.locale,
+      kybStatus: "pending",
+      additionalityAttested: true,
+      additionalityAttestedAt: now,
+      additionalityAttestedBy: body.contactName.trim(),
+      additionalityAttestedIp: ip,
+      privacyConsent: true,
+      createdAt: now,
+      updatedAt: now,
+    };
+    db.payrollEmployers.unshift(entry);
+    notifyAdminStub("payroll_employer", {
+      id: entry.id,
+      company: entry.companyLegalName,
+      email: entry.contactEmail,
+      country: entry.country,
+    });
+    res.status(201).json({ ok: true, id: entry.id, kybStatus: entry.kybStatus });
   } catch (err) {
     next(err);
   }

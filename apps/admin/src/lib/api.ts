@@ -101,6 +101,23 @@ export const adminApi = {
     ),
   waitlist: (token: string) =>
     request<{ entries: WaitlistEntry[] }>("/admin/waitlist", {}, token),
+  payrollEmployers: (token: string) =>
+    request<{ employers: PayrollEmployerApplication[] }>(
+      "/admin/payroll-employers",
+      {},
+      token,
+    ),
+  updatePayrollEmployerKyb: (
+    token: string,
+    id: string,
+    kybStatus: PayrollEmployerKybStatus,
+    notes?: string,
+  ) =>
+    request<{ employer: PayrollEmployerApplication }>(
+      `/admin/payroll-employers/${id}`,
+      { method: "PATCH", body: JSON.stringify({ kybStatus, notes }) },
+      token,
+    ),
   investors: (token: string) =>
     request<{ inquiries: InvestorInquiry[] }>("/admin/investors", {}, token),
   updateInvestorStatus: (
@@ -136,6 +153,31 @@ export interface WaitlistEntry {
   referral?: string;
   locale?: string;
   createdAt: string;
+}
+
+export type PayrollEmployerKybStatus = "pending" | "approved" | "rejected";
+
+export interface PayrollEmployerApplication {
+  id: string;
+  companyLegalName: string;
+  registrationNumber: string;
+  country: "DE" | "AT";
+  address: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  employeeCount: string;
+  industry?: string;
+  locale?: string;
+  kybStatus: PayrollEmployerKybStatus;
+  additionalityAttested: boolean;
+  additionalityAttestedAt: string;
+  additionalityAttestedBy: string;
+  additionalityAttestedIp?: string;
+  privacyConsent: boolean;
+  createdAt: string;
+  updatedAt: string;
+  notes?: string;
 }
 
 export interface InvestorInquiry {

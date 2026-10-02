@@ -109,6 +109,31 @@ export interface InvestorInquiry {
   updatedAt: string;
 }
 
+export type PayrollEmployerKybStatus = "pending" | "approved" | "rejected";
+
+export interface PayrollEmployerApplication {
+  id: string;
+  companyLegalName: string;
+  registrationNumber: string;
+  country: "DE" | "AT";
+  address: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  employeeCount: string;
+  industry?: string;
+  locale?: string;
+  kybStatus: PayrollEmployerKybStatus;
+  additionalityAttested: boolean;
+  additionalityAttestedAt: string;
+  additionalityAttestedBy: string;
+  additionalityAttestedIp?: string;
+  privacyConsent: boolean;
+  createdAt: string;
+  updatedAt: string;
+  notes?: string;
+}
+
 export interface AdminAuditLog {
   id: string;
   actorId?: string;
@@ -137,6 +162,7 @@ export interface Db {
   etfWatchlists: Map<string, Set<string>>; // key: userId -> tickers
   waitlist: WaitlistEntry[];
   investorInquiries: InvestorInquiry[];
+  payrollEmployers: PayrollEmployerApplication[];
   adminAuditLogs: AdminAuditLog[];
   featureFlags: FeatureFlagsState;
 }
@@ -151,6 +177,7 @@ export const db: Db = {
   etfWatchlists: new Map(),
   waitlist: [],
   investorInquiries: [],
+  payrollEmployers: [],
   adminAuditLogs: [],
   featureFlags: {
     RESERVE_LIVE: false,

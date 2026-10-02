@@ -12,6 +12,7 @@ const navItems = [
   { href: "/users", label: "Users" },
   { href: "/kyc", label: "KYC Queue" },
   { href: "/waitlist", label: "Waitlist" },
+  { href: "/payroll-employers", label: "Payroll employers" },
   { href: "/investors", label: "Investors" },
   { href: "/transfers", label: "Transfers" },
   { href: "/partners", label: "Partners" },

@@ -180,6 +180,14 @@ in CI and uploads `php-auth/auth/` and `php-auth/auth-lib/` (excluding
 
 Configure `SMTP_*` and `MTE_CRM_*` in `auth-lib/.env` (see `.env.example`). Intake still returns `201` if mail/CRM side effects fail after a successful persist.
 
+## Payroll employer applications
+
+`POST /auth/payroll-employer-apply.php` persists JSON under `auth-lib/data/payroll-employers.json`, then best-effort SMTP notify + auto-reply + MTE CRM upsert with `email_source=aurix-payroll-employer-apply`. Review applications in:
+
+- **Admin (Node):** `/payroll-employers` when `services/backend` is running
+- **CRM:** MunichTech EXPO outreach leads tagged `aurix-payroll-employer-apply`
+- **Server file:** `auth-lib/data/payroll-employers.json` (not web-accessible)
+
 ### Hostinger Mail (contact@aurixapp.de)
 
 Use **Hostinger Mail** only — not Gmail or a third-party relay. The mailbox password is for SMTP/IMAP auth only; **never** reuse it as FTP/SSH deploy credentials.
