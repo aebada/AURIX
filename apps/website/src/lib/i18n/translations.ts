@@ -69,6 +69,7 @@ export interface Dictionary {
   };
   home: {
     eyebrowHero: string;
+    brandHero: string;
     h1Line1: string;
     h1Line2: string;
     sub: string;
@@ -76,6 +77,20 @@ export interface Dictionary {
     ctaSecondary: string;
     ctaDemo: string;
     ctaBusiness: string;
+    trustRow: string[];
+    ops: {
+      eyebrow: string;
+      h2: string;
+      sub: string;
+      items: {
+        id: string;
+        title: string;
+        body: string;
+        points: string[];
+        href: string;
+        cta: string;
+      }[];
+    };
     pathsEyebrow: string;
     pathsH2: string;
     pathsSub: string;
@@ -195,7 +210,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     header: {
       login: "Log in",
-      signup: "Sign up",
+      signup: "Get started",
       dashboard: "Open web app",
       signout: "Sign out",
       tryDemo: "Try demo",
@@ -230,24 +245,86 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Head to your dashboard to check balances, move money, and manage your account.",
     },
     home: {
-      eyebrowHero: "The Fintech Revolution — 2026",
-      h1Line1: "Measured Trust.",
-      h1Line2: "Real Digital Money.",
-      sub: "One account for customers, businesses, and partners — multi-wallets, payments, and gold-linked value. Practice the product today; live custody stays gated until certification.",
-      ctaPrimary: "Try practice mode",
-      ctaSecondary: "Watch walkthrough",
-      ctaDemo: "Watch product demo",
+      eyebrowHero: "Gold-linked money for people & companies",
+      brandHero: "AURIX",
+      h1Line1: "Measured trust.",
+      h1Line2: "Real digital money.",
+      sub: "Wallets, payments, partner gold delivery, and employer benefits — practice today. Live custody stays gated until certification.",
+      ctaPrimary: "Get started",
+      ctaSecondary: "Try practice mode",
+      ctaDemo: "Watch walkthrough",
       ctaBusiness: "For businesses",
+      trustRow: [
+        "Practice wallets live",
+        "Partner corridors building",
+        "Payroll apply open",
+        "Custody gated honestly",
+      ],
+      ops: {
+        eyebrow: "Product",
+        h2: "Everything that moves value — in one place",
+        sub: "Hover a capability to preview it. Practice rails today; live metal grants and vault claims stay off until certified.",
+        items: [
+          {
+            id: "wallet",
+            title: "Multi-wallet",
+            body: "Gold, silver, and cash pockets with practice pay, send, and trade — one account for personal and business.",
+            points: [
+              "Personal · Business · Family contexts",
+              "Practice balances — no live vault claims",
+              "Instant product feel before certification",
+            ],
+            href: "/app/?tour=1",
+            cta: "Open practice wallet",
+          },
+          {
+            id: "send",
+            title: "Send gold",
+            body: "Cross-border gold for customers, fulfilled by jewelry and bullion partners in your corridor.",
+            points: [
+              "You keep the sender relationship",
+              "Partners earn on pickup & delivery",
+              "SA · EG · KW · AE · QA focus",
+            ],
+            href: "/send/",
+            cta: "Send gold",
+          },
+          {
+            id: "payroll",
+            title: "Payroll benefit",
+            body: "Employers grant owned gold as a tax-aware Sachbezug — additional to salary, never a substitute.",
+            points: [
+              "Monthly ~€50 or annual ~€10,000 framing",
+              "Additionality attestation required",
+              "Register your company for KYB review",
+            ],
+            href: "/for-business/payroll/",
+            cta: "Register your company",
+          },
+          {
+            id: "partners",
+            title: "Partners",
+            body: "Join the Gold as a Service network — appear in the locator once approved, redeem at the counter.",
+            points: [
+              "Partner panel for inventory & earnings",
+              "Zero setup fee to start the conversation",
+              "Corridor-by-corridor activation",
+            ],
+            href: "/partner-with-us/",
+            cta: "Become a partner",
+          },
+        ],
+      },
       pathsEyebrow: "Who it’s for",
-      pathsH2: "B2C · B2B · B2B2C · Capital",
+      pathsH2: "One platform. Four ways in.",
       pathsSub:
-        "Tap a model to see the product surface — personal wallets, business treasury, partner gold delivery, or investor thesis.",
+        "Tap a path to preview the surface — customers, businesses, partners, or capital.",
       paths: [
         {
           id: "b2c",
           model: "B2C",
           title: "Customers",
-          body: "A Revolut-style multi-wallet for people: gold, silver, and cash pockets with practice pay, send, and trade.",
+          body: "A modern multi-wallet for people: gold, silver, and cash pockets with practice pay, send, and trade.",
           highlights: [
             "Personal · Business · Kids wallets in one account",
             "Practice payments and swaps today",
@@ -261,14 +338,14 @@ export const dictionaries: Record<Locale, Dictionary> = {
           id: "b2b",
           model: "B2B",
           title: "Businesses",
-          body: "Treasury, payroll pockets, merchant float, and team seats — built for operators who need gold-linked value on the books.",
+          body: "Treasury, payroll pockets, merchant float, and team seats — plus AURIX for Payroll for employee gold benefits.",
           highlights: [
-            "Metal salary: pay staff partly in gold & silver",
+            "Metal salary & tax-aware Sachbezug framing",
             "Ops treasury with pocket-level controls",
-            "Banks, payments, and investment partners",
+            "Register company for employer onboarding review",
           ],
-          href: "/business",
-          cta: "Explore B2B",
+          href: "/for-business/payroll/",
+          cta: "Explore payroll benefit",
           visualLabel: "Business treasury",
         },
         {
@@ -301,45 +378,45 @@ export const dictionaries: Record<Locale, Dictionary> = {
         },
       ],
       problem: {
-        eyebrow: "The Problem",
-        h2: "A broken financial system",
+        eyebrow: "The problem",
+        h2: "Value, stability, and usability rarely meet.",
         quote: "There is no system that combines real value, stability, and global usability.",
         items: [
           {
             number: "01",
-            title: "Fiat Inflation",
-            body: "Traditional currencies are losing purchasing power at an accelerating rate. Savings are accessible, but no longer protected from systemic devaluation.",
+            title: "Fiat inflation",
+            body: "Savings stay accessible — but purchasing power erodes. Everyday money is not designed as lasting value.",
           },
           {
             number: "02",
-            title: "Crypto Volatility",
-            body: "Digital assets offer speed but lack the stability required for real-world commercial use. Speculation has replaced utility in the digital frontier.",
+            title: "Crypto volatility",
+            body: "Speed without the stability most people and businesses need for real commercial use.",
           },
           {
             number: "03",
-            title: "The Ownership Gap",
-            body: "Modern platforms provide digital access but often lack true underlying asset ownership. Users hold promises, not physical reality.",
+            title: "The ownership gap",
+            body: "Many platforms sell digital access without clear underlying assets. Users hold promises, not metal.",
           },
         ],
       },
       solution: {
-        eyebrow: "The Solution",
-        h2: "A new category of money",
+        eyebrow: "The product",
+        h2: "Gold-linked digital money — orchestrated, not custodied by AURIX.",
         items: [
           {
-            title: "Hybrid Reserve System",
+            title: "Partner reserves",
             body: "Designed so digital units map to physical gold and silver held by licensed custodians — not AURIX. Live vault allocation is in certification and not enabled yet.",
           },
           {
-            title: "AI Governance Layer",
-            body: "Anomaly detection and governance scoring are built for continuous verification when partner reserve feeds go live. Irreversible actions stay human-approved.",
+            title: "Governance layer",
+            body: "Anomaly detection and scoring for continuous verification when partner reserve feeds go live. Irreversible actions stay human-approved.",
           },
           {
-            title: "Instant Global Utility",
-            body: "Practice payments, transfers, and business payouts today. Live fiat and metal rails activate only with certified payment and custody partners.",
+            title: "Everyday utility",
+            body: "Practice payments, transfers, payroll benefits, and partner fulfillment today. Live rails activate only with certified partners.",
           },
         ],
-        formula: "Partner Reserves + Payment Network + Governance = AURIX",
+        formula: "Partner reserves + payment network + governance = AURIX",
       },
       pointcoin: {
         eyebrow: "Introducing Pointcoin",
@@ -515,7 +592,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     header: {
       login: "Anmelden",
-      signup: "Registrieren",
+      signup: "Loslegen",
       dashboard: "Web-App öffnen",
       signout: "Abmelden",
       tryDemo: "Demo testen",
@@ -550,24 +627,86 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Gehen Sie zu Ihrem Dashboard, um Guthaben zu prüfen, Geld zu bewegen und Ihr Konto zu verwalten.",
     },
     home: {
-      eyebrowHero: "Die Fintech-Revolution — 2026",
+      eyebrowHero: "Goldverknüpftes Geld für Menschen & Unternehmen",
+      brandHero: "AURIX",
       h1Line1: "Verlässliches Vertrauen.",
       h1Line2: "Echtes digitales Geld.",
-      sub: "Ein Konto für Kunden, Unternehmen und Partner — Multi-Wallets, Zahlungen und goldverknüpfter Wert. Produkt heute üben; Live-Verwahrung bleibt bis zur Zertifizierung gesperrt.",
-      ctaPrimary: "Übungsmodus starten",
-      ctaSecondary: "Rundgang ansehen",
-      ctaDemo: "Produktdemo ansehen",
+      sub: "Wallets, Zahlungen, Partner-Goldlieferung und Employer-Benefits — heute üben. Live-Verwahrung bleibt bis zur Zertifizierung gesperrt.",
+      ctaPrimary: "Loslegen",
+      ctaSecondary: "Übungsmodus starten",
+      ctaDemo: "Rundgang ansehen",
       ctaBusiness: "Für Unternehmen",
+      trustRow: [
+        "Übungs-Wallets live",
+        "Partner-Korridore im Aufbau",
+        "Payroll-Bewerbung offen",
+        "Verwahrung ehrlich gesperrt",
+      ],
+      ops: {
+        eyebrow: "Produkt",
+        h2: "Alles, was Wert bewegt — an einem Ort",
+        sub: "Fahren Sie über eine Fähigkeit für die Vorschau. Übungs-Rails heute; Live-Metall-Grants und Vault-Claims bleiben bis zur Zertifizierung aus.",
+        items: [
+          {
+            id: "wallet",
+            title: "Multi-Wallet",
+            body: "Gold-, Silber- und Cash-Taschen mit Übungszahlen, Senden und Handel — ein Konto für privat und business.",
+            points: [
+              "Persönlich · Business · Familie",
+              "Übungsguthaben — keine Live-Vault-Claims",
+              "Produktgefühl vor der Zertifizierung",
+            ],
+            href: "/app/?tour=1",
+            cta: "Übungs-Wallet öffnen",
+          },
+          {
+            id: "send",
+            title: "Gold senden",
+            body: "Grenzüberschreitendes Gold für Kunden, erfüllt von Schmuck- und Bullion-Partnern in Ihrem Korridor.",
+            points: [
+              "Sie behalten die Absender-Beziehung",
+              "Partner verdienen an Abholung & Lieferung",
+              "Fokus SA · EG · KW · AE · QA",
+            ],
+            href: "/send/",
+            cta: "Gold senden",
+          },
+          {
+            id: "payroll",
+            title: "Lohn-Benefit",
+            body: "Arbeitgeber gewähren eigenes Gold als steuerbewussten Sachbezug — zusätzlich zum Gehalt, nie als Ersatz.",
+            points: [
+              "Monatlich ~€50 oder jährlich ~€10.000",
+              "Zusätzlichkeits-Bestätigung erforderlich",
+              "Unternehmen zur KYB-Prüfung registrieren",
+            ],
+            href: "/for-business/payroll/",
+            cta: "Unternehmen registrieren",
+          },
+          {
+            id: "partners",
+            title: "Partner",
+            body: "Werden Sie Teil des Gold-as-a-Service-Netzwerks — im Locator erscheinen, am Tresen einlösen.",
+            points: [
+              "Partner-Panel für Bestand & Erträge",
+              "Kein Setup-Fee für den Einstieg",
+              "Aktivierung Korridor für Korridor",
+            ],
+            href: "/partner-with-us/",
+            cta: "Partner werden",
+          },
+        ],
+      },
       pathsEyebrow: "Für wen",
-      pathsH2: "B2C · B2B · B2B2C · Kapital",
+      pathsH2: "Eine Plattform. Vier Einstiege.",
       pathsSub:
-        "Modell wählen und die Produktfläche sehen — Wallets, Treasury, Partner-Goldlieferung oder Investor-These.",
+        "Pfad wählen und die Oberfläche sehen — Kunden, Unternehmen, Partner oder Kapital.",
       paths: [
         {
           id: "b2c",
           model: "B2C",
           title: "Kunden",
-          body: "Multi-Wallet im Neobank-Stil: Gold-, Silber- und Cash-Taschen mit Übungszahlungen, Senden und Handel.",
+          body: "Modernes Multi-Wallet: Gold-, Silber- und Cash-Taschen mit Übungszahlungen, Senden und Handel.",
           highlights: [
             "Persönlich · Business · Kids in einem Konto",
             "Übungszahlungen und Swaps heute",
@@ -581,25 +720,25 @@ export const dictionaries: Record<Locale, Dictionary> = {
           id: "b2b",
           model: "B2B",
           title: "Unternehmen",
-          body: "Treasury, Payroll-Taschen, Händler-Float und Team-Sitze — für Betreiber mit goldverknüpftem Wert in den Büchern.",
+          body: "Treasury, Payroll-Taschen, Händler-Float und Team-Sitze — plus AURIX for Payroll für Mitarbeiter-Gold-Benefits.",
           highlights: [
+            "Metall-Gehalt & Sachbezug-Framing",
             "Ops-Treasury mit Taschen-Kontrolle",
-            "Payroll- und Händler-Auszahlungen",
-            "Banken-, Payment- und Investment-Partner",
+            "Unternehmen zur Employer-Prüfung registrieren",
           ],
-          href: "/business",
-          cta: "B2B entdecken",
+          href: "/for-business/payroll/",
+          cta: "Payroll-Benefit entdecken",
           visualLabel: "Business-Treasury",
         },
         {
           id: "b2b2c",
           model: "B2B2C",
           title: "Partner",
-          body: "Juwelier- und Bullion-Stores erfüllen Gold für Ihre Kunden. Sie besitzen die Absenderbeziehung; Partner verdienen an Abholung und Lieferung.",
+          body: "Schmuck- und Bullion-Stores erfüllen Gold für Ihre Kunden. Sie besitzen die Absender-Beziehung; Partner verdienen an Abholung und Lieferung.",
           highlights: [
             "Gold senden über SA · EG · KW · AE · QA",
-            "Standortsuche + Partner-Einlösung",
-            "Keine Setup-Gebühr für den Einstieg",
+            "Partner-Locator + Einlöse-Panel",
+            "Kein Setup-Fee für den Einstieg",
           ],
           href: "/partner-with-us/",
           cta: "Partner werden",
@@ -609,10 +748,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
           id: "investors",
           model: "Kapital",
           title: "Investoren",
-          body: "Plattform-These, Meilensteine und direktes IR-Formular — ehrlicher Early-Stage-Status, keine Fake-Vault-Claims.",
+          body: "Plattform-These, Meilensteine und direktes IR-Formular — ehrlicher Early-Stage-Status, keine Fake-Live-Vault-Claims.",
           highlights: [
-            "Übungprodukt und Partner-Korridore zuerst",
-            "Lizensierte Rails vor Live-Settlement",
+            "Übungsprodukt und Partner-Korridore zuerst",
+            "Lizenzierte Rails vor Live-Settlement",
             "Direkte Anfrage an Investor Relations",
           ],
           href: "/investors",
@@ -622,44 +761,44 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
       problem: {
         eyebrow: "Das Problem",
-        h2: "Ein kaputtes Finanzsystem",
-        quote: "Es gibt kein System, das echten Wert, Stabilität und globale Nutzbarkeit vereint.",
+        h2: "Wert, Stabilität und Nutzbarkeit treffen selten zusammen.",
+        quote: "Es gibt kein System, das realen Wert, Stabilität und globale Nutzbarkeit vereint.",
         items: [
           {
             number: "01",
             title: "Fiat-Inflation",
-            body: "Traditionelle Währungen verlieren zunehmend schneller an Kaufkraft. Ersparnisse sind zugänglich, aber nicht mehr vor systemischer Entwertung geschützt.",
+            body: "Ersparnisse bleiben zugänglich — aber Kaufkraft schwindet. Alltagswährung ist nicht als dauerhafter Wert gedacht.",
           },
           {
             number: "02",
             title: "Krypto-Volatilität",
-            body: "Digitale Vermögenswerte bieten Geschwindigkeit, aber nicht die Stabilität, die für den realen Handelseinsatz nötig ist. Spekulation hat den Nutzen im digitalen Grenzland verdrängt.",
+            body: "Geschwindigkeit ohne die Stabilität, die Menschen und Unternehmen für realen Handel brauchen.",
           },
           {
             number: "03",
-            title: "Die Eigentumslücke",
-            body: "Moderne Plattformen bieten digitalen Zugang, aber oft kein echtes zugrunde liegendes Eigentum. Nutzer halten Versprechen, keine physische Realität.",
+            title: "Eigentumslücke",
+            body: "Viele Plattformen verkaufen digitalen Zugang ohne klare Basiswerte. Nutzer halten Versprechen, kein Metall.",
           },
         ],
       },
       solution: {
-        eyebrow: "Die Lösung",
-        h2: "Eine neue Geldkategorie",
+        eyebrow: "Das Produkt",
+        h2: "Goldverknüpftes digitales Geld — orchestriert, nicht von AURIX verwahrt.",
         items: [
           {
-            title: "Hybrides Reservesystem",
-            body: "Jede Einheit ist zu 100 % durch physisches Gold und Silber in hochsicheren, geprüften Tresoren gedeckt. Wir schließen die Lücke zwischen physischer Realität und digitaler Geschwindigkeit.",
+            title: "Partner-Reserven",
+            body: "Digitale Einheiten sollen physischem Gold und Silber bei lizenzierten Verwahrern entsprechen — nicht AURIX. Live-Vault-Allokation ist in Zertifizierung und noch nicht aktiv.",
           },
           {
-            title: "Kontinuierliche KI-Prüfung",
-            body: "Kryptografische Echtzeitverifizierung und KI-gestützte Überwachung stellen sicher, dass digitale Einheiten stets den physischen Reserven entsprechen. Vertrauen wird gemessen, nicht versprochen.",
+            title: "Governance-Schicht",
+            body: "Anomalie-Erkennung und Scoring für kontinuierliche Prüfung, wenn Partner-Reserve-Feeds live gehen. Unumkehrbare Aktionen bleiben menschlich freigegeben.",
           },
           {
-            title: "Sofortiger globaler Nutzen",
-            body: "Ein leistungsstarkes Zahlungsnetzwerk, das Edelmetalle so liquide wie Bargeld macht — sofort nutzbar für Überweisungen, Zahlungen im Einzelhandel und Ersparnisse.",
+            title: "Alltagsnutzen",
+            body: "Übungszahlungen, Transfers, Payroll-Benefits und Partner-Fulfillment heute. Live-Rails nur mit zertifizierten Partnern.",
           },
         ],
-        formula: "Reale Vermögensreserve + digitales Zahlungsnetzwerk = AURIX",
+        formula: "Partner-Reserven + Zahlungsnetz + Governance = AURIX",
       },
       pointcoin: {
         eyebrow: "Wir stellen vor: Pointcoin",
@@ -673,7 +812,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         facts: [
           { value: "0,0001 g", label: "Kleinste Einheit — ein Pointcoin, ermöglicht echtes Mikroeigentum" },
           { value: "1:1", label: "Jeder ausgegebene Pointcoin wird durch eingelagertes Gold oder Silber gedeckt" },
-          { value: "24/7", label: "KI-geprüfter Reservenachweis, kontinuierlich gegen Tresor-APIs verifiziert" },
+          { value: "Practice", label: "Web- & Mobile-Übungsguthaben heute — Live-Reserven demnächst" },
         ],
         link: "Das vollständige Tokenisierungsmodell lesen →",
       },
@@ -835,7 +974,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     header: {
       login: "تسجيل الدخول",
-      signup: "إنشاء حساب",
+      signup: "ابدأ",
       dashboard: "فتح تطبيق الويب",
       signout: "تسجيل الخروج",
       tryDemo: "جرّب العرض",
@@ -869,18 +1008,80 @@ export const dictionaries: Record<Locale, Dictionary> = {
       loggedInDescription: "انتقل إلى لوحة التحكم للتحقق من الأرصدة، وتحويل الأموال، وإدارة حسابك.",
     },
     home: {
-      eyebrowHero: "ثورة التكنولوجيا المالية — 2026",
+      eyebrowHero: "مال مرتبط بالذهب للأفراد والشركات",
+      brandHero: "AURIX",
       h1Line1: "ثقة مُقاسة.",
       h1Line2: "مال رقمي حقيقي.",
-      sub: "حساب واحد. محافظ متعددة — شخصية وتجارية وللأطفال — مدعومة بالذهب والفضة، مع دفع فوري وقسائم واحتياطيات تدققها الذكاء الاصطناعي.",
-      ctaPrimary: "بدء وضع التدريب",
-      ctaSecondary: "شاهد الجولة",
-      ctaDemo: "شاهد عرض المنتج",
-      ctaBusiness: "حسابات الأعمال",
+      sub: "محافظ ومدفوعات وتوصيل ذهب عبر الشركاء ومزايا أصحاب العمل — تدرّب اليوم. الحفظ الحي يبقى مغلقًا حتى الاعتماد.",
+      ctaPrimary: "ابدأ",
+      ctaSecondary: "بدء وضع التدريب",
+      ctaDemo: "شاهد الجولة",
+      ctaBusiness: "للشركات",
+      trustRow: [
+        "محافظ تجريبية حية",
+        "ممرات الشركاء قيد البناء",
+        "تقديم الرواتب مفتوح",
+        "الحفظ مغلق بصدق",
+      ],
+      ops: {
+        eyebrow: "المنتج",
+        h2: "كل ما يحرّك القيمة — في مكان واحد",
+        sub: "مرّر فوق قدرة لمعاينتها. سكك تجريبية اليوم؛ المنح الحية وادعاءات الخزنة متوقفة حتى الاعتماد.",
+        items: [
+          {
+            id: "wallet",
+            title: "محفظة متعددة",
+            body: "جيوب ذهب وفضة ونقد مع دفع وإرسال وتداول تجريبي — حساب واحد للشخصي والأعمال.",
+            points: [
+              "شخصي · أعمال · عائلة",
+              "أرصدة تجريبية — بلا ادعاءات حفظ حية",
+              "إحساس المنتج قبل الاعتماد",
+            ],
+            href: "/app/?tour=1",
+            cta: "افتح المحفظة التجريبية",
+          },
+          {
+            id: "send",
+            title: "أرسل الذهب",
+            body: "ذهب عبر الحدود للعملاء، ينفّذه شركاء المجوهرات والسبائك في ممرك.",
+            points: [
+              "تحتفظ بعلاقة المُرسل",
+              "الشركاء يربحون من الاستلام والتوصيل",
+              "تركيز SA · EG · KW · AE · QA",
+            ],
+            href: "/send/",
+            cta: "أرسل الذهب",
+          },
+          {
+            id: "payroll",
+            title: "ميزة الرواتب",
+            body: "أصحاب العمل يمنحون ذهبًا مملوكًا كمنفعة عينية واعية ضريبيًا — إضافة للراتب وليس بديلاً.",
+            points: [
+              "شهري ~€50 أو سنوي ~€10,000",
+              "إقرار بالإضافة مطلوب",
+              "سجّل شركتك لمراجعة KYB",
+            ],
+            href: "/for-business/payroll/",
+            cta: "سجّل شركتك",
+          },
+          {
+            id: "partners",
+            title: "الشركاء",
+            body: "انضم لشبكة الذهب كخدمة — اظهر في المحدد بعد الموافقة واسترد عند المنضدة.",
+            points: [
+              "لوحة شريك للمخزون والأرباح",
+              "بدون رسوم إعداد لبدء المحادثة",
+              "تفعيل ممرًا بممر",
+            ],
+            href: "/partner-with-us/",
+            cta: "كن شريكًا",
+          },
+        ],
+      },
       pathsEyebrow: "لمن صُممت",
-      pathsH2: "B2C · B2B · B2B2C · رأس المال",
+      pathsH2: "منصة واحدة. أربع مداخل.",
       pathsSub:
-        "اختر النموذج لترى سطح المنتج — محافظ شخصية، خزينة أعمال، توصيل ذهب عبر الشركاء، أو أطروحة المستثمر.",
+        "اختر مسارًا لمعاينة السطح — العملاء أو الشركات أو الشركاء أو رأس المال.",
       paths: [
         {
           id: "b2c",
@@ -906,8 +1107,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "تدفقات الرواتب ومدفوعات التجّار",
             "شركاء البنوك والمدفوعات والاستثمار",
           ],
-          href: "/business",
-          cta: "استكشف B2B",
+          href: "/for-business/payroll/",
+          cta: "استكشف ميزة الرواتب",
           visualLabel: "خزينة الأعمال",
         },
         {

@@ -122,7 +122,7 @@ export function Header() {
               </AuthNavLink>
               <AuthNavLink
                 href={AUTH_REGISTER_HREF}
-                className="whitespace-nowrap rounded-full bg-navy px-4 py-2 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
+                className="whitespace-nowrap rounded-full bg-gradient-gold px-4 py-2 text-sm font-bold text-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:shadow-gold/25 active:translate-y-0"
               >
                 {t.header.signup}
               </AuthNavLink>
