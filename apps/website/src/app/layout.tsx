@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -17,6 +17,12 @@ export const metadata: Metadata = {
   },
   description:
     "AURIX is a regulated orchestration layer connecting real, vaulted gold and silver reserves to an AI-audited, instant global payment network.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 // Applies the stored/system theme before first paint so there's no

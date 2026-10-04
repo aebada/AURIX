@@ -21,6 +21,7 @@ export function ChatWidget() {
   const { t, locale, dir } = useLanguage();
   const c = t.pages.chat;
   const [open, setOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [messages, setMessages] = useState<DisplayMessage[]>([
     { role: "assistant", content: c.welcome },
   ]);
@@ -57,6 +58,19 @@ export function ChatWidget() {
     const openFromDemo = () => setOpen(true);
     window.addEventListener("aurix:open-chat", openFromDemo);
     return () => window.removeEventListener("aurix:open-chat", openFromDemo);
+  }, []);
+
+  useEffect(() => {
+    const sync = (event?: Event) => {
+      const fromEvent = (event as CustomEvent<{ open?: boolean }> | undefined)?.detail?.open;
+      const fromDom = document.documentElement.dataset.aurixMobileNav === "open";
+      const next = typeof fromEvent === "boolean" ? fromEvent : fromDom;
+      setMobileNavOpen(next);
+      if (next) setOpen(false);
+    };
+    sync();
+    window.addEventListener("aurix:mobile-nav", sync);
+    return () => window.removeEventListener("aurix:mobile-nav", sync);
   }, []);
 
   async function sendMessage(text: string) {
@@ -98,13 +112,21 @@ export function ChatWidget() {
     void sendMessage(label);
   }
 
+  if (mobileNavOpen) {
+    return null;
+  }
+
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex p-4 sm:p-6"
-      style={{ justifyContent: dir === "rtl" ? "flex-start" : "flex-end" }}
+      data-aurix-chat-widget
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[40] flex p-4 sm:p-6"
+      style={{
+        justifyContent: dir === "rtl" ? "flex-start" : "flex-end",
+        paddingBottom: "max(1rem, env(safe-area-inset-bottom, 0px))",
+      }}
     >
       <div
-        className="pointer-events-auto flex flex-col gap-3"
+        className="pointer-events-none flex flex-col items-stretch gap-3"
         style={{ alignItems: dir === "rtl" ? "flex-start" : "flex-end" }}
       >
         <div
@@ -114,8 +136,8 @@ export function ChatWidget() {
           aria-hidden={!open}
           className={`overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] shadow-[0_24px_48px_-28px_rgba(18,22,44,0.55)] transition-all duration-300 ease-out motion-reduce:transition-none ${
             open
-              ? "mb-0 max-h-[min(32rem,70vh)] w-[min(22rem,calc(100vw-2rem))] translate-y-0 scale-100 opacity-100"
-              : "pointer-events-none mb-0 max-h-0 w-[min(22rem,calc(100vw-2rem))] translate-y-3 scale-95 opacity-0"
+              ? "pointer-events-auto mb-0 max-h-[min(32rem,70vh)] w-[min(22rem,calc(100vw-2rem))] translate-y-0 scale-100 opacity-100"
+              : "pointer-events-none invisible mb-0 max-h-0 w-0 translate-y-3 scale-95 opacity-0"
           }`}
         >
           <div className="flex h-[min(32rem,70vh)] flex-col">
@@ -231,7 +253,7 @@ export function ChatWidget() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls={panelId}
-          className="group flex h-14 items-center gap-2.5 rounded-full bg-navy pl-4 pr-5 text-white shadow-[0_16px_32px_-16px_rgba(18,22,44,0.7)] transition-transform duration-300 ease-out hover:scale-[1.03] motion-reduce:transition-none motion-reduce:hover:scale-100"
+          className="pointer-events-auto group flex h-14 items-center gap-2.5 rounded-full bg-navy pl-4 pr-5 text-white shadow-[0_16px_32px_-16px_rgba(18,22,44,0.7)] transition-transform duration-300 ease-out hover:scale-[1.03] motion-reduce:transition-none motion-reduce:hover:scale-100"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/90 text-navy">
             {open ? <CloseIcon /> : <ChatIcon />}

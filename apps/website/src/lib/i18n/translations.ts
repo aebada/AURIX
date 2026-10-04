@@ -40,6 +40,7 @@ export interface Dictionary {
     dashboard: string;
     signout: string;
     tryDemo: string;
+    language: string;
   };
   footer: {
     tagline: string;
@@ -214,6 +215,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       dashboard: "Open web app",
       signout: "Sign out",
       tryDemo: "Try demo",
+      language: "Language",
     },
     footer: {
       tagline:
@@ -596,6 +598,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       dashboard: "Web-App öffnen",
       signout: "Abmelden",
       tryDemo: "Demo testen",
+      language: "Sprache",
     },
     footer: {
       tagline:
@@ -978,6 +981,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       dashboard: "فتح تطبيق الويب",
       signout: "تسجيل الخروج",
       tryDemo: "جرّب العرض",
+      language: "اللغة",
     },
     footer: {
       tagline:

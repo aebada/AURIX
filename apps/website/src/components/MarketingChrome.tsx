@@ -32,7 +32,9 @@ export function MarketingChrome({
       {header}
       <main className="flex-1">{children}</main>
       {footer}
-      {chat}
+      <div data-aurix-chat-layer="" className="relative z-[40]">
+        {chat}
+      </div>
     </>
   );
 }

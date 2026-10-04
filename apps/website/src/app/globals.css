@@ -413,3 +413,29 @@ body {
 .audience-pin {
   animation: audience-pin-pop 0.55s ease-out both;
 }
+
+/* Hide Ask AURIX while the mobile nav drawer is open (iOS Safari tap-through).
+   visibility:hidden still intercepts taps on iOS; display:none is required. */
+html[data-aurix-mobile-nav="open"] [data-aurix-chat-widget],
+html[data-aurix-mobile-nav="open"] [data-aurix-chat-layer] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html[data-aurix-mobile-nav="open"] body > *:not(header) {
+  pointer-events: none;
+}
+
+html[data-aurix-mobile-nav="open"] header {
+  pointer-events: auto;
+  z-index: 210;
+}
+
+#aurix-mobile-nav {
+  z-index: 200;
+  pointer-events: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
