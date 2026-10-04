@@ -18,6 +18,7 @@ import {
 import { PRACTICE_PRICES, type Metal } from "@/lib/app/types";
 import { getPracticePriceProvider } from "@/lib/app/price-provider";
 import { useMetalQuotes } from "@/lib/metal-quotes";
+import { useAuth } from "@/lib/auth-context";
 
 type CheckoutCfg = {
   stripe: boolean;
@@ -26,18 +27,23 @@ type CheckoutCfg = {
 };
 
 export default function TradePage() {
+  const { user } = useAuth();
   const { activeWallet, buy, sell, practiceEnabled } = usePractice();
   const { gold, silver, live } = useMetalQuotes("EUR");
   const [side, setSide] = useState<"buy" | "sell">("buy");
   const [metal, setMetal] = useState<Metal>("gold");
-  const [amount, setAmount] = useState("100");
+  const [amount, setAmount] = useState("50");
+  const [email, setEmail] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [payBusy, setPayBusy] = useState(false);
   const [checkout, setCheckout] = useState<CheckoutCfg | null>(null);
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_USE_PHP_AUTH !== "1") return;
+    if (user?.email && !email) setEmail(user.email);
+  }, [user, email]);
+
+  useEffect(() => {
     fetch("/auth/checkout-config.php", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data: CheckoutCfg | null) => {
@@ -62,18 +68,23 @@ export default function TradePage() {
     side === "buy"
       ? n * PRACTICE_PRICES.feeRate
       : n * price * PRACTICE_PRICES.feeRate;
-  const total =
-    side === "buy" ? n + fee : n * price - fee;
+  const gramsEst = side === "buy" && price > 0 ? (n * (1 - PRACTICE_PRICES.feeRate)) / price : n;
+  const total = side === "buy" ? n + fee : n * price - fee;
+  const canPay = Boolean(checkout?.stripe || checkout?.paypal);
 
   async function pay(provider: "stripe" | "paypal") {
     setMsg(null);
     setErr(null);
     if (side !== "buy") {
-      setErr("Fiat checkout is buy-only.");
+      setErr("Card checkout is buy-only.");
       return;
     }
     if (!(n >= 10 && n <= 10000)) {
-      setErr("Fiat checkout accepts €10–€10,000.");
+      setErr("Pay €10–€10,000.");
+      return;
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErr("Enter a valid email for the receipt.");
       return;
     }
     setPayBusy(true);
@@ -86,11 +97,12 @@ export default function TradePage() {
           metal,
           fiatEur: n,
           pricePerGram: price,
+          email,
         }),
       });
       const data = (await res.json()) as { checkoutUrl?: string; error?: string };
       if (!res.ok || !data.checkoutUrl) {
-        setErr(data.error ?? "Checkout is not configured yet.");
+        setErr(data.error ?? "Checkout is not available yet.");
         return;
       }
       window.location.href = data.checkoutUrl;
@@ -104,8 +116,7 @@ export default function TradePage() {
   function submit() {
     setMsg(null);
     setErr(null);
-    const error =
-      side === "buy" ? buy(metal, n) : sell(metal, n);
+    const error = side === "buy" ? buy(metal, n) : sell(metal, n);
     if (error) setErr(error);
     else {
       setMsg(
@@ -118,12 +129,16 @@ export default function TradePage() {
   }
 
   return (
-    <AppPage title="Buy / Sell" subtitle={`Trading against ${activeWallet.name}`}>
+    <AppPage
+      title="Order gold & silver"
+      subtitle="Pay now at the live indicative quote. Vault allocation stays pending certification."
+    >
       {err && <Notice tone="err">{err}</Notice>}
       {msg && <Notice tone="ok">{msg}</Notice>}
-      {!practiceEnabled && (
-        <Notice tone="info">Enable Practice mode in Profile to trade virtual metals.</Notice>
-      )}
+      <Notice tone="info">
+        Paying by card reserves grams at this quote. It is not London vaulted metal
+        and not a BPC mint until custody is certified.
+      </Notice>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Panel title="Order ticket" className="lg:col-span-2">
@@ -161,11 +176,7 @@ export default function TradePage() {
             ))}
           </div>
 
-          <Field
-            label={
-              side === "buy" ? "Amount to spend (EUR)" : "Grams to sell"
-            }
-          >
+          <Field label={side === "buy" ? "Amount to pay (EUR)" : "Grams to sell"}>
             <input
               className={inputClass}
               type="number"
@@ -176,6 +187,19 @@ export default function TradePage() {
             />
           </Field>
 
+          {side === "buy" ? (
+            <Field label="Email for receipt (optional)">
+              <input
+                className={inputClass}
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
+            </Field>
+          ) : null}
+
           <dl className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <dt className="text-muted">
@@ -183,11 +207,12 @@ export default function TradePage() {
               </dt>
               <dd className="font-semibold">{formatEur(price)} / g</dd>
             </div>
-            <p className="text-xs text-muted">
-              {live
-                ? `Live ${quote.source} quote for display. Fills stay practice — not custody and not a live online gold order.`
-                : `LBMA-referenced mock (${quote.source}) — not custody and not a live online gold order.`}
-            </p>
+            {side === "buy" ? (
+              <div className="flex justify-between">
+                <dt className="text-muted">Est. grams (after 0.5% fee)</dt>
+                <dd>{formatGrams(gramsEst)}</dd>
+              </div>
+            ) : null}
             <div className="flex justify-between">
               <dt className="text-muted">Fee (0.5%)</dt>
               <dd>{formatEur(fee)}</dd>
@@ -201,27 +226,26 @@ export default function TradePage() {
           </dl>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <PrimaryButton onClick={submit} disabled={!practiceEnabled || n <= 0}>
-              Confirm {side} (practice)
-            </PrimaryButton>
             {side === "buy" && checkout?.stripe ? (
-              <SecondaryButton onClick={() => void pay("stripe")} disabled={payBusy || n <= 0}>
-                Pay with Stripe (reservation)
-              </SecondaryButton>
+              <PrimaryButton onClick={() => void pay("stripe")} disabled={payBusy || n < 10}>
+                {payBusy ? "Opening Stripe…" : "Pay with card"}
+              </PrimaryButton>
             ) : null}
             {side === "buy" && checkout?.paypal ? (
-              <SecondaryButton onClick={() => void pay("paypal")} disabled={payBusy || n <= 0}>
-                Pay with PayPal (reservation)
+              <SecondaryButton onClick={() => void pay("paypal")} disabled={payBusy || n < 10}>
+                Pay with PayPal
               </SecondaryButton>
             ) : null}
+            {side === "buy" && !canPay ? (
+              <PrimaryButton disabled>
+                Card checkout loading…
+              </PrimaryButton>
+            ) : null}
+            <SecondaryButton onClick={submit} disabled={!practiceEnabled || n <= 0}>
+              Practice fill
+            </SecondaryButton>
             <SecondaryButton onClick={() => setAmount("")}>Clear</SecondaryButton>
           </div>
-          {side === "buy" && (checkout?.stripe || checkout?.paypal) ? (
-            <p className="mt-3 text-xs text-muted">
-              Stripe/PayPal collect EUR at the quoted grams. That is a reservation —
-              not London vault allocation and not a BPC mint.
-            </p>
-          ) : null}
         </Panel>
 
         <Panel title="Wallet pockets" description={activeWallet.name}>
@@ -245,6 +269,10 @@ export default function TradePage() {
               </span>
             </li>
           </ul>
+          <p className="mt-4 text-xs text-muted">
+            Pocket balances above are practice unless you paid by card. Paid
+            reservations are recorded on the server, not in this browser wallet.
+          </p>
         </Panel>
       </div>
     </AppPage>

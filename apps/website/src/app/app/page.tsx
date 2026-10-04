@@ -33,7 +33,7 @@ export default function AppOverviewPage() {
       subtitle="Revolut-style multi-wallet · switch accounts in the sidebar"
       actions={
         <Link href="/app/trade/">
-          <PrimaryButton>Buy / Sell</PrimaryButton>
+          <PrimaryButton>Order gold</PrimaryButton>
         </Link>
       }
     >

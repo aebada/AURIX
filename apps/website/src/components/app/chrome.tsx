@@ -20,7 +20,7 @@ const NAV: {
 }[] = [
   { href: "/app/", label: "Overview", section: "Account" },
   { href: "/app/wallet/", label: "Wallet", section: "Account" },
-  { href: "/app/trade/", label: "Buy / Sell", section: "Money" },
+  { href: "/app/trade/", label: "Order gold", section: "Money" },
   { href: "/app/payments/", label: "Payments", section: "Money" },
   { href: "/app/markets/", label: "Markets", section: "Money" },
   { href: "/app/vouchers/", label: "Vouchers", section: "Money" },

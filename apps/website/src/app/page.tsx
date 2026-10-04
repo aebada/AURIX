@@ -57,9 +57,15 @@ export default function Home() {
               {h.sub}
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/app/trade/"
+                className="rounded-full bg-gradient-gold px-8 py-3.5 text-sm font-bold text-navy shadow-lg shadow-gold/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-gold/35 active:translate-y-0"
+              >
+                Order gold
+              </Link>
               <AuthNavLink
                 href={AUTH_REGISTER_HREF}
-                className="rounded-full bg-gradient-gold px-8 py-3.5 text-sm font-bold text-navy shadow-lg shadow-gold/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-gold/35 active:translate-y-0"
+                className="rounded-full border border-white/25 bg-white/5 px-8 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-light/50 hover:bg-white/10 active:translate-y-0"
               >
                 {h.ctaPrimary}
               </AuthNavLink>
