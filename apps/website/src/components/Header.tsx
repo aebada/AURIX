@@ -140,7 +140,6 @@ export function Header() {
                         active ? "bg-navy text-white" : "text-ink hover:bg-[var(--color-surface)]"
                       }`}
                       aria-current={active ? "page" : undefined}
-                      onClick={() => setOpen(false)}
                     >
                       {t.nav[link.key]}
                     </Link>
@@ -158,7 +157,6 @@ export function Header() {
                         active ? "bg-navy text-white" : "text-ink hover:bg-[var(--color-surface)]"
                       }`}
                       aria-current={active ? "page" : undefined}
-                      onClick={() => setOpen(false)}
                     >
                       {t.nav[link.key]}
                     </Link>
@@ -175,7 +173,6 @@ export function Header() {
                     <Link
                       href={WEB_APP_HREF}
                       className="block min-h-11 touch-manipulation rounded-lg px-3 py-2.5 text-base font-semibold text-ink hover:bg-[var(--color-surface)]"
-                      onClick={() => setOpen(false)}
                     >
                       {t.header.dashboard}
                     </Link>
