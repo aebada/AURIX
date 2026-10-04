@@ -45,8 +45,9 @@ const buySchema = z.object({
   pricePerUnit: z.number().positive(),
 });
 
-// Mock buy: real implementation routes the order to a vault/liquidity
-// partner (see docs/PRODUCT_PLAN.md 4.1) and only records the result here.
+// Simulated ledger buy only — not vault allocation or BPC mint
+// (see docs/london-gold-order-connectors.md). User-facing buy remains
+// /app/trade practice until RESERVE_LIVE + signed custody.
 paymentsRouter.post("/buy", requireAuth, (req, res) => {
   const userId = req.auth!.sub;
   const { asset, fiatAmount, pricePerUnit } = buySchema.parse(req.body);
@@ -71,7 +72,7 @@ paymentsRouter.post("/buy", requireAuth, (req, res) => {
     amount: unitsPurchased,
     fee,
     status: "settled" as const,
-    partnerReference: `mock-vault-${nextId("ref")}`,
+    partnerReference: `mock-practice-${nextId("ref")}`,
     createdAt: new Date().toISOString(),
   };
   db.transactions.push(transaction);
@@ -109,7 +110,7 @@ paymentsRouter.post("/sell", requireAuth, (req, res) => {
     amount: units,
     fee,
     status: "settled" as const,
-    partnerReference: `mock-vault-${nextId("ref")}`,
+    partnerReference: `mock-practice-${nextId("ref")}`,
     createdAt: new Date().toISOString(),
   };
   db.transactions.push(transaction);

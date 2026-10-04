@@ -19,8 +19,13 @@ enum Role {
   support
   admin
   super_admin
+  operations_manager
+  sales_partnerships
+  finance
+  marketing
   partner
   employer
+  investor
   compliance_officer
 }
 
@@ -221,4 +226,70 @@ model PayrollThreshold {
   updatedAt    DateTime @updatedAt
 
   @@unique([country, taxYear, planType])
+}
+
+enum MetalOrderStatus {
+  quoted
+  paid
+  allocated
+  minted
+  settled
+  cancelled
+  failed
+}
+
+// London connector order machine (Phase A scaffolding). Runtime uses mock-db.
+// minted/settled must stay unused until signed custody + RESERVE_LIVE.
+model MetalOrder {
+  id                   String           @id @default(cuid())
+  userId               String?
+  metal                String           // gold | silver
+  grams                Float
+  fiatAmount           Float
+  fiatCurrency         String           @default("EUR")
+  status               MetalOrderStatus @default(quoted)
+  quoteId              String?
+  custodyAllocationId  String?
+  liveMint             Boolean          @default(false)
+  practice             Boolean          @default(true)
+  note                 String?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+// Phase C ingest shape only. Do not populate from a live vault until
+// independent attestation exists. Runtime mock does not write here.
+model ReserveLedgerEntry {
+  id          String   @id @default(cuid())
+  asOf        DateTime
+  goldGrams   Float    @default(0)
+  silverGrams Float    @default(0)
+  purity      Float?
+  vaultRef    String?
+  source      String   @default("practice_stub")
+  liveVault   Boolean  @default(false)
+  attested    Boolean  @default(false)
+  note        String?
+  createdAt   DateTime @default(now())
+
+  @@index([asOf])
+}
+
+// Signed partner registry. Empty until a contract exists. Not a live vault.
+model Custodian {
+  id             String    @id @default(cuid())
+  name           String
+  kind           String    // allocated_platform | london_vault | dealer
+  jurisdiction   String?
+  londonVault    Boolean   @default(false)
+  contactInfo    String?
+  lastAuditDate  DateTime?
+  lastAuditUrl   String?
+  live           Boolean   @default(false)
+  note           String    @default("Unsigned — practice only")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }

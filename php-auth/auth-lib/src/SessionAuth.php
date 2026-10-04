@@ -43,6 +43,7 @@ final class SessionAuth
             'name' => $user['name'] ?? null,
             'avatar_url' => $user['avatar_url'] ?? null,
             'auth_provider' => $user['auth_provider'] ?? 'email',
+            'role' => $user['role'] ?? 'user',
         ];
     }
 

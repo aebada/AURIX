@@ -16,5 +16,9 @@ npm run db:seed
 Seed creates `super_admin` for `engahmed2055@gmail.com` and default feature
 flags (`RESERVE_LIVE`, `CROSS_BORDER_LIVE`, `PAYROLL_BENEFIT_LIVE`) all **OFF**.
 
+`MetalOrder` (quoted → paid → allocated → minted → settled, plus cancelled/failed)
+is scaffolding for London connectors. Runtime seed lives in `mock-db.ts`;
+minted/settled must not be used until signed custody + `RESERVE_LIVE`.
+
 Wire Prisma into route handlers in a later milestone; do not claim live custody
 or remittance when flipping flags.

@@ -57,10 +57,22 @@ export default function SettingsPage() {
         {saved ? <p className="text-sm text-emerald-700">Saved (mock store).</p> : null}
 
         <Card>
+          <p className="text-sm font-bold text-navy">Payments (fiat only)</p>
+          <p className="mt-1 text-sm text-muted">
+            Stripe/PayPal keys live in production <span className="font-semibold">auth-lib/.env</span>{" "}
+            on the host — never in git. Check{" "}
+            <a className="underline" href="https://aurixapp.de/auth/checkout-config.php">
+              checkout-config.php
+            </a>
+            . Collecting EUR is not vault allocation. See the London founder playbook.
+          </p>
+        </Card>
+
+        <Card>
           <p className="text-sm font-bold text-navy">RESERVE_LIVE</p>
           <p className="mt-1 text-sm text-muted">
-            When false, mint/redeem and vault claims stay in certification. Do not
-            enable without signed custody.
+            Leave this off until signed London custody, KYC, counsel, and attestation
+            (playbook Step 12). Toggling it here does not mint BPC.
           </p>
           <label className="mt-4 flex items-center gap-2 text-sm">
             <input

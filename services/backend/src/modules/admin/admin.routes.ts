@@ -4,12 +4,23 @@ import { appendAuditLog, db } from "../../data/mock-db.js";
 import { requireAuth } from "../../middleware/require-auth.js";
 import { requireRole } from "../../middleware/require-role.js";
 import { ApiError } from "../../middleware/error-handler.js";
+import { metalOrdersRouter } from "../metal-orders/metal-orders.routes.js";
+import { ASSIGNABLE_ROLES, ROLE_LABELS, STAFF_ROLES, SUPER_ADMIN_EMAIL } from "../../lib/rbac.js";
 
 export const adminRouter = Router();
 
 // RBAC: "support" is read-only (can view users/transactions/KYC queue but
 // not act on them), "admin" can also make KYC decisions, "super_admin" can
 // additionally change other users' roles (see /users/:userId/role below).
+adminRouter.get("/rbac", requireAuth, requireRole("support"), (_req, res) => {
+  res.json({
+    founderEmail: SUPER_ADMIN_EMAIL,
+    staffRoles: STAFF_ROLES,
+    assignableRoles: ASSIGNABLE_ROLES,
+    labels: ROLE_LABELS,
+  });
+});
+
 adminRouter.get("/users", requireAuth, requireRole("support"), (_req, res) => {
   const users = Array.from(db.users.values()).map((u) => ({
     id: u.id,
@@ -60,7 +71,22 @@ adminRouter.post("/kyc/:userId/decision", requireAuth, requireRole("admin"), (re
   }
 });
 
-const roleSchema = z.object({ role: z.enum(["user", "support", "admin", "super_admin"]) });
+const roleSchema = z.object({
+  role: z.enum([
+    "super_admin",
+    "operations_manager",
+    "sales_partnerships",
+    "finance",
+    "marketing",
+    "compliance_officer",
+    "support",
+    "admin",
+    "user",
+    "partner",
+    "investor",
+    "employer",
+  ]),
+});
 
 adminRouter.post(
   "/users/:userId/role",
@@ -71,6 +97,9 @@ adminRouter.post(
       const { role } = roleSchema.parse(req.body);
       const user = db.users.get(req.params.userId);
       if (!user) throw new ApiError(404, "User not found");
+      if (user.email.toLowerCase() === SUPER_ADMIN_EMAIL && role !== "super_admin") {
+        throw new ApiError(403, "Founder account must remain SUPER_ADMIN");
+      }
 
       const previous = user.role;
       user.role = role;
@@ -222,3 +251,5 @@ adminRouter.put(
 adminRouter.get("/audit-logs", requireAuth, requireRole("admin"), (_req, res) => {
   res.json({ logs: db.adminAuditLogs.slice(0, 200) });
 });
+
+adminRouter.use("/metal-orders", metalOrdersRouter);

@@ -32,7 +32,19 @@ async function request<T>(
   return body as T;
 }
 
-export type Role = "user" | "support" | "admin" | "super_admin";
+export type Role =
+  | "user"
+  | "support"
+  | "admin"
+  | "super_admin"
+  | "operations_manager"
+  | "sales_partnerships"
+  | "finance"
+  | "marketing"
+  | "compliance_officer"
+  | "partner"
+  | "investor"
+  | "employer";
 
 export interface AuthUser {
   id: string;
@@ -139,6 +151,25 @@ export const adminApi = {
       { method: "PUT", body: JSON.stringify(flags) },
       token,
     ),
+  metalOrders: (token: string) =>
+    request<{ orders: MetalOrder[]; liveMint: boolean; reserveLive: boolean; note: string }>(
+      "/admin/metal-orders",
+      {},
+      token,
+    ),
+  metalReserves: (token: string) =>
+    request<{
+      report: {
+        asOf: string;
+        goldGrams: number;
+        silverGrams: number;
+        practice: true;
+        liveVault: false;
+        note: string;
+      };
+      reserveLive: boolean;
+      liveVault: false;
+    }>("/admin/metal-orders/reserves", {}, token),
 };
 
 export type InvestorPipelineStatus = "new" | "contacted" | "in_diligence" | "closed";
@@ -203,4 +234,30 @@ export interface FeatureFlagsState {
   MAINTENANCE_MODE: boolean;
   CROSS_BORDER_LIVE: Record<string, boolean>;
   PAYROLL_BENEFIT_LIVE: { DE: boolean; AT: boolean };
+}
+
+export type MetalOrderStatus =
+  | "quoted"
+  | "paid"
+  | "allocated"
+  | "minted"
+  | "settled"
+  | "cancelled"
+  | "failed";
+
+export interface MetalOrder {
+  id: string;
+  userId?: string;
+  metal: "gold" | "silver";
+  grams: number;
+  fiatAmount: number;
+  fiatCurrency: "EUR" | "USD";
+  status: MetalOrderStatus;
+  quoteId?: string;
+  custodyAllocationId?: string;
+  liveMint: false;
+  practice: true;
+  note: string;
+  createdAt: string;
+  updatedAt: string;
 }

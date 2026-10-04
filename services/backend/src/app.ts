@@ -8,6 +8,7 @@ import { marketDataRouter } from "./modules/market-data/market-data.routes.js";
 import { paymentsRouter } from "./modules/payments/payments.routes.js";
 import { notificationsRouter } from "./modules/notifications/notifications.routes.js";
 import { adminRouter } from "./modules/admin/admin.routes.js";
+import { ordersRouter } from "./modules/metal-orders/metal-orders.routes.js";
 import { chatRouter } from "./modules/chat/chat.routes.js";
 import { etfsRouter } from "./modules/etfs/etfs.routes.js";
 import { publicRouter } from "./modules/public/public.routes.js";
@@ -30,6 +31,7 @@ export function createApp() {
   app.use("/wallet", walletRouter);
   app.use("/market-data", marketDataRouter);
   app.use("/payments", paymentsRouter);
+  app.use("/orders", ordersRouter);
   app.use("/notifications", notificationsRouter);
   app.use("/admin", adminRouter);
   app.use("/chat", chatRouter);

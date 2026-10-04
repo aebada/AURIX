@@ -7,26 +7,73 @@ import { useAuth } from "@/lib/auth-context";
 import { useMobileNav } from "@/lib/mobile-nav-context";
 import type { Role } from "@/lib/api";
 
-const navItems = [
-  { href: "/", label: "Overview" },
-  { href: "/users", label: "Users" },
-  { href: "/kyc", label: "KYC Queue" },
-  { href: "/waitlist", label: "Waitlist" },
-  { href: "/payroll-employers", label: "Payroll employers" },
-  { href: "/investors", label: "Investors" },
-  { href: "/transfers", label: "Transfers" },
-  { href: "/partners", label: "Partners" },
-  { href: "/aml", label: "AML" },
-  { href: "/monitoring", label: "Transaction Monitoring" },
-  { href: "/settings", label: "Settings" },
-  { href: "/governance", label: "AI Governance" },
+const groups: { title: string; items: { href: string; label: string }[] }[] = [
+  {
+    title: "Ops",
+    items: [
+      { href: "/", label: "Overview" },
+      { href: "/users", label: "Users" },
+      { href: "/team", label: "Team & roles" },
+      { href: "/waitlist", label: "Waitlist" },
+      { href: "/investors", label: "Investors" },
+    ],
+  },
+  {
+    title: "Compliance",
+    items: [
+      { href: "/kyc", label: "KYC queue" },
+      { href: "/aml", label: "AML" },
+      { href: "/monitoring", label: "Monitoring" },
+      { href: "/audit", label: "Audit log" },
+    ],
+  },
+  {
+    title: "Money & metal",
+    items: [
+      { href: "/transactions", label: "Transactions" },
+      { href: "/metal-orders", label: "Metal orders" },
+      { href: "/reserves", label: "Reserves" },
+      { href: "/transfers", label: "Cross-border" },
+      { href: "/disputes", label: "Disputes" },
+    ],
+  },
+  {
+    title: "Network",
+    items: [
+      { href: "/partners", label: "Partners" },
+      { href: "/partners/commission-rules", label: "Commission rules" },
+    ],
+  },
+  {
+    title: "Payroll",
+    items: [
+      { href: "/payroll-employers", label: "Employers" },
+      { href: "/payroll-thresholds", label: "Thresholds" },
+    ],
+  },
+  {
+    title: "Site",
+    items: [
+      { href: "/content", label: "Content" },
+      { href: "/settings", label: "Settings" },
+      { href: "/governance", label: "AI Governance" },
+    ],
+  },
 ];
 
-const ROLE_LABELS: Record<Role, string> = {
+const ROLE_LABELS: Record<string, string> = {
+  super_admin: "SUPER_ADMIN",
+  operations_manager: "Operations Manager",
+  sales_partnerships: "Sales & Partnerships",
+  finance: "Finance",
+  marketing: "Marketing",
+  compliance_officer: "Compliance Officer",
+  support: "Support",
+  admin: "Operations Manager",
   user: "User",
-  support: "Support (read-only)",
-  admin: "Admin",
-  super_admin: "Super Admin",
+  partner: "Partner",
+  investor: "Investor",
+  employer: "Employer",
 };
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
@@ -45,24 +92,36 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </div>
       </Link>
 
-      <nav className="mt-10 flex flex-col gap-1">
-        {navItems.map((item) => {
-          const active = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onNavigate}
-              className={`rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
-                active
-                  ? "bg-navy text-white"
-                  : "text-muted hover:bg-[var(--color-paper)] hover:text-navy"
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+      <nav className="mt-8 flex flex-col gap-5">
+        {groups.map((g) => (
+          <div key={g.title}>
+            <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-muted">
+              {g.title}
+            </p>
+            <div className="mt-1 flex flex-col gap-0.5">
+              {g.items.map((item) => {
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onNavigate}
+                    className={`rounded-xl px-3 py-2 text-sm font-semibold transition-colors ${
+                      active
+                        ? "bg-navy text-white"
+                        : "text-muted hover:bg-[var(--color-paper)] hover:text-navy"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       <div className="mt-auto rounded-2xl border border-[var(--color-line)] bg-[var(--color-paper)] p-4">
@@ -71,10 +130,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           {user ? ROLE_LABELS[user.role] : "—"}
         </p>
         <p className="mt-1 text-xs leading-relaxed text-muted">
-          Overview, Users, and KYC Queue are live via services/backend and
-          role-gated server-side (Support is read-only; Admin can act on
-          KYC; only Super Admin can change roles, from the Users page).
-          Monitoring, Partner Health, and AI Governance are still mock.
+          Feature flags and KYC decisions are server-gated. Payments keys stay in
+          server env, never in this UI.
         </p>
         <button
           type="button"
@@ -93,7 +150,7 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="hidden w-64 shrink-0 flex-col border-r border-[var(--color-line)] bg-white px-5 py-6 lg:flex">
+      <aside className="hidden w-64 shrink-0 flex-col overflow-y-auto border-r border-[var(--color-line)] bg-white px-5 py-6 lg:flex">
         <SidebarContent />
       </aside>
 

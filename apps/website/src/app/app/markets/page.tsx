@@ -51,11 +51,14 @@ export default function MarketsPage() {
   }
 
   return (
-    <AppPage title="Markets" subtitle="Practice prices · vault contributions">
+    <AppPage title="Markets" subtitle="Practice / indicative prices · practice savings pocket">
       {err && <Notice tone="err">{err}</Notice>}
       {msg && <Notice tone="ok">{msg}</Notice>}
 
-      <Panel title="Live practice prices" description="Independent of live quotes in practice mode">
+      <Panel
+        title="Practice / indicative prices"
+        description="LBMA-referenced mock — not custody and not a live vault quote"
+      >
         <div className="grid gap-4 sm:grid-cols-2">
           {MARKET.map((m) => (
             <div

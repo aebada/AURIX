@@ -5,15 +5,7 @@ import { Topbar } from "@/components/Topbar";
 import { Card, StatusBadge } from "@/components/Card";
 import { useAuth } from "@/lib/auth-context";
 import { adminApi, ApiError, type AdminUser, type Role } from "@/lib/api";
-
-const ROLES: Role[] = ["user", "support", "admin", "super_admin"];
-
-const ROLE_LABELS: Record<Role, string> = {
-  user: "User",
-  support: "Support (read-only)",
-  admin: "Admin",
-  super_admin: "Super Admin",
-};
+import { ASSIGNABLE_ROLES, ROLE_LABELS, STAFF_ROLES, SUPER_ADMIN_EMAIL } from "@/lib/rbac";
 
 export default function UsersPage() {
   const { token, user: currentUser } = useAuth();
@@ -54,57 +46,71 @@ export default function UsersPage() {
           </div>
         )}
         <Card>
+          <p className="mb-4 text-sm text-muted">
+            Roles follow MunichTech EXPO style: staff (SUPER_ADMIN, Operations,
+            Sales & Partnerships, Finance, Marketing, Compliance) vs participants
+            (User, Partner, Investor, Employer). Founder{" "}
+            <span className="font-semibold text-navy">{SUPER_ADMIN_EMAIL}</span> is
+            always SUPER_ADMIN.
+          </p>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-left text-sm">
               <thead>
                 <tr className="border-b border-[var(--color-line)] text-xs uppercase tracking-wider text-muted">
                   <th className="py-2 font-semibold">Name</th>
                   <th className="py-2 font-semibold">Email</th>
-                  <th className="py-2 font-semibold">KYC status</th>
+                  <th className="py-2 font-semibold">KYC</th>
                   <th className="py-2 font-semibold">Role</th>
+                  <th className="py-2 font-semibold">Kind</th>
                   <th className="py-2 font-semibold">Joined</th>
                 </tr>
               </thead>
               <tbody>
                 {users.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-6 text-center text-muted">
+                    <td colSpan={6} className="py-6 text-center text-muted">
                       No users yet.
                     </td>
                   </tr>
                 ) : (
-                  users.map((u) => (
-                    <tr key={u.id} className="border-b border-[var(--color-line)] last:border-0">
-                      <td className="py-3 font-medium text-navy">{u.fullName}</td>
-                      <td className="py-3 text-muted">{u.email}</td>
-                      <td className="py-3">
-                        <StatusBadge status={u.kycStatus} />
-                      </td>
-                      <td className="py-3">
-                        {canManageRoles ? (
-                          <select
-                            value={u.role}
-                            disabled={busyId === u.id}
-                            onChange={(e) => changeRole(u.id, e.target.value as Role)}
-                            className="rounded-lg border border-[var(--color-line)] px-2 py-1 text-xs font-semibold text-navy disabled:opacity-50"
-                          >
-                            {ROLES.map((r) => (
-                              <option key={r} value={r}>
-                                {ROLE_LABELS[r]}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <span className="text-xs font-semibold text-muted">
-                            {ROLE_LABELS[u.role]}
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3 text-muted">
-                        {new Date(u.createdAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))
+                  users.map((u) => {
+                    const founder = u.email.toLowerCase() === SUPER_ADMIN_EMAIL;
+                    return (
+                      <tr key={u.id} className="border-b border-[var(--color-line)] last:border-0">
+                        <td className="py-3 font-medium text-navy">{u.fullName}</td>
+                        <td className="py-3 text-muted">{u.email}</td>
+                        <td className="py-3">
+                          <StatusBadge status={u.kycStatus} />
+                        </td>
+                        <td className="py-3">
+                          {canManageRoles && !founder ? (
+                            <select
+                              value={u.role}
+                              disabled={busyId === u.id}
+                              onChange={(e) => changeRole(u.id, e.target.value as Role)}
+                              className="rounded-lg border border-[var(--color-line)] px-2 py-1 text-xs font-semibold text-navy disabled:opacity-50"
+                            >
+                              {ASSIGNABLE_ROLES.map((r) => (
+                                <option key={r} value={r}>
+                                  {ROLE_LABELS[r]}
+                                </option>
+                              ))}
+                            </select>
+                          ) : (
+                            <span className="text-xs font-semibold text-navy">
+                              {ROLE_LABELS[u.role] ?? u.role}
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3 text-xs text-muted">
+                          {STAFF_ROLES.includes(u.role) ? "Staff" : "Participant"}
+                        </td>
+                        <td className="py-3 text-muted">
+                          {new Date(u.createdAt).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>

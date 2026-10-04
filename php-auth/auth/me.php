@@ -22,5 +22,6 @@ SessionAuth::json([
         'name' => $user['name'],
         'avatarUrl' => $user['avatar_url'] ?? null,
         'provider' => $user['auth_provider'] ?? 'email',
+        'role' => $user['role'] ?? 'user',
     ],
 ]);

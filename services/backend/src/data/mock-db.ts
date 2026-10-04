@@ -7,15 +7,10 @@
 // so the API surface is realistic, without any real provider integration.
 
 import { hashPassword } from "../lib/password.js";
+import { roleForEmail, type Role } from "../lib/rbac.js";
 
+export type { Role };
 export type Asset = "GOLD" | "SILVER" | "FIAT";
-
-// Ranked low to high — see middleware/require-role.ts. "user" is every
-// regular customer (apps/website, apps/web) and has no admin-portal
-// access at all; "support" is read-only ops access; "admin" can act on
-// users/KYC/monitoring; "super_admin" can additionally change other
-// users' roles.
-export type Role = "user" | "support" | "admin" | "super_admin";
 
 export interface User {
   id: string;
@@ -152,6 +147,34 @@ export interface FeatureFlagsState {
   PAYROLL_BENEFIT_LIVE: { DE: boolean; AT: boolean };
 }
 
+/** London connector order machine (Phase A stub). Live mint stays off. */
+export type MetalOrderStatus =
+  | "quoted"
+  | "paid"
+  | "allocated"
+  | "minted"
+  | "settled"
+  | "cancelled"
+  | "failed";
+
+export interface MetalOrder {
+  id: string;
+  userId?: string;
+  metal: "gold" | "silver";
+  grams: number;
+  fiatAmount: number;
+  fiatCurrency: "EUR" | "USD";
+  status: MetalOrderStatus;
+  quoteId?: string;
+  custodyAllocationId?: string;
+  /** Always false in this stub — real mint is Phase C + RESERVE_LIVE. */
+  liveMint: false;
+  practice: true;
+  note: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Db {
   users: Map<string, User>;
   usersByEmail: Map<string, string>;
@@ -165,6 +188,7 @@ export interface Db {
   payrollEmployers: PayrollEmployerApplication[];
   adminAuditLogs: AdminAuditLog[];
   featureFlags: FeatureFlagsState;
+  metalOrders: MetalOrder[];
 }
 
 export const db: Db = {
@@ -192,6 +216,7 @@ export const db: Db = {
     },
     PAYROLL_BENEFIT_LIVE: { DE: false, AT: false },
   },
+  metalOrders: [],
 };
 
 // Bootstrap account so apps/admin is reachable at all on a fresh instance —
@@ -268,4 +293,90 @@ export function adjustBalance(userId: string, asset: Asset, delta: number) {
 let idCounter = 1;
 export function nextId(prefix: string): string {
   return `${prefix}_${(idCounter++).toString(36)}${Date.now().toString(36)}`;
+}
+
+const ORDER_NOTE =
+  "Practice metal order — not a live vault allocation or BPC mint.";
+
+function seedMetalOrder(
+  status: MetalOrderStatus,
+  grams: number,
+  extras: Partial<MetalOrder> = {},
+): MetalOrder {
+  const now = new Date().toISOString();
+  return {
+    id: nextId("mord"),
+    metal: "gold",
+    grams,
+    fiatAmount: Number((grams * 80).toFixed(2)),
+    fiatCurrency: "EUR",
+    status,
+    liveMint: false,
+    practice: true,
+    note: ORDER_NOTE,
+    createdAt: now,
+    updatedAt: now,
+    ...extras,
+  };
+}
+
+db.metalOrders.push(
+  seedMetalOrder("quoted", 1, { quoteId: "quote_practice_1" }),
+  seedMetalOrder("paid", 2.5, { quoteId: "quote_practice_2" }),
+  seedMetalOrder("allocated", 5, {
+    quoteId: "quote_practice_3",
+    custodyAllocationId: "alloc_practice_demo",
+  }),
+  seedMetalOrder("cancelled", 0.5, { quoteId: "quote_practice_4" }),
+);
+
+const LIVE_MINT_STATUSES: MetalOrderStatus[] = ["minted", "settled"];
+
+export function assertPracticeMintGated(nextStatus: MetalOrderStatus) {
+  if (LIVE_MINT_STATUSES.includes(nextStatus) && !db.featureFlags.RESERVE_LIVE) {
+    throw new Error("mint/settle is gated while RESERVE_LIVE=false");
+  }
+  // Even with the flag on, this stub never performs a live mint.
+  if (LIVE_MINT_STATUSES.includes(nextStatus)) {
+    throw new Error("live mint is not implemented — no custody partner is wired");
+  }
+}
+
+export function createMetalOrder(input: {
+  userId: string;
+  metal: "gold" | "silver";
+  grams: number;
+  fiatAmount: number;
+  fiatCurrency: "EUR" | "USD";
+  quoteId?: string;
+}): MetalOrder {
+  const now = new Date().toISOString();
+  const order: MetalOrder = {
+    id: nextId("mord"),
+    userId: input.userId,
+    metal: input.metal,
+    grams: input.grams,
+    fiatAmount: input.fiatAmount,
+    fiatCurrency: input.fiatCurrency,
+    status: "quoted",
+    quoteId: input.quoteId,
+    liveMint: false,
+    practice: true,
+    note: ORDER_NOTE,
+    createdAt: now,
+    updatedAt: now,
+  };
+  db.metalOrders.unshift(order);
+  return order;
+}
+
+export function updateMetalOrder(
+  id: string,
+  patch: Partial<Pick<MetalOrder, "status" | "custodyAllocationId" | "note" | "quoteId">>,
+): MetalOrder {
+  const order = db.metalOrders.find((o) => o.id === id);
+  if (!order) throw new Error("Metal order not found");
+  if (patch.status) assertPracticeMintGated(patch.status);
+  Object.assign(order, patch, { updatedAt: new Date().toISOString(), liveMint: false, practice: true });
+  return order;
 }

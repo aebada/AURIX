@@ -3,6 +3,7 @@ import { Router } from "express";
 import { OAuth2Client } from "google-auth-library";
 import { z } from "zod";
 import { db, nextId } from "../../data/mock-db.js";
+import { isStaffRole, normalizeRole, roleForEmail } from "../../lib/rbac.js";
 import { hashPassword, verifyPassword } from "../../lib/password.js";
 import { signToken } from "../../lib/jwt.js";
 import { ApiError } from "../../middleware/error-handler.js";
@@ -32,7 +33,7 @@ authRouter.post("/register", (req, res) => {
     fullName,
     createdAt: new Date().toISOString(),
     kycStatus: "unverified" as const,
-    role: "user" as const,
+    role: roleForEmail(email),
   };
   db.users.set(id, user);
   db.usersByEmail.set(user.email, id);
@@ -58,6 +59,9 @@ authRouter.post("/login", (req, res) => {
     throw new ApiError(401, "Invalid email or password");
   }
 
+  user.role = roleForEmail(user.email, normalizeRole(user.role));
+  db.users.set(user.id, user);
+
   const token = signToken({ sub: user.id, email: user.email });
   res.json({
     token,
@@ -67,6 +71,7 @@ authRouter.post("/login", (req, res) => {
       fullName: user.fullName,
       kycStatus: user.kycStatus,
       role: user.role,
+      staff: isStaffRole(user.role),
     },
   });
 });
@@ -117,10 +122,13 @@ authRouter.post("/google", async (req, res, next) => {
         fullName: name ?? normalizedEmail,
         createdAt: new Date().toISOString(),
         kycStatus: "unverified" as const,
-        role: "user" as const,
+        role: roleForEmail(normalizedEmail),
       };
       db.users.set(userId, user);
       db.usersByEmail.set(normalizedEmail, userId);
+    } else {
+      user.role = roleForEmail(user.email, normalizeRole(user.role));
+      db.users.set(user.id, user);
     }
 
     const token = signToken({ sub: user.id, email: user.email });
@@ -132,6 +140,7 @@ authRouter.post("/google", async (req, res, next) => {
         fullName: user.fullName,
         kycStatus: user.kycStatus,
         role: user.role,
+        staff: isStaffRole(user.role),
       },
     });
   } catch (err) {

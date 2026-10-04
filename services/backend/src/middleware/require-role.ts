@@ -1,30 +1,38 @@
 import type { NextFunction, Request, Response } from "express";
-import { db, type Role } from "../data/mock-db.js";
+import { db } from "../data/mock-db.js";
+import {
+  hasPermission,
+  isStaffRole,
+  normalizeRole,
+  type Permission,
+  type Role,
+} from "../lib/rbac.js";
 
-// Ranked low to high so a route can require a minimum tier ("admin"
-// also satisfies a route gated at "support", etc) instead of listing
-// every allowed role explicitly.
-const ROLE_RANK: Record<Role, number> = {
-  user: 0,
-  support: 1,
-  admin: 2,
-  super_admin: 3,
-};
-
-// Looks the role up fresh from db.users on every request rather than
-// trusting a claim baked into the JWT at login time — a role change
-// (promote/demote) takes effect immediately instead of only after the
-// token is reissued.
-export function requireRole(minRole: Role) {
+export function requireStaff() {
   return (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.auth?.sub;
-    const user = userId ? db.users.get(userId) : undefined;
-    if (!user) {
-      return res.status(401).json({ error: "Not authenticated" });
+    const user = req.auth?.sub ? db.users.get(req.auth.sub) : undefined;
+    if (!user) return res.status(401).json({ error: "Not authenticated" });
+    if (!isStaffRole(normalizeRole(user.role))) {
+      return res.status(403).json({ error: "Staff role required" });
     }
-    if (ROLE_RANK[user.role] < ROLE_RANK[minRole]) {
+    next();
+  };
+}
+
+export function requirePermission(permission: Permission) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = req.auth?.sub ? db.users.get(req.auth.sub) : undefined;
+    if (!user) return res.status(401).json({ error: "Not authenticated" });
+    if (!hasPermission(normalizeRole(user.role), permission)) {
       return res.status(403).json({ error: "Insufficient role for this action" });
     }
     next();
   };
+}
+
+/** Legacy min-tier gate used by existing routes. */
+export function requireRole(minRole: Role) {
+  if (minRole === "super_admin") return requirePermission("users.assign_super_admin");
+  if (minRole === "admin") return requirePermission("kyc.manage");
+  return requireStaff();
 }
