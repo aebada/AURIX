@@ -1,0 +1,101 @@
+{
+  "attempted_at": "2026-10-02T10:35:23.514186+00:00",
+  "from": "contact@aurixapp.de",
+  "from_name": "Prof. Dr. Ahmed Ebada / AURIX",
+  "dry_run": false,
+  "smtp_configured": true,
+  "crm_configured": true,
+  "status": "sent",
+  "recipients": [
+    {
+      "at": "2026-10-02T10:35:23.514413+00:00",
+      "company": "Flink",
+      "to": "contact@goflink.com",
+      "lead_id": 24208,
+      "subject": "Flink × AURIX — employee-value partner (gold Sachbezug pilot waitlist)",
+      "mail": true,
+      "message_id": "<179093732351.30521.108138835228705003@aurixapp.de>"
+    },
+    {
+      "at": "2026-10-02T10:35:25.185971+00:00",
+      "company": "SCHUFA Holding AG",
+      "to": "jobs@schufa.de",
+      "lead_id": 24209,
+      "subject": "Please forward to Total Rewards / Comp & Benefits — AURIX employee benefit partnership (not a job application)",
+      "mail": true,
+      "message_id": "<179093732518.30521.5290635167611798171@aurixapp.de>"
+    },
+    {
+      "at": "2026-10-02T10:35:26.779153+00:00",
+      "company": "n8n",
+      "to": "partners@n8n.io",
+      "lead_id": 23126,
+      "subject": "People / employee benefit — please route — AURIX gold Sachbezug (pilot waitlist)",
+      "mail": true,
+      "message_id": "<179093732677.30521.12292799661557170734@aurixapp.de>"
+    },
+    {
+      "at": "2026-10-02T10:35:28.723204+00:00",
+      "company": "AUTO1 Group",
+      "to": "info@auto1-group.com",
+      "lead_id": 377,
+      "subject": "AUTO1 × AURIX — Total Rewards employee-value partner (gold Sachbezug pilot waitlist)",
+      "mail": true,
+      "message_id": "<179093732872.30521.15084073669329124515@aurixapp.de>"
+    },
+    {
+      "at": "2026-10-02T10:35:30.345317+00:00",
+      "company": "Personio",
+      "to": "integration-partner@personio.com",
+      "lead_id": 32,
+      "subject": "Complementary employee benefit for Personio customers — gold Sachbezug (early partnership)",
+      "mail": true,
+      "message_id": "<179093733034.30521.317594308080234281@aurixapp.de>"
+    }
+  ],
+  "crm_updates": [
+    {
+      "company": "Flink",
+      "lead_id": 24208,
+      "ok": true,
+      "http_status": 200,
+      "action": "existed_updated",
+      "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/24208"
+    },
+    {
+      "company": "SCHUFA Holding AG",
+      "lead_id": 24209,
+      "ok": true,
+      "http_status": 200,
+      "action": "existed_updated",
+      "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/24209"
+    },
+    {
+      "company": "n8n",
+      "lead_id": 23126,
+      "ok": true,
+      "http_status": 200,
+      "action": "existed_updated",
+      "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/23126"
+    },
+    {
+      "company": "AUTO1 Group",
+      "lead_id": 377,
+      "ok": true,
+      "http_status": 200,
+      "action": "existed_updated",
+      "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/377"
+    },
+    {
+      "company": "Personio",
+      "lead_id": 32,
+      "ok": true,
+      "http_status": 200,
+      "action": "existed_updated",
+      "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/32"
+    }
+  ],
+  "emails_sent": 5,
+  "crm_retry_at": "2026-10-02T10:36:26.364767+00:00",
+  "crm_note": "Initial CRM upsert failed: invalid status 'contacted'. Retried with status=queued + SENT notes."
+}

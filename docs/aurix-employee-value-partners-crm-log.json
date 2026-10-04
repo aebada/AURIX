@@ -1,0 +1,203 @@
+[
+  {
+    "at": "2026-10-02T10:22:10.789061+00:00",
+    "company_name": "Flink",
+    "contact_email": "contact@goflink.com",
+    "website": "https://www.goflink.com",
+    "email_source": "aurix-employee-value-partners",
+    "http_status": 200,
+    "success": true,
+    "action": "created",
+    "lead_id": 24208,
+    "lead_company": "Flink",
+    "lead_status": "queued",
+    "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/24208"
+  },
+  {
+    "at": "2026-10-02T10:22:11.105162+00:00",
+    "company_name": "SCHUFA Holding AG",
+    "contact_email": "jobs@schufa.de",
+    "website": "https://www.schufa.de",
+    "email_source": "aurix-employee-value-partners",
+    "http_status": 200,
+    "success": true,
+    "action": "created",
+    "lead_id": 24209,
+    "lead_company": "SCHUFA Holding AG",
+    "lead_status": "queued",
+    "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/24209"
+  },
+  {
+    "at": "2026-10-02T10:22:11.411185+00:00",
+    "company_name": "n8n",
+    "contact_email": "partners@n8n.io",
+    "website": "https://n8n.io",
+    "email_source": "aurix-employee-value-partners",
+    "http_status": 200,
+    "success": true,
+    "action": "existed_updated",
+    "lead_id": 23126,
+    "lead_company": "n8n",
+    "lead_status": "queued",
+    "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/23126"
+  },
+  {
+    "at": "2026-10-02T10:22:11.673044+00:00",
+    "company_name": "AUTO1 Group",
+    "contact_email": "info@auto1-group.com",
+    "website": "https://www.auto1-group.com",
+    "email_source": "aurix-employee-value-partners",
+    "http_status": 200,
+    "success": true,
+    "action": "existed_updated",
+    "lead_id": 377,
+    "lead_company": "AUTO1 Group",
+    "lead_status": "queued",
+    "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/377"
+  },
+  {
+    "at": "2026-10-02T10:22:11.948811+00:00",
+    "company_name": "Personio",
+    "contact_email": "integration-partner@personio.com",
+    "website": "https://www.personio.com",
+    "email_source": "aurix-employee-value-partners",
+    "http_status": 200,
+    "success": true,
+    "action": "existed_updated",
+    "lead_id": 32,
+    "lead_company": "Personio",
+    "lead_status": "queued",
+    "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/32"
+  },
+  {
+    "at": "2026-10-02T10:32:13.099780+00:00",
+    "event": "send_attempt_blocked",
+    "reason": "SMTP_PASS not configured for contact@aurixapp.de",
+    "send_log": "docs/aurix-employee-value-partners-send-log.json",
+    "crm_updates": [
+      {
+        "lead_id": 24208,
+        "company": "Flink",
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated"
+      },
+      {
+        "lead_id": 24209,
+        "company": "SCHUFA Holding AG",
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated"
+      },
+      {
+        "lead_id": 23126,
+        "company": "n8n",
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated"
+      },
+      {
+        "lead_id": 377,
+        "company": "AUTO1 Group",
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated"
+      },
+      {
+        "lead_id": 32,
+        "company": "Personio",
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated"
+      }
+    ]
+  },
+  {
+    "at": "2026-10-02T10:36:08.050076+00:00",
+    "event": "outreach_email_sent",
+    "from": "contact@aurixapp.de",
+    "emails_sent": 5,
+    "send_log": "docs/aurix-employee-value-partners-send-log.json",
+    "crm_updates": [
+      {
+        "company": "Flink",
+        "lead_id": 24208,
+        "ok": false,
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      },
+      {
+        "company": "SCHUFA Holding AG",
+        "lead_id": 24209,
+        "ok": false,
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      },
+      {
+        "company": "n8n",
+        "lead_id": 23126,
+        "ok": false,
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      },
+      {
+        "company": "AUTO1 Group",
+        "lead_id": 377,
+        "ok": false,
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      },
+      {
+        "company": "Personio",
+        "lead_id": 32,
+        "ok": false,
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      }
+    ]
+  },
+  {
+    "at": "2026-10-02T10:36:26.365823+00:00",
+    "event": "outreach_email_sent",
+    "from": "contact@aurixapp.de",
+    "emails_sent": 5,
+    "send_log": "docs/aurix-employee-value-partners-send-log.json",
+    "crm_updates": [
+      {
+        "company": "Flink",
+        "lead_id": 24208,
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated",
+        "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/24208"
+      },
+      {
+        "company": "SCHUFA Holding AG",
+        "lead_id": 24209,
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated",
+        "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/24209"
+      },
+      {
+        "company": "n8n",
+        "lead_id": 23126,
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated",
+        "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/23126"
+      },
+      {
+        "company": "AUTO1 Group",
+        "lead_id": 377,
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated",
+        "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/377"
+      },
+      {
+        "company": "Personio",
+        "lead_id": 32,
+        "ok": true,
+        "http_status": 200,
+        "action": "existed_updated",
+        "admin_url": "https://munichtechexpo.com/back/admin/outreach/leads/32"
+      }
+    ]
+  }
+]
