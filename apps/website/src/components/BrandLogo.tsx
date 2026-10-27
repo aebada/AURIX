@@ -15,14 +15,17 @@ const LIGHT_SRC = "/brand/aurix-logo-light.png";
 /**
  * Full AURIX wordmark. Navy text for light surfaces; white text + gold mark
  * for dark themes (Night / Prestige / Ocean) via the `.dark` class on <html>.
+ * Intrinsic asset ≈ 611×180 — keep aspect ratio so "IX" never clips.
  */
 export function BrandLogo({
   variant = "auto",
-  className = "h-9 w-auto sm:h-10",
-  width = 136,
-  height = 40,
+  className = "h-8 w-auto",
+  width = 122,
+  height = 36,
   priority = false,
 }: BrandLogoProps) {
+  const imgClass = `${className} max-w-none object-contain object-left`;
+
   if (variant === "onDark") {
     return (
       <Image
@@ -30,7 +33,7 @@ export function BrandLogo({
         alt="AURIX"
         width={width}
         height={height}
-        className={className}
+        className={imgClass}
         priority={priority}
       />
     );
@@ -43,20 +46,20 @@ export function BrandLogo({
         alt="AURIX"
         width={width}
         height={height}
-        className={className}
+        className={imgClass}
         priority={priority}
       />
     );
   }
 
   return (
-    <>
+    <span className="inline-flex h-8 shrink-0 items-center" style={{ width: width }}>
       <Image
         src={DARK_SRC}
         alt="AURIX"
         width={width}
         height={height}
-        className={`${className} dark:hidden`}
+        className={`${imgClass} dark:hidden`}
         priority={priority}
       />
       <Image
@@ -64,9 +67,9 @@ export function BrandLogo({
         alt="AURIX"
         width={width}
         height={height}
-        className={`${className} hidden dark:block`}
+        className={`${imgClass} hidden dark:block`}
         priority={priority}
       />
-    </>
+    </span>
   );
 }

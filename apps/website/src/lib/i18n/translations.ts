@@ -247,7 +247,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Head to your dashboard to check balances, move money, and manage your account.",
     },
     home: {
-      eyebrowHero: "Gold-linked money for people & companies",
+      eyebrowHero: "Gold-linked money for people & Business",
       brandHero: "AURIX",
       h1Line1: "Measured trust.",
       h1Line2: "Real digital money.",
@@ -630,7 +630,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Gehen Sie zu Ihrem Dashboard, um Guthaben zu prüfen, Geld zu bewegen und Ihr Konto zu verwalten.",
     },
     home: {
-      eyebrowHero: "Goldverknüpftes Geld für Menschen & Unternehmen",
+      eyebrowHero: "Goldverknüpftes Geld für Menschen & Business",
       brandHero: "AURIX",
       h1Line1: "Verlässliches Vertrauen.",
       h1Line2: "Echtes digitales Geld.",
@@ -1012,7 +1012,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       loggedInDescription: "انتقل إلى لوحة التحكم للتحقق من الأرصدة، وتحويل الأموال، وإدارة حسابك.",
     },
     home: {
-      eyebrowHero: "مال مرتبط بالذهب للأفراد والشركات",
+      eyebrowHero: "مال مرتبط بالذهب للأفراد والأعمال",
       brandHero: "AURIX",
       h1Line1: "ثقة مُقاسة.",
       h1Line2: "مال رقمي حقيقي.",

@@ -18,7 +18,7 @@ const WEB_APP_HREF = "/app/";
 
 function navLinkClass(active: boolean) {
   return [
-    "whitespace-nowrap rounded-full px-1.5 py-1.5 text-xs font-semibold transition-colors lg:px-2.5 lg:text-sm xl:px-3",
+    "whitespace-nowrap rounded-full px-2 py-1.5 text-sm font-semibold transition-colors xl:px-2.5",
     active
       ? "bg-navy text-white dark:bg-[var(--color-heading)] dark:text-[var(--color-paper)]"
       : "text-muted hover:bg-[var(--color-surface)] hover:text-heading",
@@ -115,7 +115,7 @@ export function Header() {
       ? createPortal(
           <nav
             id="aurix-mobile-nav"
-            className="fixed inset-x-0 z-[200] overflow-y-auto overscroll-contain bg-[var(--color-paper)] px-4 pt-4 sm:px-6 md:hidden"
+            className="fixed inset-x-0 z-[200] overflow-y-auto overscroll-contain bg-[var(--color-paper)] px-4 pt-4 sm:px-6 xl:hidden"
             style={{
               top: "4rem",
               bottom: 0,
@@ -231,21 +231,21 @@ export function Header() {
             : "border-transparent"
         }`}
       >
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
+        <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-4 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="flex shrink-0 items-center py-1 transition-opacity hover:opacity-80"
+            className="relative z-20 flex shrink-0 items-center py-1 transition-opacity hover:opacity-80"
             onClick={() => setOpen(false)}
           >
             <BrandLogo priority />
           </Link>
 
-          {/* Desktop / tablet: Revolut-style centered primary nav */}
+          {/* Full primary nav only when there is room — avoids logo/USD overlap */}
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-center md:flex"
+            className="hidden min-w-0 items-center justify-center overflow-hidden xl:flex"
             aria-label="Primary"
           >
-            <div className="flex min-w-0 flex-nowrap items-center justify-center gap-0.5 lg:gap-1">
+            <div className="flex max-w-full flex-nowrap items-center justify-center gap-0.5">
               {navLinks.map((link) => {
                 const active = isActivePath(pathname, link.href);
                 return (
@@ -262,51 +262,9 @@ export function Header() {
             </div>
           </nav>
 
-          {/* Desktop / tablet actions: tools + auth */}
-          <div className="ms-auto hidden items-center gap-2 md:flex">
-            <div className="flex items-center gap-1.5">
-              <CurrencySelector className="w-[4.5rem] lg:w-[4.75rem]" />
-              <LanguageSelector className="hidden max-w-[6.75rem] lg:block" />
-              <ThemeToggle />
-            </div>
-            <span className="mx-0.5 hidden h-5 w-px bg-[var(--color-line)] sm:block" aria-hidden />
-            {token ? (
-              <div className="flex items-center gap-2">
-                <Link
-                  href={WEB_APP_HREF}
-                  className="whitespace-nowrap text-sm font-semibold text-muted transition-colors hover:text-heading"
-                >
-                  {t.header.dashboard}
-                </Link>
-                <button
-                  type="button"
-                  onClick={logout}
-                  className="whitespace-nowrap rounded-full bg-navy px-4 py-2 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
-                >
-                  {t.header.signout}
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <AuthNavLink
-                  href={AUTH_LOGIN_HREF}
-                  className="whitespace-nowrap text-sm font-semibold text-muted transition-colors hover:text-heading"
-                >
-                  {t.header.login}
-                </AuthNavLink>
-                <AuthNavLink
-                  href={AUTH_REGISTER_HREF}
-                  className="whitespace-nowrap rounded-full bg-gradient-gold px-4 py-2 text-sm font-bold text-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:shadow-gold/25 active:translate-y-0"
-                >
-                  {t.header.signup}
-                </AuthNavLink>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile: currency + theme + hamburger */}
-          <div className="ms-auto flex items-center gap-1.5 md:hidden">
-            <CurrencySelector className="w-[4.5rem]" />
+          {/* Compact actions below xl: currency + theme + menu (no crowded mid-nav) */}
+          <div className="relative z-20 flex items-center justify-end gap-1.5 sm:gap-2 xl:hidden">
+            <CurrencySelector className="w-[4.25rem] shrink-0" />
             <ThemeToggle />
             <button
               type="button"
@@ -337,6 +295,48 @@ export function Header() {
                 </svg>
               )}
             </button>
+          </div>
+
+          {/* Wide desktop: tools + auth (never overlaps nav column) */}
+          <div className="relative z-20 hidden items-center justify-end gap-2 xl:flex">
+            <div className="flex shrink-0 items-center gap-1.5">
+              <CurrencySelector className="w-[4.5rem] shrink-0" />
+              <LanguageSelector className="max-w-[6.75rem] shrink-0" />
+              <ThemeToggle />
+            </div>
+            <span className="mx-0.5 h-5 w-px shrink-0 bg-[var(--color-line)]" aria-hidden />
+            {token ? (
+              <div className="flex shrink-0 items-center gap-2">
+                <Link
+                  href={WEB_APP_HREF}
+                  className="whitespace-nowrap text-sm font-semibold text-muted transition-colors hover:text-heading"
+                >
+                  {t.header.dashboard}
+                </Link>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="whitespace-nowrap rounded-full bg-navy px-4 py-2 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0"
+                >
+                  {t.header.signout}
+                </button>
+              </div>
+            ) : (
+              <div className="flex shrink-0 items-center gap-2">
+                <AuthNavLink
+                  href={AUTH_LOGIN_HREF}
+                  className="whitespace-nowrap text-sm font-semibold text-muted transition-colors hover:text-heading"
+                >
+                  {t.header.login}
+                </AuthNavLink>
+                <AuthNavLink
+                  href={AUTH_REGISTER_HREF}
+                  className="whitespace-nowrap rounded-full bg-gradient-gold px-4 py-2 text-sm font-bold text-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:shadow-gold/25 active:translate-y-0"
+                >
+                  {t.header.signup}
+                </AuthNavLink>
+              </div>
+            )}
           </div>
         </div>
       </header>
