@@ -87,7 +87,7 @@ final class Config
             googleClientSecret: self::env('GOOGLE_CLIENT_SECRET', ''),
             googleRedirectUri: $redirectUri,
             sessionSecret: self::env('SESSION_SECRET', ''),
-            loginSuccessUrl: self::env('LOGIN_SUCCESS_URL', '/'),
+            loginSuccessUrl: self::env('LOGIN_SUCCESS_URL', '/app/'),
             aipassAuthUrl: rtrim(self::env('AIPASS_AUTH_URL', 'https://aipass.space'), '/'),
             useOauthBridge: $useBridge,
             oauthBridgeSecret: $bridgeSecret,

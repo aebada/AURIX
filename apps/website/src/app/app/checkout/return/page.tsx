@@ -1,12 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AppPage } from "@/components/app/AppShell";
-import { Notice, Panel } from "@/components/app/chrome";
+import { Notice, Panel, PrimaryButton, SecondaryButton } from "@/components/app/chrome";
 
 export default function CheckoutReturnPage() {
   const [msg, setMsg] = useState("Confirming payment…");
   const [err, setErr] = useState<string | null>(null);
+  const [grams, setGrams] = useState<number | null>(null);
+  const [bpc, setBpc] = useState<number | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -19,7 +22,7 @@ export default function CheckoutReturnPage() {
       if (provider === "paypal") {
         if (paypalOk === "1") {
           setMsg(
-            "Payment received. This is a fiat reservation only — metal is not vaulted or minted until custody is certified.",
+            "Payment received. BPC was minted to your internal AURIX account. This is not an attested London vault.",
           );
         } else {
           setErr("PayPal confirmation failed or was cancelled.");
@@ -32,12 +35,21 @@ export default function CheckoutReturnPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ orderId: order, sessionId }),
         });
+        const data = (await res.json().catch(() => null)) as {
+          grams?: number;
+          bpc?: number;
+          status?: string;
+        } | null;
         if (!res.ok) {
           setErr("Stripe confirmation failed.");
           return;
         }
+        if (typeof data?.grams === "number") setGrams(data.grams);
+        if (typeof data?.bpc === "number") setBpc(data.bpc);
         setMsg(
-          "Payment received. This is a fiat reservation only — metal is not vaulted or minted until custody is certified.",
+          data?.status === "minted"
+            ? "Payment confirmed and BPC minted to your internal reserve account."
+            : "Payment received. Open Dashboard to see your account.",
         );
         return;
       }
@@ -47,13 +59,29 @@ export default function CheckoutReturnPage() {
   }, []);
 
   return (
-    <AppPage title="Checkout" subtitle="Fiat reservation — not a live gold order">
+    <AppPage title="Checkout" subtitle="Payment → internal BPC mint">
       {err ? <Notice tone="err">{err}</Notice> : <Notice tone="ok">{msg}</Notice>}
-      <Panel title="What happens next">
-        <p className="text-sm text-muted">
-          Allocation stays pending certification. Practice balances on Buy / Sell are
-          separate and still simulated.
+      {(grams != null || bpc != null) && (
+        <Panel title="Minted">
+          <p className="text-sm text-heading">
+            {grams != null ? `${grams} g` : ""}
+            {bpc != null ? ` · ${bpc.toLocaleString()} BPC` : ""}
+          </p>
+        </Panel>
+      )}
+      <Panel title="Next">
+        <p className="mb-4 text-sm text-muted">
+          View balances under Accounts. London vault attestation stays off until a
+          custodian is signed.
         </p>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/app/">
+            <PrimaryButton>Open dashboard</PrimaryButton>
+          </Link>
+          <Link href="/app/transactions/">
+            <SecondaryButton>Transactions</SecondaryButton>
+          </Link>
+        </div>
       </Panel>
     </AppPage>
   );

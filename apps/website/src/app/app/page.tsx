@@ -7,6 +7,7 @@ import {
   Notice,
   Panel,
   PrimaryButton,
+  SecondaryButton,
 } from "@/components/app/chrome";
 import {
   formatEur,
@@ -14,8 +15,14 @@ import {
   kindLabel,
   usePractice,
 } from "@/lib/app/practice-store";
+import { useMetalAccount } from "@/lib/app/metal-account";
+import { useAuth } from "@/lib/auth-context";
+import { AUTH_LOGIN_HREF, AUTH_REGISTER_HREF } from "@/lib/auth-urls";
+import { AuthNavLink } from "@/components/AuthNavLink";
 
 export default function AppOverviewPage() {
+  const { user } = useAuth();
+  const { wallet, orders, loading, signedIn } = useMetalAccount();
   const {
     state,
     activeWallet,
@@ -26,21 +33,118 @@ export default function AppOverviewPage() {
   } = usePractice();
 
   const b = activeWallet.balances;
+  const recentOrders = orders.slice(0, 6);
 
   return (
     <AppPage
-      title="Overview"
-      subtitle="Revolut-style multi-wallet · switch accounts in the sidebar"
+      title={signedIn ? "Dashboard" : "Overview"}
+      subtitle={
+        signedIn
+          ? `Welcome back${user?.fullName ? `, ${user.fullName}` : ""} · accounts & activity`
+          : "Sign in to see your metal account, or explore practice wallets"
+      }
       actions={
-        <Link href="/app/trade/">
-          <PrimaryButton>Order gold</PrimaryButton>
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/app/trade/">
+            <PrimaryButton>Order gold</PrimaryButton>
+          </Link>
+          {signedIn ? (
+            <Link href="/app/transactions/">
+              <SecondaryButton>Transactions</SecondaryButton>
+            </Link>
+          ) : null}
+        </div>
       }
     >
+      {!signedIn ? (
+        <Notice tone="info">
+          <span className="font-semibold text-heading">Sign in</span> to open your
+          AURIX account, paid gold orders, and BPC balances.{" "}
+          <AuthNavLink href={AUTH_LOGIN_HREF} className="font-bold underline">
+            Log in
+          </AuthNavLink>{" "}
+          or{" "}
+          <AuthNavLink href={AUTH_REGISTER_HREF} className="font-bold underline">
+            create an account
+          </AuthNavLink>
+          .
+        </Notice>
+      ) : null}
+
+      {signedIn ? (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="rounded-lg border border-gold/40 bg-gold/10 p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
+              Gold account
+            </p>
+            <p className="mt-2 text-2xl font-extrabold text-heading">
+              {loading ? "…" : formatGrams(wallet?.goldGrams ?? 0)}
+            </p>
+            <p className="mt-1 text-xs text-muted">
+              {(wallet?.goldBpc ?? 0).toLocaleString()} BPC · internal reserve
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--color-line)] bg-[var(--color-surface)] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
+              Silver account
+            </p>
+            <p className="mt-2 text-2xl font-extrabold text-heading">
+              {loading ? "…" : formatGrams(wallet?.silverGrams ?? 0)}
+            </p>
+            <p className="mt-1 text-xs text-muted">
+              {(wallet?.silverBpc ?? 0).toLocaleString()} BPC
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--color-line)] bg-[var(--color-surface)] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
+              Orders
+            </p>
+            <p className="mt-2 text-2xl font-extrabold text-heading">
+              {loading ? "…" : orders.length}
+            </p>
+            <p className="mt-1 text-xs text-muted">
+              <Link href="/app/transactions/" className="font-semibold text-navy underline">
+                View all transactions
+              </Link>
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--color-line)] bg-[var(--color-surface)] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
+              Custody
+            </p>
+            <p className="mt-2 text-lg font-extrabold text-heading">Internal reserve</p>
+            <p className="mt-1 text-xs text-muted">
+              London vault attestation not live yet
+            </p>
+          </div>
+        </div>
+      ) : null}
+
+      {signedIn && recentOrders.length > 0 ? (
+        <Panel title="Recent orders" description="Paid / minted metal from your account">
+          <DataTable
+            columns={["When", "Metal", "Grams", "Paid", "Status"]}
+            empty="No orders yet."
+            rows={recentOrders.map((o) => [
+              <span key="d" className="text-muted">
+                {o.createdAt ? new Date(o.createdAt).toLocaleString() : "—"}
+              </span>,
+              <span key="m" className="capitalize">
+                {o.metal}
+              </span>,
+              formatGrams(o.grams),
+              formatEur(o.fiatEur),
+              <span key="s" className="font-semibold uppercase text-gold-dark">
+                {o.status}
+              </span>,
+            ])}
+          />
+        </Panel>
+      ) : null}
+
       {!practiceEnabled && (
         <Notice tone="info">
           Practice mode is off — enable it in Profile to move virtual balances.
-          Demo numbers stay read-only until then.
         </Notice>
       )}
 
@@ -59,7 +163,7 @@ export default function AppOverviewPage() {
               }`}
             >
               <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
-                {kindLabel(w.kind)}
+                {kindLabel(w.kind)} · practice
               </p>
               <p className="mt-1 font-bold text-heading">{w.name}</p>
               <p className="mt-3 text-2xl font-extrabold tracking-tight text-heading">
@@ -77,7 +181,7 @@ export default function AppOverviewPage() {
       <div className="grid gap-6 lg:grid-cols-3">
         <Panel
           title={`${activeWallet.name} pockets`}
-          description="Fiat + metal pockets inside the active wallet"
+          description="Practice fiat + metal"
           className="lg:col-span-1"
         >
           <dl className="space-y-3 text-sm">
@@ -98,24 +202,17 @@ export default function AppOverviewPage() {
               </dd>
             </div>
           </dl>
-          <p className="mt-4 text-xs text-muted">
-            Total marked ≈ {formatEur(walletTotal(activeWallet))}
-          </p>
         </Panel>
 
-        <Panel
-          title="Quick links"
-          description="Desktop ops shortcuts"
-          className="lg:col-span-2"
-        >
+        <Panel title="Quick links" description="Your app" className="lg:col-span-2">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/app/business/", label: "Business treasury & team" },
-              { href: "/app/family/", label: "Kids / Family controls" },
-              { href: "/app/vouchers/", label: "Create & redeem vouchers" },
-              { href: "/app/payments/", label: "Send / transfer wallets" },
-              { href: "/app/markets/", label: "Markets & vault" },
-              { href: "/app/profile/", label: "Practice & KYC" },
+              { href: "/app/accounts/", label: "Accounts" },
+              { href: "/app/transactions/", label: "Transactions" },
+              { href: "/app/wallet/", label: "Practice wallet" },
+              { href: "/app/trade/", label: "Order gold" },
+              { href: "/app/payments/", label: "Payments" },
+              { href: "/app/profile/", label: "Profile" },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -130,12 +227,12 @@ export default function AppOverviewPage() {
       </div>
 
       <Panel
-        title="Recent activity"
-        description={`Transactions for ${activeWallet.name}`}
+        title="Practice activity"
+        description={`Local practice ledger · ${activeWallet.name}`}
       >
         <DataTable
           columns={["When", "Type", "Label", "Amount"]}
-          empty="No activity yet for this wallet."
+          empty="No practice activity yet."
           rows={txnsForActive.slice(0, 8).map((t) => [
             <span key="d" className="text-muted">
               {new Date(t.createdAt).toLocaleString()}

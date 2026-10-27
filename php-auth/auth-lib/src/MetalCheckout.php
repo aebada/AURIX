@@ -31,7 +31,7 @@ final class MetalCheckout
             'paypalClientId' => $paypalId,
             'mode' => self::env('PAYPAL_MODE', 'sandbox'),
             'liveCustody' => false,
-            'note' => 'Payment reserves grams at the quoted price. Vault allocation stays pending until custody is certified.',
+            'note' => 'Pay EUR to mint BPC against AURIX internal reserve. London vault attestation is not live.',
         ];
     }
 
@@ -69,8 +69,8 @@ final class MetalCheckout
         }
 
         $email = isset($body['email']) ? trim((string) $body['email']) : '';
-        if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('email is invalid');
+        if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('email is required for mint destination');
         }
 
         $fee = round($fiat * self::FEE_RATE, 2);
@@ -195,6 +195,28 @@ final class MetalCheckout
     }
 
     /**
+     * @return list<array<string, mixed>>
+     */
+    public static function forEmail(string $email): array
+    {
+        $email = strtolower(trim($email));
+        if ($email === '') {
+            return [];
+        }
+        $rows = [];
+        foreach (self::all() as $row) {
+            if (strtolower(trim((string) ($row['email'] ?? ''))) === $email) {
+                $rows[] = $row;
+            }
+        }
+        usort($rows, static function (array $a, array $b): int {
+            return strcmp((string) ($b['createdAt'] ?? ''), (string) ($a['createdAt'] ?? ''));
+        });
+
+        return $rows;
+    }
+
+    /**
      * @param array<string, mixed> $order
      * @return array<string, mixed>
      */
@@ -202,23 +224,25 @@ final class MetalCheckout
     {
         $order['status'] = 'paid';
         $order['providerRef'] = $ref;
-        $order['allocation'] = 'pending_certification';
-        $order['liveMint'] = false;
-        $order['liveCustody'] = false;
         $order['updatedAt'] = gmdate('c');
+        $order = MetalLedger::settlePaidOrder($order);
         self::upsert($order);
 
         try {
             $cfg = Config::fromEnvironment();
             $mailer = new SmtpMailer($cfg);
             $mailer->send(
-                [$cfg->mailNotifyTo],
-                'AURIX paid gold reservation ' . $order['id'],
-                'Paid €' . $order['fiatEur'] . ' for ~' . $order['grams'] . ' g ' . $order['metal'] . ".\nAllocation pending certification. Not vault-delivered.\nOrder " . $order['id'],
+                array_values(array_unique(array_filter([$cfg->mailNotifyTo, (string) ($order['email'] ?? '')]))),
+                'AURIX minted BPC ' . $order['id'],
+                'Paid €' . $order['fiatEur'] . ' → ' . $order['grams'] . ' g ' . $order['metal']
+                    . ' → ' . ($order['bpc'] ?? 0) . " BPC on AURIX internal reserve.\n"
+                    . "Not an attested London vault delivery.\nOrder " . $order['id'],
             );
         } catch (\Throwable $e) {
             // notify is best-effort
         }
+
+        $order['wallet'] = MetalLedger::walletForEmail((string) $order['email']);
 
         return $order;
     }

@@ -18,7 +18,9 @@ const NAV: {
   label: string;
   section: "Account" | "Money" | "Org";
 }[] = [
-  { href: "/app/", label: "Overview", section: "Account" },
+  { href: "/app/", label: "Dashboard", section: "Account" },
+  { href: "/app/accounts/", label: "Accounts", section: "Account" },
+  { href: "/app/transactions/", label: "Transactions", section: "Account" },
   { href: "/app/wallet/", label: "Wallet", section: "Account" },
   { href: "/app/trade/", label: "Order gold", section: "Money" },
   { href: "/app/payments/", label: "Payments", section: "Money" },
